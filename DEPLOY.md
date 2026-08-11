@@ -1,63 +1,49 @@
-# Deploying Collabrate to Cloudflare Pages
+# Deploying Collabrate to Vercel
 
-The site is already configured for this: `next.config.ts` now builds a fully static export (`output: "export"`), which I verified builds cleanly into an `out/` folder that Cloudflare Pages can serve directly, no server runtime needed.
+Vercel is Next.js's native host, so this is zero-config: no static export, no wrangler files, no build-output-directory settings. I reverted `next.config.ts` back to plain defaults and removed the Cloudflare-specific `wrangler.jsonc`. Vercel detects it's a Next.js project automatically and just builds and runs it.
 
-Everything below runs on your own machine (not through Cowork), since it needs your GitHub and Cloudflare logins.
+Everything below runs on your own machine (not through Cowork), since it needs your GitHub and Vercel logins.
 
 ## 1. Push the code to GitHub
 
-In a terminal, `cd` into your `collab_web` folder, then:
+Same repo you already have (`team-collabrate/collabrate`) works fine, this isn't a GitHub problem, so no need to touch that part. Just make sure the latest changes are pushed:
 
 ```bash
-git init
 git add -A
-git commit -m "Initial commit"
+git commit -m "Switch to Vercel"
+git push
 ```
 
-Create a new empty repo on GitHub (github.com → New repository → don't initialize with a README). Then:
+If that repo is still giving you grief (the "linked to a repository that no longer exists" issue from before is a *Cloudflare*-side stale reference, unrelated to GitHub itself), first confirm `https://github.com/team-collabrate/collabrate` actually loads and shows your files before moving on.
 
-```bash
-git remote add origin https://github.com/<your-username>/<repo-name>.git
-git branch -M main
-git push -u origin main
-```
+## 2. Import the project into Vercel
 
-**Before moving on, open the repo in your browser** (e.g. `https://github.com/<org-or-user>/<repo-name>`) and confirm you actually see your files (`package.json`, `src/`, etc.), not an empty repo. Cloudflare's "Cloning repository..." step fails instantly with `error occurred while fetching repository` if the repo has no commits yet, this is the single most common cause, more common than GitHub App permissions.
+1. Go to [vercel.com](https://vercel.com) → sign in with GitHub.
+2. **Add New... → Project**.
+3. Authorize the Vercel GitHub App if prompted, and select `team-collabrate/collabrate`. This is a separate GitHub App installation from Cloudflare's, so none of the earlier permission mess carries over, if Vercel can see the repo in the picker, it has access.
+4. Vercel auto-detects **Framework Preset: Next.js**. Leave build/output settings on their defaults, don't override them.
+5. Click **Deploy**. First build takes a minute or two. You'll get a `*.vercel.app` URL to confirm it works before wiring up the real domain.
 
-## 2. Connect the repo to Cloudflare Pages
+Every future `git push` to `main` auto-deploys, same as Cloudflare would have. Pull requests also get their own preview URLs automatically.
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
-2. Authorize Cloudflare's GitHub app and pick the repo you just pushed.
-3. Build settings:
-   - **Framework preset:** None
-   - **Build command:** `npm run build`
-   - **Build output directory:** `out`
-4. Click **Save and Deploy**. First build takes a couple of minutes. You'll get a `*.pages.dev` URL to confirm it works before wiring up the real domain.
+## 3. Point collabrate.digital at Vercel
 
-Every future `git push` to `main` auto-deploys.
+Your nameservers already point to Cloudflare (confirmed propagated), so the easiest path is to keep Cloudflare as your DNS host and just add records pointing at Vercel, no need to touch Porkbun again or revert anything.
 
-**If the build fails at "Cloning repository..." with `error occurred while fetching repository`:** this almost always means the Cloudflare GitHub App doesn't actually have access to the repo, most commonly because it was installed with "Only select repositories" and this one wasn't checked, or the repo was renamed/transferred after the app was installed. Fix:
+1. In Vercel: project → **Settings → Domains** → add `collabrate.digital` (and `www.collabrate.digital` if you want both). Vercel will show you the exact record(s) it needs, typically:
+   - `A` record: `@` → `76.76.21.21`
+   - `CNAME` record: `www` → `cname.vercel-dns.com`
+   (Vercel shows the current values on that page, use whatever it actually displays, these change occasionally.)
+2. In Cloudflare: `collabrate.digital` → **DNS → Records** → add those records.
+3. **Important:** set the proxy status to **DNS only** (grey cloud, not orange) on these records. Vercel issues and manages its own SSL certificate for the domain directly; routing it through Cloudflare's proxy on top can cause certificate/handshake conflicts (similar to the 525 error from before).
+4. Back in Vercel, the Domains page will show a checkmark once it verifies the DNS, usually within a few minutes.
 
-1. Go to [github.com/settings/installations](https://github.com/settings/installations) (or your org's equivalent) → find **Cloudflare Workers and Pages** → **Configure**.
-2. Under **Repository access**, either switch to **All repositories**, or make sure this specific repo is checked under **Only select repositories**.
-3. Retry the deployment from the Cloudflare dashboard (or push a new commit).
+That's it, `https://collabrate.digital` will serve the live site over HTTPS.
 
-If that doesn't fix it, uninstall the **Cloudflare Workers and Pages** GitHub App entirely from that settings page, then in Cloudflare go to **Workers & Pages → Create → Pages → Connect to Git** again to reinstall it fresh and re-pick the repo.
+## Cleanup (optional, no rush)
 
-## 3. Point your Porkbun domain at Cloudflare
-
-1. Cloudflare dashboard → **Add a domain**, enter the domain you bought on Porkbun.
-2. Cloudflare scans existing DNS records, then gives you two nameservers (something like `xxx.ns.cloudflare.com` / `yyy.ns.cloudflare.com`).
-3. In Porkbun: **Account → Domain Management** → your domain → **NS** (nameservers) → replace Porkbun's default nameservers with the two Cloudflare gave you.
-4. Nameserver changes usually take effect within a few minutes to a few hours (can take up to 24h). Cloudflare emails you once it detects the switch and the domain becomes "Active."
-
-## 4. Attach the domain to your Pages project
-
-1. Workers & Pages → your project → **Custom domains** → **Set up a custom domain**.
-2. Enter the domain (and `www` subdomain if you want both). Cloudflare auto-creates the DNS records and issues SSL since the domain is now on Cloudflare's nameservers.
-
-That's it, the domain will serve the live site over HTTPS.
+The old Cloudflare Worker project (`collabrate` under Workers & Pages) is now unused, you can delete it from the Cloudflare dashboard whenever, it's not costing you anything sitting there.
 
 ## One thing to know
 
-The contact form on `/contact` is currently front-end only (it shows a "Sent" confirmation but doesn't actually send anywhere). If you want real submissions to reach your inbox, say so and I'll wire it up to an email service (e.g. Resend) or a form backend, since a static export has no server to handle it natively, it'd call a small external API instead.
+The contact form on `/contact` is currently front-end only (it shows a "Sent" confirmation but doesn't actually send anywhere). If you want real submissions to reach your inbox, say so and I'll wire it up, e.g. a Vercel-friendly option like a Next.js Server Action calling Resend, which is even easier now that we're not on a static export.
