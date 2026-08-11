@@ -213,25 +213,29 @@ export const services: ServiceItem[] = [
 export const processSteps = [
   {
     step: "01",
-    title: "Discovery Call (1 week)",
+    title: "Discovery Call",
+    duration: "1 week",
     description: "You tell us what you're trying to achieve. We ask the hard questions and get specific.",
     icon: "Search",
   },
   {
     step: "02",
-    title: "Strategy & Plan (1-2 weeks)",
+    title: "Strategy & Plan",
+    duration: "1-2 weeks",
     description: "We map out the game plan, timeline, and what success looks like.",
     icon: "Compass",
   },
   {
     step: "03",
-    title: "Build & Launch (2-4 weeks)",
+    title: "Build & Launch",
+    duration: "2-4 weeks",
     description: "We start shipping. Weekly updates. Transparent about progress.",
     icon: "Hammer",
   },
   {
     step: "04",
-    title: "Measure & Optimize (Ongoing)",
+    title: "Measure & Optimize",
+    duration: "Ongoing",
     description: "Real data, real metrics. We show you what's working and double down.",
     icon: "LineChart",
   },

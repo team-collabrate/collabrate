@@ -24,8 +24,8 @@ export function WhatWeDo() {
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-brand-diagonal text-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                 <Icon name={area.icon} className="size-6" />
               </span>
-              <h3 className="text-lg font-semibold text-foreground">{area.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{area.description}</p>
+              <h3 className="text-lg font-semibold text-foreground text-balance">{area.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground text-balance">{area.description}</p>
             </motion.div>
           ))}
         </StaggerGroup>

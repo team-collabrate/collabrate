@@ -27,7 +27,7 @@ export function ServicesByGoal() {
               <h3 className="text-base font-semibold text-foreground">{group.goal}</h3>
               <ul className="flex flex-col gap-2.5">
                 {group.items.map((item) => (
-                  <li key={item.name} className="text-xs leading-relaxed">
+                  <li key={item.name} className="text-xs leading-relaxed text-balance">
                     <span className="font-semibold text-foreground">{item.name}</span>
                     <span className="text-muted-foreground">: {item.description}</span>
                   </li>

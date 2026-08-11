@@ -26,7 +26,7 @@ export function Industries() {
             >
               <Icon name={industry.icon} className="size-6 text-brand-violet" />
               <h3 className="font-semibold text-foreground">{industry.name}</h3>
-              <p className="text-xs leading-relaxed text-muted-foreground">{industry.description}</p>
+              <p className="text-xs leading-relaxed text-muted-foreground text-balance">{industry.description}</p>
             </motion.div>
           ))}
         </StaggerGroup>

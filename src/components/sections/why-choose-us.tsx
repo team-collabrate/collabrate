@@ -27,8 +27,8 @@ export function WhyChooseUs() {
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand-diagonal text-white shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                 <Icon name={item.icon} className="size-5.5" />
               </span>
-              <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+              <h3 className="text-lg font-semibold text-foreground text-balance">{item.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground text-balance">{item.description}</p>
             </motion.div>
           ))}
         </StaggerGroup>
