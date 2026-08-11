@@ -1,0 +1,160 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #FFFFFF;
+  --surface: #F8FAFC;
+  --card: #F4F4F5;
+  --border: #E5E7EB;
+  --heading: #111827;
+  --body: #4B5563;
+  --muted: #9CA3AF;
+
+  --brand-violet: #8A2BE2;
+  --brand-orchid: #B154B3;
+  --brand-magenta: #CF6CAD;
+  --brand-rose: #E29AB4;
+  --brand-coral: #F7686F;
+  --brand-orange: #FF9F43;
+
+  --radius: 1.25rem;
+}
+
+.dark {
+  --background: #09090B;
+  --surface: #18181B;
+  --card: #27272A;
+  --border: #3F3F46;
+  --heading: #FAFAFA;
+  --body: #D4D4D8;
+  --muted: #71717A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--heading);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-card-foreground: var(--heading);
+  --color-border: var(--border);
+  --color-muted: var(--surface);
+  --color-muted-foreground: var(--body);
+  --color-ring: var(--brand-violet);
+
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-purple: var(--brand-violet);
+  --color-brand-orchid: var(--brand-orchid);
+  --color-brand-magenta: var(--brand-magenta);
+  --color-brand-rose: var(--brand-rose);
+  --color-brand-coral: var(--brand-coral);
+  --color-brand-orange: var(--brand-orange);
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Sora Variable', var(--font-sans);
+
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.5rem;
+
+  --animate-gradient-move: gradient-move 6s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite alternate;
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-accordion-down: accordion-down 0.3s ease-out;
+  --animate-accordion-up: accordion-up 0.3s ease-out;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+
+  @keyframes gradient-move {
+    to {
+      background-position: 200% center;
+    }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-16px) rotate(1deg); }
+  }
+  @keyframes aurora {
+    0% { transform: translate(-10%, -10%) rotate(0deg) scale(1); }
+    50% { transform: translate(10%, 5%) rotate(15deg) scale(1.15); }
+    100% { transform: translate(-5%, 10%) rotate(-10deg) scale(1.05); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+  @keyframes shimmer {
+    from { background-position: 0% 0%; }
+    to { background-position: -200% 0%; }
+  }
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--body);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--brand-violet);
+  color: white;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+.text-gradient {
+  background-image: linear-gradient(90deg, #FF9F43, #F7686F, #CF6CAD, #B154B3, #8A2BE2);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-brand {
+  background-image: linear-gradient(90deg, #FF9F43, #F7686F, #CF6CAD, #B154B3, #8A2BE2);
+}
+
+.bg-gradient-brand-diagonal {
+  background-image: linear-gradient(135deg, #8A2BE2, #CF6CAD, #FF9F43);
+}
+
+.glass {
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.grid-fade-mask {
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, black 40%, transparent 100%);
+}
