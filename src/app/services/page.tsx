@@ -31,30 +31,27 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
-  // Carousel only shows services we have a real photo for — no generated
+  // This grid only shows services we have a real photo for — no generated
   // placeholder art here. The full 22-service list still appears below in
   // the goal-grouped sections regardless of whether a photo exists.
-  const carouselSlides = serviceCoverSlides
+  const serviceCards = serviceCoverSlides
     .map((service) => ({ service, image: getServiceImagePath(service.slug) }))
     .filter(
       (entry): entry is { service: (typeof serviceCoverSlides)[number]; image: string } =>
         entry.image !== null
     )
     .map(({ service, image }) => ({
-      src: image,
-      alt: `${service.title}: ${service.category}`,
+      slug: service.slug,
       title: service.title,
-      subtitle: service.category,
-      meta: [
-        { label: "Value", value: service.value },
-        { label: "Engagement", value: service.engagement },
-      ],
+      category: service.category,
+      value: service.value,
+      image,
     }));
 
   return (
     <main>
       <ServicesHero />
-      <ServicesCarousel slides={carouselSlides} />
+      <ServicesCarousel services={serviceCards} />
       {serviceGoalGroups.map((group, i) => (
         <ServiceGoalSection key={group.heading} group={group} index={i} />
       ))}
