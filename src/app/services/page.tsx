@@ -14,7 +14,6 @@ import {
   servicesFaq,
   servicesNextSteps,
 } from "@/data/services-page";
-import { getServiceImagePath } from "@/lib/service-images";
 
 export const metadata: Metadata = {
   title: { absolute: servicesPageMeta.title },
@@ -31,22 +30,14 @@ export const metadata: Metadata = {
 };
 
 export default function ServicesPage() {
-  // This grid only shows services we have a real photo for — no generated
-  // placeholder art here. The full 22-service list still appears below in
-  // the goal-grouped sections regardless of whether a photo exists.
-  const serviceCards = serviceCoverSlides
-    .map((service) => ({ service, image: getServiceImagePath(service.slug) }))
-    .filter(
-      (entry): entry is { service: (typeof serviceCoverSlides)[number]; image: string } =>
-        entry.image !== null
-    )
-    .map(({ service, image }) => ({
-      slug: service.slug,
-      title: service.title,
-      category: service.category,
-      value: service.value,
-      image,
-    }));
+  // Icon + gradient cards now, no photos, so every service can appear here
+  // instead of only the ones with an uploaded image.
+  const serviceCards = serviceCoverSlides.map((service) => ({
+    slug: service.slug,
+    title: service.title,
+    category: service.category,
+    value: service.value,
+  }));
 
   return (
     <main>

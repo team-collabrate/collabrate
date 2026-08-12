@@ -4,17 +4,19 @@ import React, { useState, useCallback, useMemo } from "react";
 import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Brand-consistent gradient themes (swapped in from the generic
-// slate/blue/purple palette the source component shipped with) so these
-// cards read as part of Collabrate's visual system, not a stock template.
+// Original 21st.dev theme palette.
 const THEMES = {
-  violet: "from-[#8A2BE2] via-[#B154B3] to-[#CF6CAD]",
-  coral: "from-[#F7686F] via-[#CF6CAD] to-[#B154B3]",
-  orange: "from-[#FF9F43] via-[#F7686F] to-[#CF6CAD]",
-  magenta: "from-[#CF6CAD] via-[#B154B3] to-[#8A2BE2]",
+  primary: "from-slate-700 via-slate-800 to-slate-900",
+  secondary: "from-blue-600 via-blue-700 to-blue-800",
+  accent: "from-purple-600 via-purple-700 to-purple-800",
+  success: "from-emerald-600 via-emerald-700 to-emerald-800",
+  warning: "from-amber-600 via-amber-700 to-amber-800",
+  danger: "from-red-600 via-red-700 to-red-800",
+  info: "from-cyan-600 via-cyan-700 to-cyan-800",
+  neutral: "from-gray-600 via-gray-700 to-gray-800",
 } as const;
 
-type ThemeType = keyof typeof THEMES;
+export type ThemeType = keyof typeof THEMES;
 
 interface MousePos {
   readonly x: number;
@@ -104,7 +106,7 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
       description,
       image,
       icon,
-      theme = "violet",
+      theme = "primary",
       gradient,
       onClick,
       className,
