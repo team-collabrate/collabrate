@@ -4,9 +4,7 @@ import React, { useState, useCallback, useMemo } from "react";
 import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Six curated dark, shiny jewel-tone gradients (deep anchor tones with a brighter
-// mid stop for sheen; the specular glare + highlight overlays layered on top of
-// the card do the rest of the "shiny" work).
+// Six curated dark jewel-tone gradients.
 const THEMES = {
   navy: "from-[#0B1220] via-[#1E3A5F] to-[#020617]",
   sapphire: "from-[#0A2540] via-[#1D5FA8] to-[#04101E]",
@@ -18,14 +16,10 @@ const THEMES = {
 
 export type ThemeType = keyof typeof THEMES;
 
-// Keeps the service name on a single line regardless of length: shorter names get
-// the full 22-26px heading size, longer ones step down so they still fit one line
-// inside the fixed-width card without wrapping. `truncate` is a hard safety net.
-function headingSizeClass(title: string): string {
-  if (title.length <= 14) return "text-[24px] sm:text-[26px]";
-  if (title.length <= 22) return "text-[18px] sm:text-[20px]";
-  return "text-[15px] sm:text-[17px]";
-}
+// One consistent heading size for every card. Sized to still fit the longest
+// service name ("Mobile Application Development") on a single line; `truncate`
+// is a hard safety net regardless.
+const HEADING_SIZE = "text-[16px] sm:text-[18px]";
 
 interface MousePos {
   readonly x: number;
@@ -254,21 +248,6 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
         />
 
         <motion.div
-          className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
-          style={{ transform: "translateZ(15px)" }}
-        >
-          <motion.div
-            className="absolute -inset-full"
-            animate={{
-              background: hovered
-                ? `linear-gradient(${mousePos.x + 135}deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%)`
-                : "transparent",
-            }}
-            transition={{ duration: 0.3 }}
-          />
-        </motion.div>
-
-        <motion.div
           className="relative z-20 flex h-full flex-col p-6"
           style={{ transform: "translateZ(20px)" }}
         >
@@ -315,7 +294,7 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
             <motion.h3
               className={cn(
                 "w-full truncate font-semibold leading-snug tracking-tight drop-shadow-md",
-                headingSizeClass(title)
+                HEADING_SIZE
               )}
               style={{ color: "#FFFFFF" }}
               animate={{ scale: hovered ? 1.02 : 1 }}
@@ -349,29 +328,6 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
             )}
           </motion.div>
         </motion.div>
-
-        <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
-          style={{
-            background: `linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.1) 100%)`,
-            transform: "translateZ(25px)",
-          }}
-          animate={{ opacity: hovered ? 1 : 0.7 }}
-          transition={{ duration: 0.3 }}
-        />
-
-        {!disabled && (
-          <motion.div
-            className="absolute -inset-0.5 rounded-2xl opacity-0 pointer-events-none"
-            style={{
-              background: `linear-gradient(135deg, ${finalGradient})`,
-              filter: "blur(15px)",
-              transform: "translateZ(-5px)",
-            }}
-            animate={{ opacity: hovered ? 0.2 : 0 }}
-            transition={{ duration: 0.4 }}
-          />
-        )}
 
         {loading && (
           <motion.div
