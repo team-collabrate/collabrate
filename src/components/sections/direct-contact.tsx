@@ -19,7 +19,8 @@ export function DirectContact() {
                 <MapPin className="size-4" /> {site.location}
               </span>
               <span className="flex items-center gap-2.5 text-sm text-muted-foreground">
-                <Globe2 className="size-4" /> Serving {site.serviceRegions.join(", ")}
+                <Globe2 className="size-4" /> Serving businesses across India, Singapore, Malaysia, and the
+                Gulf countries
               </span>
             </div>
             <div className="flex items-center gap-2">

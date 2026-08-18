@@ -21,7 +21,7 @@ export default function ServicesPage() {
             as="h1"
             eyebrow="Services"
             title="Pick what you need. We handle the rest."
-            description="Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to do."
+            description="Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to achieve."
           />
         </div>
       </section>

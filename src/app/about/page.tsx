@@ -29,7 +29,10 @@ export default function AboutPage() {
       <section className="relative pt-40 pb-20 sm:pt-48 sm:pb-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
-            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
+            <span className="text-xs font-semibold uppercase tracking-wider text-brand-violet">
+              About Collabrate
+            </span>
+            <h1 className="mt-3 text-balance text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
               One team, every part of your digital growth.
             </h1>
           </Reveal>

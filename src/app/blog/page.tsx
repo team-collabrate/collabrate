@@ -13,7 +13,7 @@ const pillars = [
   "Marketing & Growth",
   "AI & Automation",
   "Industry Playbooks",
-  "Process Notes",
+  "Founder/Process Notes",
 ];
 
 // No posts published yet. This is an empty state, not a fabricated post list.
