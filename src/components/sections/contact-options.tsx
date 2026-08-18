@@ -26,7 +26,7 @@ export function ContactOptions() {
     <section className="relative py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <Reveal direction="left" className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-8 sm:p-10">
+          <Reveal direction="left" className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-surface text-brand-violet">
               <CalendarDays className="size-5" />
             </span>
@@ -46,7 +46,7 @@ export function ContactOptions() {
             </PendingLink>
           </Reveal>
 
-          <Reveal direction="right" delay={0.08} className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-8 sm:p-10">
+          <Reveal direction="right" delay={0.08} className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-surface text-brand-violet">
               <MessageSquare className="size-5" />
             </span>

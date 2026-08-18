@@ -104,8 +104,8 @@ export function ServiceCategorySection({ category, index }: { category: ServiceC
         {/* Full detail, always visible (not hover-gated), per service */}
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2">
           {category.services.map((service) => (
-            <div key={service.name} className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6">
-              <h3 className="text-sm font-semibold text-foreground">{service.name}</h3>
+            <div key={service.name} className="flex flex-col gap-3 rounded-3xl border border-border bg-card p-7 shadow-sm">
+              <h3 className="text-lg font-semibold text-foreground">{service.name}</h3>
               <ul className="flex flex-col gap-2">
                 {service.points.map((point) => (
                   <li key={point} className="flex items-start gap-2.5 text-sm text-muted-foreground">

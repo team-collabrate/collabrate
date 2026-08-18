@@ -40,7 +40,7 @@ export function Testimonials() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -direction * 40 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col items-center gap-6 rounded-3xl border border-border bg-card p-8 text-center sm:p-12"
+              className="flex flex-col items-center gap-6 rounded-3xl border border-border bg-card p-8 shadow-sm text-center sm:p-12"
             >
               <Quote className="size-8 text-brand-violet/50" />
               <p className="text-balance text-xl font-medium leading-relaxed text-foreground sm:text-2xl">

@@ -21,10 +21,10 @@ export function Industries() {
               key={industry.name}
               variants={staggerItem}
               whileHover={{ y: -4 }}
-              className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6 transition-colors duration-300 hover:border-brand-purple/40"
+              className="flex flex-col gap-3 rounded-3xl border border-border bg-card p-7 shadow-sm transition-colors duration-300 hover:border-brand-purple/40"
             >
               <span className="text-xs font-semibold text-brand-violet">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="font-semibold text-foreground">{industry.name}</h3>
+              <h3 className="text-lg font-semibold text-foreground">{industry.name}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground text-balance">{industry.description}</p>
             </motion.div>
           ))}

@@ -53,7 +53,7 @@ export default function PricingPage() {
       <section className="relative pb-16 sm:pb-20">
         <div className="mx-auto max-w-3xl px-6">
           <Reveal>
-            <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
+            <div className="rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">
               <h2 className="text-lg font-semibold text-foreground">How it works</h2>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 We start with a conversation about your goals, then scope the right mix of development,

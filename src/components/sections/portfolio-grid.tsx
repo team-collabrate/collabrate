@@ -18,7 +18,8 @@ function PortfolioCard({ project }: { project: PortfolioProject }) {
   return (
     <motion.article
       variants={staggerItem}
-      className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-7 sm:p-8"
+      whileHover={{ y: -4 }}
+      className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-7 shadow-sm transition-colors duration-300 hover:border-brand-purple/40 sm:p-8"
     >
       <span className="text-xs font-semibold uppercase tracking-wider text-brand-violet">
         {project.industry}

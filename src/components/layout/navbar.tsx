@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
@@ -9,6 +10,7 @@ import { nav, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -42,15 +44,31 @@ export function Navbar() {
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {nav.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-surface"
-            >
-              {link.label}
-            </a>
-          ))}
+          {nav.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                  isActive
+                    ? "text-foreground bg-surface"
+                    : "text-muted-foreground hover:text-foreground hover:bg-surface"
+                )}
+              >
+                {link.label}
+                {isActive && (
+                  <motion.span
+                    layoutId="navActiveDot"
+                    className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-brand-violet"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
@@ -81,16 +99,24 @@ export function Navbar() {
             className="glass fixed inset-x-4 top-20 z-40 rounded-3xl border border-border p-6 shadow-xl lg:hidden"
           >
             <nav className="flex flex-col gap-1">
-              {nav.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-4 py-3 text-base font-medium text-foreground hover:bg-surface"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {nav.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      "flex items-center gap-2.5 rounded-xl px-4 py-3 text-base font-medium hover:bg-surface",
+                      isActive ? "text-foreground bg-surface" : "text-foreground"
+                    )}
+                  >
+                    {isActive && <span className="size-1.5 shrink-0 rounded-full bg-brand-violet" />}
+                    {link.label}
+                  </a>
+                );
+              })}
             </nav>
             <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
               <Button variant="gradient" asChild>
