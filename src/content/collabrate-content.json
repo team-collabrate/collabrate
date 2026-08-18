@@ -264,12 +264,12 @@
       "services": [
         {
           "name": "Social Media Marketing",
-          "summary": "We manage your social presence end to end — from content editing and scheduling to community management — across whichever platforms make sense for your business. You provide the raw content; we shape it into consistent, on-brand posts and keep the conversation going with your audience.",
-          "points": ["Instagram, Facebook, LinkedIn, X — platform mix decided case by case", "Content editing and design from client-provided material", "Posting, scheduling, and community management (comments, DMs)"]
+          "summary": "We manage your social presence end to end, from content editing and scheduling to community management, across whichever platforms make sense for your business. You provide the raw content; we shape it into consistent, on-brand posts and keep the conversation going with your audience.",
+          "points": ["Instagram, Facebook, LinkedIn, X: platform mix decided case by case", "Content editing and design from client-provided material", "Posting, scheduling, and community management (comments, DMs)"]
         },
         {
           "name": "Performance Marketing (Paid Ads)",
-          "summary": "We plan, create, and run paid campaigns across Google, Meta, and LinkedIn — including the creatives, not just the targeting. Every campaign is built around conversions, with budgets adjusted based on what's actually working.",
+          "summary": "We plan, create, and run paid campaigns across Google, Meta, and LinkedIn, including the creatives, not just the targeting. Every campaign is built around conversions, with budgets adjusted based on what's actually working.",
           "points": ["Google Ads", "Meta Ads", "LinkedIn Ads"],
           "note": "Landing pages handled separately under Web Development."
         },
@@ -280,12 +280,12 @@
         },
         {
           "name": "LinkedIn Outreach (Lead Generation)",
-          "summary": "We handle both sides of LinkedIn growth — targeted outreach using Sales Navigator, and managing your personal profile so it supports the outreach instead of undercutting it.",
+          "summary": "We handle both sides of LinkedIn growth: targeted outreach using Sales Navigator, and managing your personal profile so it supports the outreach instead of undercutting it.",
           "points": ["Sales Navigator–driven prospecting", "Full outreach message copywriting", "Personal LinkedIn profile management for founders"]
         },
         {
           "name": "SEO",
-          "summary": "We handle SEO end to end — fixing the technical foundation, writing optimized content, and targeting the keywords your customers actually search.",
+          "summary": "We handle SEO end to end: fixing the technical foundation, writing optimized content, and targeting the keywords your customers actually search.",
           "points": ["Technical SEO (site speed, structure, indexing)", "SEO content writing (blog posts, pages)", "Keyword research and optimization; backlink building on request"]
         },
         {
@@ -300,8 +300,8 @@
       "heading": "Websites and Applications Built to Perform",
       "description": "Custom-built websites and mobile applications designed for speed, scalability, and real business outcomes.",
       "highlights": [
-        "Built with a reason, not a template — every page and section earns its place.",
-        "Tracking wired in from day one — analytics, CRM, payments, connected during the build.",
+        "Built with a reason, not a template. Every page and section earns its place.",
+        "Tracking wired in from day one: analytics, CRM, payments, connected during the build.",
         "Clean code Google actually understands.",
         "The site is the foundation, built to support the marketing that comes after."
       ],
@@ -345,7 +345,7 @@
       "services": [
         {
           "name": "AI Chatbots",
-          "summary": "We build hybrid chatbots — combining structured flows with AI — trained on your actual business data, not generic scripts. Deployed across your website, WhatsApp, Instagram, or wherever your customers already are.",
+          "summary": "We build hybrid chatbots, combining structured flows with AI, trained on your actual business data, not generic scripts. Deployed across your website, WhatsApp, Instagram, or wherever your customers already are.",
           "points": ["Hybrid rule-based + AI/LLM chatbot development", "Multi-channel deployment (website, WhatsApp, Instagram, and more)", "Trained on your docs, FAQs, and business data", "CRM and tool integrations", "Ongoing monitoring and improvement (retainer-based)"]
         },
         {
@@ -445,7 +445,7 @@
         { "label": "Terms", "href": "/terms" }
       ]
     },
-    "copyright": "© 2025 Collabrate. Remote-first, based in Tamil Nadu, India — serving India, Singapore, Malaysia, and the Gulf."
+    "copyright": "© 2025 Collabrate. Remote-first, based in Tamil Nadu, India, serving India, Singapore, Malaysia, and the Gulf."
   },
 
   "globalConstraints": [
