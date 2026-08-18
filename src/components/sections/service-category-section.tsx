@@ -49,13 +49,24 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
 // Same 21st.dev theme cycle used previously on the old services carousel, offset per category for variety.
 const THEME_CYCLE: ThemeType[] = ["primary", "secondary", "accent", "success", "warning", "danger", "info", "neutral"];
 
+// "Performance Marketing (Paid Ads)" -> heading "Performance Marketing", subtitle "Paid Ads".
+// Names with no brackets (SEO, Social Media Marketing, ...) get a heading only.
+function splitServiceName(name: string): { heading: string; subtitle?: string } {
+  const match = name.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+  if (match) {
+    return { heading: match[1].trim(), subtitle: match[2].trim() };
+  }
+  return { heading: name };
+}
+
 export function ServiceCategorySection({ category, index }: { category: ServiceCategory; index: number }) {
   const cards: CardData[] = category.services.map((service, i) => {
     const Icon = SERVICE_ICONS[service.name] ?? Sparkles;
+    const { heading, subtitle } = splitServiceName(service.name);
     return {
       id: service.name,
-      title: service.name,
-      description: service.summary,
+      title: heading,
+      subtitle,
       icon: <Icon className="size-6" />,
       theme: THEME_CYCLE[(index * 3 + i) % THEME_CYCLE.length],
     };

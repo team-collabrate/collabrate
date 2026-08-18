@@ -25,7 +25,8 @@ interface MousePos {
 
 interface Card3DProps {
   title: string;
-  description: string;
+  /** Secondary line, e.g. the bracketed part of a service name shown on its own smaller line. */
+  subtitle?: string;
   image?: string;
   icon?: React.ReactNode;
   theme?: ThemeType;
@@ -41,7 +42,8 @@ interface Card3DProps {
 export interface CardData {
   id: string;
   title: string;
-  description: string;
+  /** Secondary line, e.g. the bracketed part of a service name shown on its own smaller line. */
+  subtitle?: string;
   image?: string;
   icon?: React.ReactNode;
   theme?: ThemeType;
@@ -103,7 +105,7 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
   (
     {
       title,
-      description,
+      subtitle,
       image,
       icon,
       theme = "primary",
@@ -258,7 +260,7 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
         </motion.div>
 
         <motion.div
-          className="relative z-20 flex h-full flex-col justify-between p-6 text-white"
+          className="relative z-20 flex h-full flex-col p-6"
           style={{ transform: "translateZ(20px)" }}
         >
           <div className="flex justify-between items-start">
@@ -270,6 +272,7 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
               >
                 <motion.div
                   className="text-3xl opacity-90 filter drop-shadow-lg"
+                  style={{ color: "#FFFFFF" }}
                   animate={{ rotateZ: hovered ? 5 : 0, y: hovered ? -2 : 0 }}
                   transition={{ duration: 0.3 }}
                 >
@@ -293,31 +296,43 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
             </motion.div>
           </div>
 
-          <motion.div className="space-y-3" animate={{ y: hovered ? -3 : 0 }} transition={{ duration: 0.3 }}>
+          {/* Text block fills the remaining space and centers vertically so removing the
+              description doesn't leave an awkward gap between the icon row and the title. */}
+          <motion.div
+            className="flex flex-1 flex-col justify-center gap-1.5 min-h-0"
+            animate={{ y: hovered ? -3 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <motion.h3
-              className="text-xl font-semibold tracking-tight drop-shadow-md"
+              className="text-[22px] sm:text-2xl font-semibold leading-snug tracking-tight drop-shadow-md text-balance break-words"
+              style={{ color: "#FFFFFF" }}
               animate={{ scale: hovered ? 1.02 : 1 }}
               transition={{ duration: 0.3 }}
             >
               {title}
             </motion.h3>
 
-            <motion.p
-              className="text-sm text-white/85 leading-relaxed drop-shadow-sm line-clamp-3"
-              animate={{ opacity: hovered ? 1 : 0.85 }}
-              transition={{ duration: 0.3 }}
-            >
-              {description}
-            </motion.p>
+            {subtitle && (
+              <motion.p
+                className="text-[15px] font-medium leading-snug drop-shadow-sm text-balance break-words"
+                style={{ color: "#FFFFFF" }}
+                animate={{ scale: hovered ? 1.01 : 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {subtitle}
+              </motion.p>
+            )}
 
             {onClick && !disabled && (
               <motion.div
-                className="flex items-center space-x-2 opacity-0"
+                className="mt-2 flex items-center space-x-2 opacity-0"
                 animate={{ x: hovered ? 0 : -8, opacity: hovered ? 1 : 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
               >
                 <div className="h-0.5 w-4 bg-white/70 rounded-full" />
-                <div className="text-xs font-medium opacity-90">{loading ? "Loading..." : "Explore"}</div>
+                <div className="text-xs font-medium opacity-90" style={{ color: "#FFFFFF" }}>
+                  {loading ? "Loading..." : "Explore"}
+                </div>
               </motion.div>
             )}
           </motion.div>
@@ -412,7 +427,7 @@ export const Card3DList: React.FC<Card3DListProps> = ({
         >
           <Card3D
             title={card.title}
-            description={card.description}
+            subtitle={card.subtitle}
             image={card.image}
             icon={card.icon}
             theme={card.theme}

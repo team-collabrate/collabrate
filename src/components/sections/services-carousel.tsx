@@ -76,7 +76,6 @@ export function ServicesCarousel({ services }: { services: ServiceCard[] }) {
     return {
       id: service.slug,
       title: service.title,
-      description: service.value,
       icon: <Icon className="size-6" />,
       theme: THEME_CYCLE[i % THEME_CYCLE.length],
     };
