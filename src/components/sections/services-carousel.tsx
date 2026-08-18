@@ -58,17 +58,8 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
   "ai-analytics": BarChart3,
 };
 
-// Original 21st.dev theme set, cycled across all services.
-const THEME_CYCLE: ThemeType[] = [
-  "primary",
-  "secondary",
-  "accent",
-  "success",
-  "warning",
-  "danger",
-  "info",
-  "neutral",
-];
+// Six curated dark, shiny jewel-tone gradients, cycled across all services.
+const THEME_CYCLE: ThemeType[] = ["navy", "sapphire", "violet", "emerald", "bronze", "ruby"];
 
 export function ServicesCarousel({ services }: { services: ServiceCard[] }) {
   const cards: CardData[] = services.map((service, i) => {

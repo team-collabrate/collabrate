@@ -4,19 +4,28 @@ import React, { useState, useCallback, useMemo } from "react";
 import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// Original 21st.dev theme palette.
+// Six curated dark, shiny jewel-tone gradients (deep anchor tones with a brighter
+// mid stop for sheen; the specular glare + highlight overlays layered on top of
+// the card do the rest of the "shiny" work).
 const THEMES = {
-  primary: "from-slate-700 via-slate-800 to-slate-900",
-  secondary: "from-blue-600 via-blue-700 to-blue-800",
-  accent: "from-purple-600 via-purple-700 to-purple-800",
-  success: "from-emerald-600 via-emerald-700 to-emerald-800",
-  warning: "from-amber-600 via-amber-700 to-amber-800",
-  danger: "from-red-600 via-red-700 to-red-800",
-  info: "from-cyan-600 via-cyan-700 to-cyan-800",
-  neutral: "from-gray-600 via-gray-700 to-gray-800",
+  navy: "from-[#0B1220] via-[#1E3A5F] to-[#020617]",
+  sapphire: "from-[#0A2540] via-[#1D5FA8] to-[#04101E]",
+  violet: "from-[#2E1065] via-[#6D28D9] to-[#1A0838]",
+  emerald: "from-[#02341F] via-[#0E8A5F] to-[#01140F]",
+  bronze: "from-[#3B1D06] via-[#B8722C] to-[#1A0C02]",
+  ruby: "from-[#3B0A0A] via-[#B91C3C] to-[#1A0303]",
 } as const;
 
 export type ThemeType = keyof typeof THEMES;
+
+// Keeps the service name on a single line regardless of length: shorter names get
+// the full 22-26px heading size, longer ones step down so they still fit one line
+// inside the fixed-width card without wrapping. `truncate` is a hard safety net.
+function headingSizeClass(title: string): string {
+  if (title.length <= 14) return "text-[24px] sm:text-[26px]";
+  if (title.length <= 22) return "text-[18px] sm:text-[20px]";
+  return "text-[15px] sm:text-[17px]";
+}
 
 interface MousePos {
   readonly x: number;
@@ -108,7 +117,7 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
       subtitle,
       image,
       icon,
-      theme = "primary",
+      theme = "navy",
       gradient,
       onClick,
       className,
@@ -296,15 +305,18 @@ const Card3D = React.forwardRef<HTMLDivElement, Card3DProps>(
             </motion.div>
           </div>
 
-          {/* Text block fills the remaining space and centers vertically so removing the
-              description doesn't leave an awkward gap between the icon row and the title. */}
+          {/* Text block is anchored to the bottom-left of the card, under the icon,
+              instead of floating mid-card once the description was removed. */}
           <motion.div
-            className="flex flex-1 flex-col justify-center gap-1.5 min-h-0"
+            className="flex flex-1 flex-col justify-end items-start gap-1.5 min-h-0 text-left"
             animate={{ y: hovered ? -3 : 0 }}
             transition={{ duration: 0.3 }}
           >
             <motion.h3
-              className="text-[22px] sm:text-2xl font-semibold leading-snug tracking-tight drop-shadow-md text-balance break-words"
+              className={cn(
+                "w-full truncate font-semibold leading-snug tracking-tight drop-shadow-md",
+                headingSizeClass(title)
+              )}
               style={{ color: "#FFFFFF" }}
               animate={{ scale: hovered ? 1.02 : 1 }}
               transition={{ duration: 0.3 }}

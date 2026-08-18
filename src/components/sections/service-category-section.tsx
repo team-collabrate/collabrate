@@ -46,8 +46,8 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
   "Custom LLM Integration": BrainCircuit,
 };
 
-// Same 21st.dev theme cycle used previously on the old services carousel, offset per category for variety.
-const THEME_CYCLE: ThemeType[] = ["primary", "secondary", "accent", "success", "warning", "danger", "info", "neutral"];
+// Six curated dark, shiny jewel-tone gradients, offset per category for variety.
+const THEME_CYCLE: ThemeType[] = ["navy", "sapphire", "violet", "emerald", "bronze", "ruby"];
 
 // "Performance Marketing (Paid Ads)" -> heading "Performance Marketing", subtitle "Paid Ads".
 // Names with no brackets (SEO, Social Media Marketing, ...) get a heading only.
@@ -68,7 +68,7 @@ export function ServiceCategorySection({ category, index }: { category: ServiceC
       title: heading,
       subtitle,
       icon: <Icon className="size-6" />,
-      theme: THEME_CYCLE[(index * 3 + i) % THEME_CYCLE.length],
+      theme: THEME_CYCLE[(index * 2 + i) % THEME_CYCLE.length],
     };
   });
 
