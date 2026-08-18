@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { Reveal, StaggerGroup } from "@/components/shared/reveal";
+import { Reveal } from "@/components/shared/reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
+import HowItWorks, { type Step } from "@/components/ui/how-it-works";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -17,10 +18,22 @@ const factors = [
   "Scale of the business and its goals",
 ];
 
-const engagementTypes = [
-  { title: "Project-based", body: "A defined scope with a fixed quote, suited to websites, apps, or one-off campaigns." },
-  { title: "Ongoing engagement", body: "Continuous marketing, development, or AI support billed on a recurring basis." },
-  { title: "Custom / Enterprise", body: "Multi-service engagements scoped around larger, more complex requirements." },
+const engagementTypes: Step[] = [
+  {
+    title: "Project-based",
+    description: "A defined scope with a fixed quote, suited to websites, apps, or one-off campaigns.",
+    colorTheme: "orange",
+  },
+  {
+    title: "Ongoing engagement",
+    description: "Continuous marketing, development, or AI support billed on a recurring basis.",
+    colorTheme: "blue",
+  },
+  {
+    title: "Custom / Enterprise",
+    description: "Multi-service engagements scoped around larger, more complex requirements.",
+    colorTheme: "purple",
+  },
 ];
 
 export default function PricingPage() {
@@ -70,17 +83,13 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="relative pb-16 sm:pb-24">
-        <div className="mx-auto max-w-6xl px-6">
-          <StaggerGroup className="grid grid-cols-1 gap-6 sm:grid-cols-3" stagger={0.08}>
-            {engagementTypes.map((type) => (
-              <div key={type.title} className="flex flex-col gap-3 rounded-3xl border border-border bg-card p-7">
-                <h3 className="font-semibold text-foreground">{type.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{type.body}</p>
-              </div>
-            ))}
-          </StaggerGroup>
+      <section className="relative pb-8 sm:pb-12">
+        <div className="mx-auto max-w-3xl px-6">
+          <Reveal className="text-center">
+            <h2 className="text-lg font-semibold text-foreground">How you can work with us</h2>
+          </Reveal>
         </div>
+        <HowItWorks features={engagementTypes} />
       </section>
 
       <CTABanner
