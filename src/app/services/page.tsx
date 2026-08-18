@@ -1,56 +1,48 @@
 import type { Metadata } from "next";
-import { ServicesHero } from "@/components/sections/services-hero";
-import { ServicesCarousel } from "@/components/sections/services-carousel";
-import { ServiceGoalSection } from "@/components/sections/service-goal-section";
-import { ServiceComparison } from "@/components/sections/service-comparison";
-import { TypicalCombinations } from "@/components/sections/typical-combinations";
-import { HowWePrice } from "@/components/sections/how-we-price";
+import { SectionHeading } from "@/components/shared/section-heading";
+import { ServiceCategorySection } from "@/components/sections/service-category-section";
 import { FAQ } from "@/components/sections/faq";
 import { CTABanner } from "@/components/sections/cta-banner";
-import {
-  servicesPageMeta,
-  serviceGoalGroups,
-  serviceCoverSlides,
-  servicesFaq,
-  servicesNextSteps,
-} from "@/data/services-page";
+import { serviceCategories, servicesFaq } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: servicesPageMeta.title },
-  description: servicesPageMeta.description,
-  openGraph: {
-    title: servicesPageMeta.title,
-    description: servicesPageMeta.description,
-  },
-  twitter: {
-    title: servicesPageMeta.title,
-    description: servicesPageMeta.description,
-  },
+  title: "Services",
+  description:
+    "Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to achieve.",
   alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
-  // Icon + gradient cards now, no photos, so every service can appear here
-  // instead of only the ones with an uploaded image.
-  const serviceCards = serviceCoverSlides.map((service) => ({
-    slug: service.slug,
-    title: service.title,
-    category: service.category,
-    value: service.value,
-  }));
-
   return (
     <main>
-      <ServicesHero />
-      <ServicesCarousel services={serviceCards} />
-      {serviceGoalGroups.map((group, i) => (
-        <ServiceGoalSection key={group.heading} group={group} index={i} />
+      <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-20">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <SectionHeading
+            as="h1"
+            eyebrow="Services"
+            title="Pick what you need. We handle the rest."
+            description="Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to do."
+          />
+        </div>
+      </section>
+
+      {serviceCategories.map((category, i) => (
+        <ServiceCategorySection key={category.id} category={category} index={i} />
       ))}
-      <ServiceComparison />
-      <TypicalCombinations />
-      <HowWePrice />
-      <CTABanner title={servicesNextSteps.title} options={servicesNextSteps.options} />
-      <FAQ eyebrow="FAQ" title="Common questions" items={servicesFaq} id="faq" />
+
+      <FAQ
+        eyebrow="FAQ"
+        title="Common questions"
+        items={servicesFaq}
+        id="faq"
+      />
+
+      <CTABanner
+        heading="Not sure where to start?"
+        body="Tell us what you're trying to achieve, and we'll recommend the right mix of services for your business, whether that's one service or all three."
+        ctaLabel="Get a Quote"
+        ctaHref="/contact"
+      />
     </main>
   );
 }

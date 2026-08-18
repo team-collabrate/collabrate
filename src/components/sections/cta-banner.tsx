@@ -3,16 +3,17 @@
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/shared/reveal";
-import { nextStepsContent, calendlyUrl } from "@/data/site";
-
-type CtaOption = { title: string; description: string; cta: string; href?: string };
 
 export function CTABanner({
-  title = nextStepsContent.title,
-  options = nextStepsContent.options,
+  heading = "Ready to build something that works?",
+  body = "Tell us what you're trying to achieve, and we'll come back with a clear plan and a quote.",
+  ctaLabel = "Get a Quote",
+  ctaHref = "/contact",
 }: {
-  title?: string;
-  options?: CtaOption[];
+  heading?: string;
+  body?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
 }) {
   return (
     <section className="relative py-12 sm:py-16">
@@ -22,28 +23,14 @@ export function CTABanner({
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.25),transparent_45%)]" />
             <div className="relative flex flex-col items-center gap-8">
               <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
-                {title}
+                {heading}
               </h2>
-
-              <div className="grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
-                {options.map((option) => {
-                  const href = option.href ?? calendlyUrl;
-                  return (
-                    <div
-                      key={option.title}
-                      className="glass flex flex-col gap-3 rounded-3xl border-white/25 p-6 text-left"
-                    >
-                      <p className="text-sm font-semibold text-white">{option.title}</p>
-                      <p className="text-sm text-white/85">{option.description}</p>
-                      <Button variant="glass" className="mt-1 w-full" asChild>
-                        <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
-                          {option.cta} <ArrowUpRight className="size-4" />
-                        </a>
-                      </Button>
-                    </div>
-                  );
-                })}
-              </div>
+              <p className="max-w-xl text-balance text-white/85">{body}</p>
+              <Button variant="glass" size="lg" asChild>
+                <a href={ctaHref}>
+                  {ctaLabel} <ArrowUpRight className="size-4" />
+                </a>
+              </Button>
             </div>
           </div>
         </Reveal>

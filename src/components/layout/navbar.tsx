@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
-import { navLinks } from "@/data/site";
+import { nav, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
@@ -42,7 +42,7 @@ export function Navbar() {
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((link) => (
+          {nav.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -54,12 +54,9 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Button variant="ghost" size="sm" asChild>
-            <a href="/contact">Contact</a>
-          </Button>
           <Button variant="gradient" size="sm" asChild>
-            <a href="/contact">
-              Let&apos;s Talk Growth <ArrowUpRight className="size-3.5" />
+            <a href={site.primaryCTA.href}>
+              {site.primaryCTA.label} <ArrowUpRight className="size-3.5" />
             </a>
           </Button>
         </div>
@@ -84,7 +81,7 @@ export function Navbar() {
             className="glass fixed inset-x-4 top-20 z-40 rounded-3xl border border-border p-6 shadow-xl lg:hidden"
           >
             <nav className="flex flex-col gap-1">
-              {navLinks.map((link) => (
+              {nav.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
@@ -96,12 +93,9 @@ export function Navbar() {
               ))}
             </nav>
             <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
-              <Button variant="outline" asChild>
-                <a href="/contact" onClick={() => setOpen(false)}>Contact</a>
-              </Button>
               <Button variant="gradient" asChild>
-                <a href="/contact" onClick={() => setOpen(false)}>
-                  Let&apos;s Talk Growth <ArrowUpRight className="size-4" />
+                <a href={site.primaryCTA.href} onClick={() => setOpen(false)}>
+                  {site.primaryCTA.label} <ArrowUpRight className="size-4" />
                 </a>
               </Button>
             </div>

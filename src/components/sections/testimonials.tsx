@@ -4,18 +4,20 @@ import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { testimonials } from "@/data/site";
+import { testimonials } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function Testimonials() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
 
-  const go = useCallback((next: number) => {
-    setDirection(next > index ? 1 : -1);
-    setIndex((next + testimonials.length) % testimonials.length);
-  }, [index]);
+  const go = useCallback(
+    (next: number) => {
+      setDirection(next > index ? 1 : -1);
+      setIndex((next + testimonials.length) % testimonials.length);
+    },
+    [index]
+  );
 
   useEffect(() => {
     const id = setInterval(() => go(index + 1), 6000);
@@ -27,7 +29,7 @@ export function Testimonials() {
   return (
     <section className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading eyebrow="Client stories" title="Don't take our word for it" />
+        <SectionHeading eyebrow="Client stories" title="What clients say" />
 
         <div className="relative mt-16 min-h-[280px]">
           <AnimatePresence mode="wait" custom={direction}>
@@ -42,16 +44,11 @@ export function Testimonials() {
             >
               <Quote className="size-8 text-brand-violet/50" />
               <p className="text-balance text-xl font-medium leading-relaxed text-foreground sm:text-2xl">
-                “{t.quote}”
+                &ldquo;{t.quote}&rdquo;
               </p>
-              <div className="flex items-center gap-3">
-                <Avatar>
-                  <AvatarFallback>{t.initials}</AvatarFallback>
-                </Avatar>
-                <div className="text-left">
-                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                  <p className="text-xs text-muted-foreground">{t.title}, {t.company}</p>
-                </div>
+              <div className="text-center">
+                <p className="text-sm font-semibold text-foreground">{t.author}</p>
+                <p className="text-xs text-muted-foreground">{t.role}</p>
               </div>
             </motion.div>
           </AnimatePresence>

@@ -1,0 +1,459 @@
+{
+  "site": {
+    "name": "Collabrate",
+    "domain": "collabrate.digital",
+    "founded": "2025",
+    "location": "Remote-first, based in Tamil Nadu, India",
+    "serviceRegions": ["India", "Singapore", "Malaysia", "Gulf countries"],
+    "email": "hello@collabrate.digital",
+    "social": {
+      "linkedin": "PENDING_LINK",
+      "instagram": "https://instagram.com/collab.rate"
+    },
+    "calendlyUrl": "PENDING_LINK",
+    "tone": "Corporate, trustworthy, plain-language. Complete sentences, no fragments, no hype punctuation.",
+    "primaryCTA": { "label": "Get a Quote", "href": "/contact" },
+    "secondaryCTA": { "label": "View Our Work", "href": "/portfolio" }
+  },
+
+  "nav": [
+    { "label": "Services", "href": "/services" },
+    { "label": "Work", "href": "/portfolio" },
+    { "label": "Pricing", "href": "/pricing" },
+    { "label": "About", "href": "/about" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+
+  "pages": {
+
+    "home": {
+      "route": "/",
+      "sections": [
+        {
+          "type": "hero",
+          "headline": "Digital development and marketing that generates measurable business growth.",
+          "subline": "Collabrate designs, builds, and markets digital products for businesses that need one accountable team instead of multiple vendors.",
+          "ctaPrimary": { "label": "Get a Quote", "href": "/contact" },
+          "ctaSecondary": { "label": "View Our Work", "href": "/portfolio" }
+        },
+        {
+          "type": "servicesOverview",
+          "heading": "Pick what you need. We handle the rest.",
+          "intro": "Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to achieve.",
+          "layout": "three-category-scroll-with-hover-detail",
+          "categoriesRef": "serviceCategories"
+        },
+        {
+          "type": "industries",
+          "heading": "Industries We Work With",
+          "intro": "From early-stage startups to large-scale enterprises, we build and manage digital infrastructure suited to the scale, complexity, and goals of every business we work with.",
+          "itemsRef": "industries"
+        },
+        {
+          "type": "testimonials",
+          "heading": "What clients say",
+          "itemsRef": "testimonials"
+        },
+        {
+          "type": "ctaBanner",
+          "heading": "Ready to build something that works?",
+          "body": "Tell us what you're trying to achieve, and we'll come back with a clear plan and a quote.",
+          "cta": { "label": "Get a Quote", "href": "/contact" },
+          "note": "Design pending from client — copy locked, layout open."
+        }
+      ]
+    },
+
+    "about": {
+      "route": "/about",
+      "sections": [
+        {
+          "type": "aboutIntro",
+          "heading": "About Collabrate",
+          "headline": "One team, every part of your digital growth.",
+          "body": "Collabrate is a digital development and marketing company founded in 2025, working with businesses across India, Singapore, Malaysia, and the Gulf. We were built on a simple idea: businesses shouldn't have to manage separate vendors for development and marketing. Our team handles both, so what we build is designed to perform, and what we market is backed by something solid."
+        },
+        {
+          "type": "pillars",
+          "items": [
+            { "title": "Founder-led, hands-on", "body": "You work directly with the people building your project, not layers of account management." },
+            { "title": "One team, full capability", "body": "Development, design, and marketing under one roof." },
+            { "title": "Built for where you're growing", "body": "Serving businesses across India, Singapore, Malaysia, and the Gulf." }
+          ]
+        },
+        {
+          "type": "facts",
+          "items": ["Founded 2025", "Remote-first, based in Tamil Nadu, India", "Serving clients across India, Singapore, Malaysia, and the Gulf countries"]
+        },
+        {
+          "type": "cta",
+          "body": "Want to work with us? Let's talk about what you're building.",
+          "cta": { "label": "Get a Quote", "href": "/contact" }
+        }
+      ],
+      "constraints": ["No founder name or bio — keep team/founder unnamed throughout."]
+    },
+
+    "services": {
+      "route": "/services",
+      "sections": [
+        {
+          "type": "servicesIntro",
+          "heading": "Pick what you need. We handle the rest.",
+          "intro": "Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to achieve."
+        },
+        {
+          "type": "serviceCategoriesFull",
+          "categoriesRef": "serviceCategories"
+        },
+        {
+          "type": "cta",
+          "heading": "Not sure where to start?",
+          "body": "Tell us what you're trying to achieve, and we'll recommend the right mix of services for your business, whether that's one service or all three.",
+          "cta": { "label": "Get a Quote", "href": "/contact" }
+        }
+      ]
+    },
+
+    "portfolio": {
+      "route": "/portfolio",
+      "sections": [
+        {
+          "type": "portfolioIntro",
+          "heading": "Our Work",
+          "intro": "A look at the platforms and applications we've built across different industries."
+        },
+        { "type": "portfolioGrid", "itemsRef": "portfolioProjects" },
+        { "type": "cta", "body": "Start your project.", "cta": { "label": "Get a Quote", "href": "/contact" } }
+      ],
+      "constraints": ["Client/brand names must NOT appear — use anonymized project titles only, per portfolioProjects data."]
+    },
+
+    "pricing": {
+      "route": "/pricing",
+      "sections": [
+        {
+          "type": "pricingIntro",
+          "heading": "Pricing",
+          "intro": "Every business is different, so we don't force projects into fixed packages. Pricing is based on scope, complexity, and what you actually need."
+        },
+        {
+          "type": "howItWorks",
+          "body": "We start with a conversation about your goals, then scope the right mix of development, marketing, or AI work. You get a clear quote before anything begins, no hidden costs, no locked-in retainers you don't need."
+        },
+        {
+          "type": "factorsList",
+          "heading": "What affects your quote",
+          "items": [
+            "Type of service (development, marketing, AI, or a combination)",
+            "Project complexity and timeline",
+            "Ongoing support vs. one-time delivery",
+            "Scale of the business and its goals"
+          ]
+        },
+        {
+          "type": "engagementTypes",
+          "items": [
+            { "title": "Project-based", "body": "A defined scope with a fixed quote, suited to websites, apps, or one-off campaigns." },
+            { "title": "Ongoing engagement", "body": "Continuous marketing, development, or AI support billed on a recurring basis." },
+            { "title": "Custom / Enterprise", "body": "Multi-service engagements scoped around larger, more complex requirements." }
+          ]
+        },
+        {
+          "type": "cta",
+          "body": "Tell us what you're building. We'll come back with a clear quote, no obligation.",
+          "cta": { "label": "Get a Quote", "href": "/contact" }
+        }
+      ],
+      "constraints": ["No numeric pricing/ranges shown — fully custom-quote model."]
+    },
+
+    "contact": {
+      "route": "/contact",
+      "sections": [
+        {
+          "type": "contactIntro",
+          "heading": "Contact",
+          "intro": "Have a project in mind or just exploring options? Tell us what you're working on, and we'll get back with next steps."
+        },
+        {
+          "type": "contactOptions",
+          "options": [
+            {
+              "title": "Schedule a Call",
+              "body": "Prefer to talk it through? Book a slot that works for you, no pressure, just a quick conversation about what you're building.",
+              "cta": { "label": "Schedule on Calendly", "href": "PENDING_CALENDLY_LINK" }
+            },
+            {
+              "title": "Send Details",
+              "body": "Tell us about your project, and we'll come back with a clear plan.",
+              "form": {
+                "fields": [
+                  { "name": "name", "label": "Name", "type": "text", "required": true },
+                  { "name": "email", "label": "Email", "type": "email", "required": true },
+                  { "name": "company", "label": "Company", "type": "text", "required": false },
+                  {
+                    "name": "service",
+                    "label": "Service Interested In",
+                    "type": "select",
+                    "options": ["Web/App Development", "Marketing", "AI Solutions", "Not Sure Yet"],
+                    "required": true
+                  },
+                  { "name": "details", "label": "Project Details", "type": "textarea", "required": true }
+                ],
+                "submitLabel": "Send Message"
+              }
+            }
+          ]
+        },
+        {
+          "type": "directContact",
+          "email": "hello@collabrate.digital",
+          "location": "Remote-first, based in Tamil Nadu, India",
+          "regions": "Serving businesses across India, Singapore, Malaysia, and the Gulf countries",
+          "social": { "linkedin": "PENDING_LINK", "instagram": "https://instagram.com/collab.rate" }
+        },
+        { "type": "closingNote", "body": "We usually respond within one business day." }
+      ]
+    },
+
+    "privacy": {
+      "route": "/privacy",
+      "lastUpdated": "August 2026",
+      "sections": [
+        { "heading": "Information We Collect", "body": "We collect information you provide directly, such as your name, email, company name, and project details, when you submit a contact form, book a call, or communicate with us. We may also collect basic usage data (such as pages visited or general location) through standard website analytics tools." },
+        { "heading": "How We Use Your Information", "body": "We use the information you provide to respond to inquiries, prepare quotes, deliver services, and communicate about your project. We do not sell your personal information to third parties." },
+        { "heading": "Third-Party Services", "body": "We may use third-party tools (such as scheduling platforms, analytics providers, or email services) to operate our website and business. These providers process data according to their own privacy policies." },
+        { "heading": "Data Retention", "body": "We retain your information only as long as necessary to fulfill the purpose it was collected for, or as required by law." },
+        { "heading": "Your Rights", "body": "You may request access to, correction of, or deletion of your personal information at any time by contacting us at hello@collabrate.digital." },
+        { "heading": "Cookies", "body": "Our website may use cookies to improve functionality and understand site usage. You can control cookie preferences through your browser settings." },
+        { "heading": "Changes to This Policy", "body": "We may update this policy from time to time. Continued use of our website after changes are posted constitutes acceptance of the updated policy." },
+        { "heading": "Contact", "body": "For questions about this policy, contact us at hello@collabrate.digital." }
+      ]
+    },
+
+    "terms": {
+      "route": "/terms",
+      "lastUpdated": "August 2026",
+      "sections": [
+        { "heading": "Services", "body": "Collabrate provides web and mobile development, digital marketing, and AI solutions. All engagements are scoped and quoted individually based on client requirements, as outlined in a separate proposal or agreement." },
+        { "heading": "Quotes and Payment", "body": "Pricing is custom to each project and shared prior to work beginning. Payment terms will be specified in the individual client agreement or invoice." },
+        { "heading": "Intellectual Property", "body": "Upon full payment, clients receive ownership rights to the final deliverables as agreed in the project scope, unless otherwise specified. Collabrate retains the right to showcase completed work in its portfolio, unless a client requests confidentiality." },
+        { "heading": "Client Responsibilities", "body": "Clients are responsible for providing timely feedback, content, and access needed to complete a project as scheduled." },
+        { "heading": "Limitation of Liability", "body": "Collabrate is not liable for indirect, incidental, or consequential damages arising from the use of our services or website." },
+        { "heading": "Termination", "body": "Either party may terminate an ongoing engagement as outlined in the individual service agreement." },
+        { "heading": "Governing Law", "body": "These terms are governed by applicable law based on the jurisdiction of service delivery." },
+        { "heading": "Contact", "body": "For questions about these terms, contact us at hello@collabrate.digital." }
+      ]
+    },
+
+    "blog": {
+      "route": "/blog",
+      "status": "strategy-only, no posts published yet",
+      "pillars": ["Web & App Development", "Marketing & Growth", "AI & Automation", "Industry Playbooks", "Founder/Process Notes"],
+      "cadence": "2 posts/month, Tuesdays",
+      "note": "Do not build post list UI with dummy content — build empty state or hide nav link until first posts exist."
+    }
+  },
+
+  "serviceCategories": [
+    {
+      "id": "marketing",
+      "heading": "Marketing That Drives Results",
+      "description": "We help businesses attract and convert the right audience through data-led marketing strategies.",
+      "services": [
+        {
+          "name": "Social Media Marketing",
+          "summary": "We manage your social presence end to end — from content editing and scheduling to community management — across whichever platforms make sense for your business. You provide the raw content; we shape it into consistent, on-brand posts and keep the conversation going with your audience.",
+          "points": ["Instagram, Facebook, LinkedIn, X — platform mix decided case by case", "Content editing and design from client-provided material", "Posting, scheduling, and community management (comments, DMs)"]
+        },
+        {
+          "name": "Performance Marketing (Paid Ads)",
+          "summary": "We plan, create, and run paid campaigns across Google, Meta, and LinkedIn — including the creatives, not just the targeting. Every campaign is built around conversions, with budgets adjusted based on what's actually working.",
+          "points": ["Google Ads", "Meta Ads", "LinkedIn Ads"],
+          "note": "Landing pages handled separately under Web Development."
+        },
+        {
+          "name": "Email Marketing and Campaigns",
+          "summary": "We write and build email campaigns and automated sequences that move leads toward a decision, not just newsletters that sit unread.",
+          "points": ["Full email copywriting", "Automated sequences (welcome, nurture, abandoned cart, and more)", "Platform setup or integration (Mailchimp, Klaviyo, or your existing tool)"]
+        },
+        {
+          "name": "LinkedIn Outreach (Lead Generation)",
+          "summary": "We handle both sides of LinkedIn growth — targeted outreach using Sales Navigator, and managing your personal profile so it supports the outreach instead of undercutting it.",
+          "points": ["Sales Navigator–driven prospecting", "Full outreach message copywriting", "Personal LinkedIn profile management for founders"]
+        },
+        {
+          "name": "SEO",
+          "summary": "We handle SEO end to end — fixing the technical foundation, writing optimized content, and targeting the keywords your customers actually search.",
+          "points": ["Technical SEO (site speed, structure, indexing)", "SEO content writing (blog posts, pages)", "Keyword research and optimization; backlink building on request"]
+        },
+        {
+          "name": "Digital Marketing Strategy",
+          "summary": "We tie your SEO, paid ads, social, and email efforts into one coordinated strategy, so every channel works toward the same goal.",
+          "points": ["Cross-channel strategy across SEO, ads, social, email", "Analytics and reporting (GA4, dashboards)", "Collaborative budget and channel planning"]
+        }
+      ]
+    },
+    {
+      "id": "web-app-development",
+      "heading": "Websites and Applications Built to Perform",
+      "description": "Custom-built websites and mobile applications designed for speed, scalability, and real business outcomes.",
+      "highlights": [
+        "Built with a reason, not a template — every page and section earns its place.",
+        "Tracking wired in from day one — analytics, CRM, payments, connected during the build.",
+        "Clean code Google actually understands.",
+        "The site is the foundation, built to support the marketing that comes after."
+      ],
+      "services": [
+        {
+          "name": "Website Development",
+          "summary": "We build custom websites designed for speed and conversions.",
+          "points": ["Custom-coded or CMS-based (WordPress), chosen per client need", "UI/UX design handled in-house", "Performance and speed optimization"]
+        },
+        {
+          "name": "Mobile Application Development",
+          "summary": "We design and build apps people actually keep using.",
+          "points": ["Native Android (Kotlin), native iOS (Swift), or cross-platform (Flutter/React Native)", "Chosen per project requirement", "App Store and Play Store deployment"]
+        },
+        {
+          "name": "Landing Pages",
+          "summary": "We build focused pages designed around one goal: conversion.",
+          "points": ["Conversion-focused design", "A/B testing", "Fast load times and mobile optimization"]
+        },
+        {
+          "name": "Business Websites",
+          "summary": "We build websites that turn visitors into inquiries.",
+          "points": ["Custom CMS or WordPress", "SEO-ready structure", "Contact and lead-capture integration"]
+        },
+        {
+          "name": "Dashboards and Admin Panels",
+          "summary": "We build internal tools that match how your team actually works.",
+          "points": ["Custom internal tools", "Role-based access and permissions", "Real-time data integration"]
+        },
+        {
+          "name": "E-commerce Websites",
+          "summary": "We build stores optimized for browsing, trust, and checkout.",
+          "points": ["Shopify or custom builds", "Payment gateway integration", "Cart and checkout optimization"]
+        }
+      ]
+    },
+    {
+      "id": "ai-solutions",
+      "heading": "AI That Works Around the Clock",
+      "description": "Intelligent automation that handles repetitive work and keeps your business responsive at all hours.",
+      "services": [
+        {
+          "name": "AI Chatbots",
+          "summary": "We build hybrid chatbots — combining structured flows with AI — trained on your actual business data, not generic scripts. Deployed across your website, WhatsApp, Instagram, or wherever your customers already are.",
+          "points": ["Hybrid rule-based + AI/LLM chatbot development", "Multi-channel deployment (website, WhatsApp, Instagram, and more)", "Trained on your docs, FAQs, and business data", "CRM and tool integrations", "Ongoing monitoring and improvement (retainer-based)"]
+        },
+        {
+          "name": "Workflow Automation",
+          "summary": "We automate repetitive tasks across the tools you already use.",
+          "points": ["Zapier, Make, or custom scripts", "Tool and CRM integrations", "Trigger-based task automation"]
+        },
+        {
+          "name": "AI-Powered Support Systems",
+          "summary": "We build support systems that resolve queries faster.",
+          "points": ["Ticket routing and prioritization", "Knowledge base integration", "Escalation to human agents when needed"]
+        },
+        {
+          "name": "AI Voice Assistants",
+          "summary": "We build voice systems that handle calls without a person on the line.",
+          "points": ["Voice AI for calls", "Appointment booking and FAQs", "Call transcription and summaries"]
+        },
+        {
+          "name": "Custom LLM Integration",
+          "summary": "We integrate AI models tailored to your business and data.",
+          "points": ["OpenAI, Anthropic Claude, or open-source models", "API integration into existing systems", "Custom fine-tuning on business data"]
+        }
+      ]
+    }
+  ],
+
+  "industries": [
+    { "name": "Booking & Scheduling Platforms", "description": "For sports facilities, fitness studios, and service-based businesses managing appointments and availability." },
+    { "name": "Vendor & Distribution Management", "description": "For dairy, FMCG, and supply-chain businesses coordinating vendors, inventory, and delivery." },
+    { "name": "Workforce & Recruitment Systems", "description": "For HR teams and agencies managing job postings, applicants, and hiring pipelines." },
+    { "name": "Business & Corporate Websites", "description": "For professional services and B2B companies building credibility and generating inquiries." },
+    { "name": "E-commerce Websites and Online Stores", "description": "For businesses selling products online, built for browsing, trust, and checkout conversion." }
+  ],
+
+  "portfolioProjects": [
+    {
+      "title": "Turf Booking Platform",
+      "industry": "Sports & Recreation",
+      "problem": "A turf facility needed a way for customers to book slots online instead of relying on phone calls, along with a digital presence to showcase the facility.",
+      "solution": "We built a booking website with real-time slot reservation, ticket viewing, a cafe menu, and WhatsApp support integration, along with food delivery platform listings.",
+      "outcome": "Customers can now book and manage turf sessions entirely online, with a streamlined experience across booking, tickets, and food ordering."
+    },
+    {
+      "title": "HR & Recruitment Dashboard",
+      "industry": "HR & Recruitment",
+      "problem": "Managing job postings, applicants, and hiring workflows manually was slowing down the recruitment process.",
+      "solution": "We built a dashboard to centralize job listings, applicant tracking, and hiring workflows in one place.",
+      "outcome": "A faster, more organized recruitment process with less manual coordination."
+    },
+    {
+      "title": "Enterprise Software Business Website",
+      "industry": "Enterprise Software / B2B",
+      "problem": "An enterprise software company needed a professional website to represent their AI-driven platform to clients in banking, insurance, and telecom.",
+      "solution": "We built a business website that clearly communicates their methodology and product suite to a technical, enterprise audience.",
+      "outcome": "A polished digital presence that supports credibility in enterprise sales conversations."
+    },
+    {
+      "title": "Gym Trainer App",
+      "industry": "Fitness & Wellness",
+      "problem": "Gym trainers needed a way to manage client schedules, track progress, and stay connected with clients outside the gym.",
+      "solution": "We built an Android application connecting trainers and clients around scheduling and engagement.",
+      "outcome": "A more organized way for trainers to manage client relationships digitally."
+    },
+    {
+      "title": "Dairy Vendor Management App",
+      "industry": "Food & Dairy",
+      "problem": "Coordinating vendors, orders, and delivery for dairy distribution was being handled manually, creating inefficiencies.",
+      "solution": "We built a vendor management app to organize orders, delivery, and vendor coordination.",
+      "outcome": "Smoother day-to-day operations for dairy distribution."
+    },
+    {
+      "title": "Dairy Vendor Management App (2)",
+      "industry": "Food & Dairy",
+      "problem": "A second dairy distribution business needed a digital system to manage vendor and delivery operations instead of manual tracking.",
+      "solution": "We built a dedicated vendor management app suited to their distribution workflow.",
+      "outcome": "Improved coordination and reduced manual tracking for vendor operations."
+    }
+  ],
+
+  "testimonials": [
+    { "quote": "Collabrate took our idea from concept to a working platform faster than we expected. Their team handled everything, development and marketing, without us having to manage multiple vendors.", "author": "[Client Name]", "role": "[Company/Industry]" },
+    { "quote": "What stood out was how closely they understood our business before building anything. The result was a website that actually brings in leads, not just looks good.", "author": "[Client Name]", "role": "[Company/Industry]" },
+    { "quote": "We needed a partner who could handle both our app and our marketing. Collabrate delivered on both, and communication throughout the process was clear and consistent.", "author": "[Client Name]", "role": "[Company/Industry]" },
+    { "quote": "Since working with Collabrate, our online presence has grown significantly. They don't just execute, they think about what actually moves the business forward.", "author": "[Client Name]", "role": "[Company/Industry]" }
+  ],
+
+  "footer": {
+    "blurb": "Collabrate helps businesses build, market, and grow through development, marketing, and AI. From websites to campaigns, we create systems that make your growth faster, simpler, and more connected. Let's build something that moves your business forward.",
+    "columns": {
+      "solutions": ["Booking & Scheduling", "Vendor & Distribution", "HR & Recruitment", "Business & Corporate", "E-commerce", "AI & Automation"],
+      "company": [
+        { "label": "About Us", "href": "/about" },
+        { "label": "Services", "href": "/services" },
+        { "label": "Portfolio", "href": "/portfolio" },
+        { "label": "Contact", "href": "/contact" },
+        { "label": "Privacy", "href": "/privacy" },
+        { "label": "Terms", "href": "/terms" }
+      ]
+    },
+    "copyright": "© 2025 Collabrate. Remote-first, based in Tamil Nadu, India — serving India, Singapore, Malaysia, and the Gulf."
+  },
+
+  "globalConstraints": [
+    "Never name or imply a specific team size or team structure — no 'our team of X developers' claims.",
+    "Never name real client/brand names anywhere on the site — portfolio is anonymized by design.",
+    "Never invent metrics, revenue figures, client logos, or founding stories beyond what's in this file.",
+    "Do not display numeric pricing anywhere — pricing is quote-only.",
+    "Founder is not named or pictured anywhere on the site.",
+    "PENDING_LINK and PENDING_CALENDLY_LINK placeholders must be wired to real URLs before launch — flag them, don't fabricate URLs."
+  ]
+}

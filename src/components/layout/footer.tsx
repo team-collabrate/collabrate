@@ -1,18 +1,10 @@
 "use client";
 
-import { Twitter, Linkedin, Github, Dribbble, ArrowUpRight } from "lucide-react";
+import { Linkedin, Instagram, MapPin, Mail } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { siteConfig, footerContent } from "@/data/site";
-
-const socialLinks = [
-  { icon: Twitter, href: siteConfig.social.twitter, label: "Twitter" },
-  { icon: Linkedin, href: siteConfig.social.linkedin, label: "LinkedIn" },
-  { icon: Github, href: siteConfig.social.github, label: "GitHub" },
-  { icon: Dribbble, href: siteConfig.social.dribbble, label: "Dribbble" },
-];
+import { PendingIconLink } from "@/components/shared/pending-link";
+import { site, footer } from "@/lib/content";
 
 export function Footer() {
   return (
@@ -22,59 +14,56 @@ export function Footer() {
           <div className="flex max-w-sm flex-col gap-5">
             <Logo />
             <p className="text-sm leading-relaxed text-muted-foreground">
-              {footerContent.description}
+              {footer.blurb}
             </p>
             <div className="flex items-center gap-2">
-              {socialLinks.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple"
-                >
-                  <s.icon className="size-4" />
-                </a>
-              ))}
+              <PendingIconLink href={site.social.linkedin} icon={Linkedin} label="LinkedIn" />
+              <PendingIconLink href={site.social.instagram} icon={Instagram} label="Instagram" />
             </div>
           </div>
 
-          <nav className="flex flex-col gap-3">
-            <h4 className="text-sm font-semibold text-foreground">Quick Links</h4>
-            <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-2">
-              {footerContent.quickLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="flex flex-col gap-8 sm:flex-row sm:gap-16">
+            <nav className="flex flex-col gap-3">
+              <h4 className="text-sm font-semibold text-foreground">Solutions</h4>
+              <ul className="flex flex-col gap-2.5">
+                {footer.columns.solutions.map((label) => (
+                  <li key={label} className="text-sm text-muted-foreground">
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <nav className="flex flex-col gap-3">
+              <h4 className="text-sm font-semibold text-foreground">Company</h4>
+              <ul className="flex flex-col gap-2.5">
+                {footer.columns.company.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
 
         <Separator className="my-12" />
 
-        <div className="flex flex-col gap-6 rounded-3xl border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-          <div>
-            <h4 className="text-lg font-semibold text-foreground">{footerContent.newsletterHeading}</h4>
-            <p className="mt-1 text-sm text-muted-foreground">{footerContent.newsletterText}</p>
+        <div className="flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>{footer.copyright}</p>
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-6">
+            <span className="flex items-center gap-1.5">
+              <MapPin className="size-3.5" /> {site.location}
+            </span>
+            <a href={`mailto:${site.email}`} className="flex items-center gap-1.5 hover:text-foreground">
+              <Mail className="size-3.5" /> {site.email}
+            </a>
           </div>
-          <form className="flex w-full max-w-sm gap-2" onSubmit={(e) => e.preventDefault()}>
-            <Input type="email" placeholder="you@company.com" aria-label="Email address" required />
-            <Button type="submit" variant="gradient" className="shrink-0">
-              Subscribe <ArrowUpRight className="size-4" />
-            </Button>
-          </form>
-        </div>
-
-        <div className="mt-10 flex flex-col-reverse items-center justify-between gap-4 text-xs text-muted-foreground sm:flex-row">
-          <p>{footerContent.copyright}</p>
-          <p>📍 {siteConfig.addressShort}</p>
         </div>
       </div>
     </footer>

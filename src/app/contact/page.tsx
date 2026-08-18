@@ -1,44 +1,42 @@
 import type { Metadata } from "next";
-import { ContactHero } from "@/components/sections/contact-hero";
-import { WaysToConnect } from "@/components/sections/ways-to-connect";
-import { ContactForm } from "@/components/sections/contact-form";
-import { DirectContactMethods, ResponseGuarantee, WhatHappensAfter } from "@/components/sections/contact-info-blocks";
+import { SectionHeading } from "@/components/shared/section-heading";
+import { ContactOptions } from "@/components/sections/contact-options";
+import { DirectContact } from "@/components/sections/direct-contact";
 import { FAQ } from "@/components/sections/faq";
-import { ApproachNote, WhyScheduleCall } from "@/components/sections/approach-note";
-import { CTABanner } from "@/components/sections/cta-banner";
-import { ClientQuotes } from "@/components/sections/client-quotes";
-import { OtherWays } from "@/components/sections/other-ways";
-import { contactPageMeta, contactFaq, readyToTalk } from "@/data/contact-page";
+import { contactFaq } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: { absolute: contactPageMeta.title },
-  description: contactPageMeta.description,
-  openGraph: {
-    title: contactPageMeta.title,
-    description: contactPageMeta.description,
-  },
-  twitter: {
-    title: contactPageMeta.title,
-    description: contactPageMeta.description,
-  },
+  title: "Contact",
+  description:
+    "Have a project in mind or just exploring options? Tell us what you're working on, and we'll get back with next steps.",
   alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
   return (
     <main>
-      <ContactHero />
-      <WaysToConnect />
-      <ContactForm />
-      <DirectContactMethods />
-      <ResponseGuarantee />
-      <WhatHappensAfter />
-      <FAQ eyebrow="Common questions" title="Still have questions?" items={contactFaq} id="faq" />
-      <ApproachNote />
-      <WhyScheduleCall />
-      <CTABanner title={readyToTalk.title} options={readyToTalk.options} />
-      <ClientQuotes />
-      <OtherWays />
+      <section className="relative pt-40 pb-12 sm:pt-48 sm:pb-16">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <SectionHeading
+            as="h1"
+            eyebrow="Contact"
+            title="Contact"
+            description="Have a project in mind or just exploring options? Tell us what you're working on, and we'll get back with next steps."
+          />
+        </div>
+      </section>
+
+      <ContactOptions />
+      <DirectContact />
+
+      <section className="relative pb-4 sm:pb-8">
+        <div className="mx-auto max-w-3xl px-6 text-center">
+          <p className="text-sm font-medium text-foreground">Your message goes straight to our team.</p>
+          <p className="mt-1 text-sm text-muted-foreground">We usually respond within one business day.</p>
+        </div>
+      </section>
+
+      <FAQ eyebrow="FAQ" title="Still have questions?" items={contactFaq} id="faq" />
     </main>
   );
 }

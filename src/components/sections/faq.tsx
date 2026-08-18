@@ -3,21 +3,19 @@
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { faqs as defaultFaqs } from "@/data/site";
-
-type FaqItem = { question: string; answer: string };
+import type { FaqItem } from "@/lib/content";
 
 export function FAQ({
   eyebrow = "FAQ",
   title = "Questions, answered",
   description,
-  items = defaultFaqs,
+  items,
   id = "faq",
 }: {
   eyebrow?: string;
   title?: string;
   description?: string;
-  items?: FaqItem[];
+  items: FaqItem[];
   id?: string;
 }) {
   return (
