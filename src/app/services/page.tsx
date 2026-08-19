@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { SectionHeading } from "@/components/shared/section-heading";
-import { ServiceCategorySection } from "@/components/sections/service-category-section";
+import { ServicesExplorer } from "@/components/sections/services-explorer";
 import { FAQ } from "@/components/sections/faq";
 import { CTABanner } from "@/components/sections/cta-banner";
-import { serviceCategories, servicesFaq } from "@/lib/content";
+import { servicesFaq } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -26,9 +26,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {serviceCategories.map((category, i) => (
-        <ServiceCategorySection key={category.id} category={category} index={i} />
-      ))}
+      <ServicesExplorer />
 
       <FAQ
         eyebrow="FAQ"
