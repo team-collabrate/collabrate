@@ -155,20 +155,8 @@ function ServiceCard({ service, gradient, defaultOpen }: { service: ServiceItem;
 function CategoryPanel({ category }: { category: ServiceCategory }) {
   return (
     <div className="flex flex-col gap-8">
-      <div className="max-w-2xl">
+      <div className="mx-auto max-w-2xl text-center">
         <p className="text-base leading-relaxed text-muted-foreground">{category.description}</p>
-        {category.highlights && category.highlights.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
-            {category.highlights.map((h) => (
-              <span
-                key={h}
-                className="rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs text-muted-foreground"
-              >
-                {h}
-              </span>
-            ))}
-          </div>
-        )}
       </div>
 
       <StaggerGroup className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2" stagger={0.06}>
