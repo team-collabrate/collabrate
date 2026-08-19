@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronDown,
   Check,
@@ -101,10 +101,23 @@ function ServiceCard({
   const subtitle = service.tagline ?? parenthetical;
   const tools = serviceToolLogos[service.name];
 
+  // The collapse/expand animation needs the panel clipped while it's
+  // resizing, but keeping it clipped once fully open cuts off tool-name
+  // tooltips that extend past the card's edge. Once open settles, drop the
+  // clip so tooltips can float outside the card; re-clip immediately on close.
+  const [settled, setSettled] = useState(open);
+  useEffect(() => {
+    if (open) {
+      const timeout = setTimeout(() => setSettled(true), 300);
+      return () => clearTimeout(timeout);
+    }
+    setSettled(false);
+  }, [open]);
+
   return (
     <motion.div
       variants={staggerItem}
-      className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-colors hover:border-brand-violet/40"
+      className="flex h-full flex-col rounded-3xl border border-border bg-card shadow-sm transition-colors hover:border-brand-violet/40"
     >
       <button
         type="button"
@@ -133,7 +146,7 @@ function ServiceCard({
       </button>
 
       <div className={cn("grid transition-all duration-300 ease-out", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
-        <div className="overflow-hidden">
+        <div className={cn("rounded-b-3xl", settled ? "overflow-visible" : "overflow-hidden")}>
           <div className="flex flex-col gap-5 px-6 pb-6">
             <p className="text-sm leading-relaxed text-muted-foreground">{service.summary}</p>
 
