@@ -80,7 +80,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-full text-foreground lg:hidden"
+          className="flex size-11 items-center justify-center rounded-full text-foreground lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}

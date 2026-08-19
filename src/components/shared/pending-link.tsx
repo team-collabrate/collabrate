@@ -70,7 +70,7 @@ export function PendingIconLink({
         aria-disabled="true"
         title={`${label} link coming soon`}
         className={cn(
-          "flex h-9 w-9 items-center justify-center rounded-full border border-dashed border-border text-muted-foreground/50 cursor-not-allowed",
+          "flex size-11 items-center justify-center rounded-full border border-dashed border-border text-muted-foreground/50 cursor-not-allowed",
           className
         )}
       >
@@ -86,7 +86,7 @@ export function PendingIconLink({
       rel="noopener noreferrer"
       aria-label={label}
       className={cn(
-        "flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple",
+        "flex size-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple",
         className
       )}
     >

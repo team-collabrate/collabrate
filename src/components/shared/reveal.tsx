@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { ReactNode } from "react";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
@@ -37,20 +37,30 @@ export function Reveal({
   once?: boolean;
   blur?: boolean;
 }) {
-  const variants: Variants = {
-    hidden: {
-      opacity: 0,
-      filter: blur ? "blur(8px)" : "blur(0px)",
-      ...distanceFor(direction),
-    },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      x: 0,
-      y: 0,
-      transition: { duration, delay, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
+  const reducedMotion = useReducedMotion();
+
+  // A user who has asked the OS for reduced motion should still see content
+  // appear (no permanently-hidden sections), just without the blur/translate
+  // entrance animation — a plain, near-instant fade.
+  const variants: Variants = reducedMotion
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.15 } },
+      }
+    : {
+        hidden: {
+          opacity: 0,
+          filter: blur ? "blur(8px)" : "blur(0px)",
+          ...distanceFor(direction),
+        },
+        visible: {
+          opacity: 1,
+          filter: "blur(0px)",
+          x: 0,
+          y: 0,
+          transition: { duration, delay, ease: [0.22, 1, 0.36, 1] },
+        },
+      };
 
   return (
     <motion.div

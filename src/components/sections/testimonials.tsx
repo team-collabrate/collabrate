@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { testimonials } from "@/lib/content";
@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 export function Testimonials() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
+  const reducedMotion = useReducedMotion();
 
   const go = useCallback(
     (next: number) => {
@@ -19,10 +21,14 @@ export function Testimonials() {
     [index]
   );
 
+  // Auto-advance pauses on hover/focus and never runs at all when the user
+  // has requested reduced motion — an auto-playing carousel that can't be
+  // stopped is a real accessibility failure, not just a nicety.
   useEffect(() => {
+    if (paused || reducedMotion) return;
     const id = setInterval(() => go(index + 1), 6000);
     return () => clearInterval(id);
-  }, [index, go]);
+  }, [index, go, paused, reducedMotion]);
 
   const t = testimonials[index];
 
@@ -31,15 +37,21 @@ export function Testimonials() {
       <div className="mx-auto max-w-4xl px-6">
         <SectionHeading eyebrow="Client stories" title="What clients say" />
 
-        <div className="relative mt-16 min-h-[280px]">
+        <div
+          className="relative mt-16 min-h-[280px]"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+          onFocus={() => setPaused(true)}
+          onBlur={() => setPaused(false)}
+        >
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={index}
               custom={direction}
-              initial={{ opacity: 0, x: direction * 40 }}
+              initial={{ opacity: 0, x: reducedMotion ? 0 : direction * 40 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -direction * 40 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, x: reducedMotion ? 0 : -direction * 40 }}
+              transition={{ duration: reducedMotion ? 0.15 : 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col items-center gap-6 rounded-3xl border border-border bg-card p-8 shadow-sm text-center sm:p-12"
             >
               <Quote className="size-8 text-brand-violet/50" />
@@ -58,7 +70,7 @@ export function Testimonials() {
           <button
             onClick={() => go(index - 1)}
             aria-label="Previous testimonial"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple"
+            className="flex size-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple"
           >
             <ChevronLeft className="size-4" />
           </button>
@@ -80,7 +92,7 @@ export function Testimonials() {
           <button
             onClick={() => go(index + 1)}
             aria-label="Next testimonial"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple"
+            className="flex size-11 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-brand-purple hover:text-brand-purple"
           >
             <ChevronRight className="size-4" />
           </button>

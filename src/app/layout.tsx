@@ -98,8 +98,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <Navbar />
-        {children}
+        <div id="main-content">{children}</div>
         <Footer />
       </body>
     </html>
