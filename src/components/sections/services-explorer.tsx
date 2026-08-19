@@ -75,7 +75,8 @@ const BADGE_GRADIENTS = [
   "from-indigo-500 to-violet-600",
 ];
 
-// "Performance Marketing (Paid Ads)" -> heading "Performance Marketing", subtitle "Paid Ads".
+// "Performance Marketing (Paid Ads)" -> heading "Performance Marketing", subtitle "Paid Ads"
+// unless the service has an explicit tagline, which takes priority as the subtitle.
 function splitServiceName(name: string): { heading: string; subtitle?: string } {
   const match = name.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
   if (match) {
@@ -96,7 +97,8 @@ function ServiceCard({
   onToggle: () => void;
 }) {
   const Icon = SERVICE_ICONS[service.name] ?? Sparkles;
-  const { heading, subtitle } = splitServiceName(service.name);
+  const { heading, subtitle: parenthetical } = splitServiceName(service.name);
+  const subtitle = service.tagline ?? parenthetical;
   const tools = serviceToolLogos[service.name];
 
   return (

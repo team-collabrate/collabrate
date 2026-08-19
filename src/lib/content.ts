@@ -28,9 +28,15 @@ export interface NavItem {
 
 export interface ServiceItem {
   name: string;
+  tagline?: string;
   summary: string;
   points: string[];
   note?: string;
+}
+
+// "Performance Marketing (Paid Ads)" -> "Performance Marketing" (drops the parenthetical).
+export function stripServiceParenthetical(name: string): string {
+  return name.replace(/\s*\([^)]*\)\s*$/, "").trim();
 }
 
 export interface ServiceCategory {

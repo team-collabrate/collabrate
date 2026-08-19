@@ -264,33 +264,38 @@
       "services": [
         {
           "name": "Social Media Marketing",
-          "summary": "We manage your social presence end to end: content editing, scheduling, and community management, across whichever platforms make sense for your business. We turn the content you provide into consistent, on-brand posts.",
+          "tagline": "Build Brand Presence",
+          "summary": "We manage your social presence end to end: content editing, scheduling, and community management, turning the material you provide into consistent, on-brand posts across the platforms that fit your business.",
           "points": ["Instagram, Facebook, LinkedIn, X: platform mix decided case by case", "Content editing and design from client-provided material", "Posting, scheduling, and community management (comments, DMs)"]
         },
         {
           "name": "Performance Marketing (Paid Ads)",
-          "summary": "We plan, create, and run paid campaigns across Google, Meta, and LinkedIn, including the creatives, not just the targeting. Every campaign is built around conversions, with budgets adjusted based on what's actually working.",
-          "points": ["Google Ads", "Meta Ads", "LinkedIn Ads"],
-          "note": "Landing pages handled separately under Web Development."
+          "tagline": "Drive More Conversions",
+          "summary": "We plan, create, and run paid campaigns across Google, Meta, and LinkedIn, building the creatives as well as the targeting, and adjusting budgets based on what's actually converting.",
+          "points": ["Google Ads", "Meta Ads", "LinkedIn Ads"]
         },
         {
           "name": "Email Marketing and Campaigns",
-          "summary": "We write and build email campaigns and automated sequences that move leads toward a decision, not just newsletters that sit unread.",
+          "tagline": "Nurture Customer Relationships",
+          "summary": "We write and build email campaigns and automated sequences that move leads toward a decision, not just newsletters that sit unread, mapped to where each subscriber actually is in your funnel.",
           "points": ["Full email copywriting", "Automated sequences (welcome, nurture, abandoned cart, and more)", "Platform setup or integration (Mailchimp, Klaviyo, or your existing tool)"]
         },
         {
           "name": "LinkedIn Outreach (Lead Generation)",
+          "tagline": "Connect With Prospects",
           "summary": "We handle both sides of LinkedIn growth: targeted outreach using Sales Navigator, and managing your personal profile so it supports the outreach instead of undercutting it.",
           "points": ["Sales Navigator–driven prospecting", "Full outreach message copywriting", "Personal LinkedIn profile management for founders"]
         },
         {
           "name": "SEO",
-          "summary": "We handle SEO end to end: fixing the technical foundation, writing optimized content, and targeting the keywords your customers actually search.",
+          "tagline": "Improve Search Visibility",
+          "summary": "We handle SEO end to end: fixing the technical foundation, writing optimized content, and targeting the keywords your customers actually search, so rankings turn into real traffic.",
           "points": ["Technical SEO (site speed, structure, indexing)", "SEO content writing (blog posts, pages)", "Keyword research and optimization; backlink building on request"]
         },
         {
           "name": "Digital Marketing Strategy",
-          "summary": "We tie your SEO, paid ads, social, and email efforts into one coordinated strategy, so every channel works toward the same goal.",
+          "tagline": "Plan Smarter Growth",
+          "summary": "We tie your SEO, paid ads, social, and email efforts into one coordinated strategy, so every channel works toward the same goal instead of pulling in different directions.",
           "points": ["Cross-channel strategy across SEO, ads, social, email", "Analytics and reporting (GA4, dashboards)", "Collaborative budget and channel planning"]
         }
       ]
@@ -308,32 +313,32 @@
       "services": [
         {
           "name": "Website Development",
-          "summary": "We build custom websites designed for speed and conversions.",
+          "summary": "We build custom websites designed for speed and conversions, from UI/UX design through development, with performance and search visibility built in from the start, not bolted on later.",
           "points": ["Custom-coded or CMS-based (WordPress), chosen per client need", "UI/UX design handled in-house", "Performance and speed optimization"]
         },
         {
           "name": "Mobile Application Development",
-          "summary": "We design and build apps people actually keep using.",
+          "summary": "We design and build apps people actually keep using, choosing native or cross-platform based on what the project needs, and carrying it through to App Store and Play Store deployment.",
           "points": ["Native Android (Kotlin), native iOS (Swift), or cross-platform (Flutter/React Native)", "Chosen per project requirement", "App Store and Play Store deployment"]
         },
         {
           "name": "Landing Pages",
-          "summary": "We build focused pages designed around one goal: conversion.",
+          "summary": "We build focused pages designed around one goal: conversion, using deliberate layout and copy choices, then testing and refining them against real visitor behavior instead of guesswork.",
           "points": ["Conversion-focused design", "A/B testing", "Fast load times and mobile optimization"]
         },
         {
           "name": "Business Websites",
-          "summary": "We build websites that turn visitors into inquiries.",
+          "summary": "We build websites that turn visitors into inquiries, structured around clear calls to action and an SEO-ready foundation, with lead capture wired in from day one, not added after launch.",
           "points": ["Custom CMS or WordPress", "SEO-ready structure", "Contact and lead-capture integration"]
         },
         {
           "name": "Dashboards and Admin Panels",
-          "summary": "We build internal tools that match how your team actually works.",
+          "summary": "We build internal tools that match how your team actually works, with role-based access and real-time data baked in, so operations run on live information instead of static reports.",
           "points": ["Custom internal tools", "Role-based access and permissions", "Real-time data integration"]
         },
         {
           "name": "E-commerce Websites",
-          "summary": "We build stores optimized for browsing, trust, and checkout.",
+          "summary": "We build stores optimized for browsing, trust, and checkout, on Shopify or a custom build depending on your needs, with payment and cart flows tuned to reduce drop-off at every step.",
           "points": ["Shopify or custom builds", "Payment gateway integration", "Cart and checkout optimization"]
         }
       ]
@@ -345,27 +350,27 @@
       "services": [
         {
           "name": "AI Chatbots",
-          "summary": "We build hybrid chatbots, combining structured flows with AI, trained on your actual business data, not generic scripts. Deployed across your website, WhatsApp, Instagram, or wherever your customers already are.",
-          "points": ["Hybrid rule-based + AI/LLM chatbot development", "Multi-channel deployment (website, WhatsApp, Instagram, and more)", "Trained on your docs, FAQs, and business data", "CRM and tool integrations", "Ongoing monitoring and improvement (retainer-based)"]
+          "summary": "We build hybrid chatbots, combining structured flows with AI, trained on your actual business data, not generic scripts, and deployed across your website, WhatsApp, Instagram, or wherever your customers already are.",
+          "points": ["Hybrid rule-based + AI/LLM chatbot development, trained on your docs and business data", "Multi-channel deployment across website, WhatsApp, Instagram, and more", "CRM and tool integrations, with ongoing monitoring and improvement (retainer-based)"]
         },
         {
           "name": "Workflow Automation",
-          "summary": "We automate repetitive tasks across the tools you already use.",
+          "summary": "We automate repetitive tasks across the tools you already use, connecting them with Zapier, Make, or custom scripts, so work moves between systems automatically instead of relying on manual handoffs.",
           "points": ["Zapier, Make, or custom scripts", "Tool and CRM integrations", "Trigger-based task automation"]
         },
         {
           "name": "AI-Powered Support Systems",
-          "summary": "We build support systems that resolve queries faster.",
+          "summary": "We build support systems that resolve queries faster, routing and prioritizing tickets automatically, pulling answers from your knowledge base, and escalating to a human agent whenever one is actually needed.",
           "points": ["Ticket routing and prioritization", "Knowledge base integration", "Escalation to human agents when needed"]
         },
         {
           "name": "AI Voice Assistants",
-          "summary": "We build voice systems that handle calls without a person on the line.",
+          "summary": "We build voice systems that handle calls without a person on the line, covering appointment booking and common questions, with every call transcribed and summarized so nothing gets lost.",
           "points": ["Voice AI for calls", "Appointment booking and FAQs", "Call transcription and summaries"]
         },
         {
           "name": "Custom LLM Integration",
-          "summary": "We integrate AI models tailored to your business and data.",
+          "summary": "We integrate AI models tailored to your business and data, using OpenAI, Anthropic Claude, or open-source models depending on the fit, wired into your existing systems and fine-tuned where useful.",
           "points": ["OpenAI, Anthropic Claude, or open-source models", "API integration into existing systems", "Custom fine-tuning on business data"]
         }
       ]

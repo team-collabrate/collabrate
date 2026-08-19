@@ -6,7 +6,7 @@ import { ArrowRight, Check } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { SocialTooltip } from "@/components/ui/social-media";
-import { serviceCategories } from "@/lib/content";
+import { serviceCategories, stripServiceParenthetical } from "@/lib/content";
 import { serviceToolLogos } from "@/lib/service-logos";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +56,7 @@ export function ServicesOverview() {
                               : "text-muted-foreground hover:bg-surface/60 hover:text-foreground"
                           )}
                         >
-                          {service.name}
+                          {stripServiceParenthetical(service.name)}
                           <ArrowRight
                             className={cn(
                               "size-3.5 shrink-0 transition-all duration-200",
