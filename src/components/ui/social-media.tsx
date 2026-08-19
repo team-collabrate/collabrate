@@ -24,8 +24,11 @@ const SocialTooltip = React.forwardRef<HTMLUListElement, SocialTooltipProps>(
       "relative z-10 w-7 h-7 text-foreground transition-colors duration-300 ease-in-out group-hover:text-white";
     const baseFilledStyles =
       "absolute bottom-0 left-0 w-full h-0 transition-all duration-300 ease-in-out group-hover:h-full";
+    // Glass tooltip, positioned above the icon (not below) so it never gets
+    // clipped by whatever sits under the row, and never reuses the brand
+    // color already used for the icon's hover fill.
     const baseTooltipStyles =
-      "absolute bottom-[-40px] left-1/2 -translate-x-1/2 px-2.5 py-1.5 text-sm text-white whitespace-nowrap rounded-md opacity-0 invisible transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:visible group-hover:bottom-[-50px] z-20";
+      "glass absolute top-[-38px] left-1/2 -translate-x-1/2 px-2.5 py-1.5 text-xs font-medium text-foreground whitespace-nowrap rounded-md shadow-sm opacity-0 invisible transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:visible group-hover:top-[-46px] z-20";
 
     return (
       <ul
@@ -52,12 +55,7 @@ const SocialTooltip = React.forwardRef<HTMLUListElement, SocialTooltipProps>(
                 className={cn(baseSvgStyles)}
               />
             </a>
-            <div
-              className={cn(baseTooltipStyles)}
-              style={{ backgroundColor: item.color }}
-            >
-              {item.tooltip}
-            </div>
+            <div className={cn(baseTooltipStyles)}>{item.tooltip}</div>
           </li>
         ))}
       </ul>

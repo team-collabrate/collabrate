@@ -93,7 +93,7 @@ function ServiceCard({ service, gradient, defaultOpen }: { service: ServiceItem;
   return (
     <motion.div
       variants={staggerItem}
-      className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-colors hover:border-brand-violet/40"
+      className="flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-colors hover:border-brand-violet/40"
     >
       <button
         type="button"
@@ -171,7 +171,7 @@ function CategoryPanel({ category }: { category: ServiceCategory }) {
         )}
       </div>
 
-      <StaggerGroup className="grid grid-cols-1 gap-5 sm:grid-cols-2" stagger={0.06}>
+      <StaggerGroup className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2" stagger={0.06}>
         {category.services.map((service, i) => (
           <ServiceCard
             key={service.name}
