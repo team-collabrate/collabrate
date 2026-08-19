@@ -5,7 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
+import { SocialTooltip } from "@/components/ui/social-media";
 import { serviceCategories } from "@/lib/content";
+import { serviceToolLogos } from "@/lib/service-logos";
 import { cn } from "@/lib/utils";
 
 const firstCategory = serviceCategories[0];
@@ -99,6 +101,17 @@ export function ServicesOverview() {
                   </ul>
                   {activeService.note && (
                     <p className="text-xs italic text-muted-foreground/80">{activeService.note}</p>
+                  )}
+                  {serviceToolLogos[activeService.name] && (
+                    <div className="flex flex-col gap-4 border-t border-border pt-5">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        Tools we use
+                      </span>
+                      <SocialTooltip
+                        items={serviceToolLogos[activeService.name]}
+                        className="justify-start gap-3"
+                      />
+                    </div>
                   )}
                 </motion.div>
               )}
