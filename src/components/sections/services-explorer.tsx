@@ -84,8 +84,17 @@ function splitServiceName(name: string): { heading: string; subtitle?: string } 
   return { heading: name };
 }
 
-function ServiceCard({ service, gradient, defaultOpen }: { service: ServiceItem; gradient: string; defaultOpen: boolean }) {
-  const [open, setOpen] = useState(defaultOpen);
+function ServiceCard({
+  service,
+  gradient,
+  open,
+  onToggle,
+}: {
+  service: ServiceItem;
+  gradient: string;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const Icon = SERVICE_ICONS[service.name] ?? Sparkles;
   const { heading, subtitle } = splitServiceName(service.name);
   const tools = serviceToolLogos[service.name];
@@ -97,7 +106,7 @@ function ServiceCard({ service, gradient, defaultOpen }: { service: ServiceItem;
     >
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={onToggle}
         aria-expanded={open}
         className="flex w-full items-center gap-4 p-6 text-left"
       >
@@ -153,6 +162,23 @@ function ServiceCard({ service, gradient, defaultOpen }: { service: ServiceItem;
 }
 
 function CategoryPanel({ category }: { category: ServiceCategory }) {
+  // Cards pair up by row (two per row on sm+). Opening either card in a row
+  // opens both, so the pair expands and collapses together and the row
+  // stays visually matched instead of one side ballooning past the other.
+  const [openPairs, setOpenPairs] = useState<Set<number>>(() => new Set([0]));
+
+  const togglePair = (pairIndex: number) => {
+    setOpenPairs((prev) => {
+      const next = new Set(prev);
+      if (next.has(pairIndex)) {
+        next.delete(pairIndex);
+      } else {
+        next.add(pairIndex);
+      }
+      return next;
+    });
+  };
+
   return (
     <div className="flex flex-col gap-8">
       <div className="mx-auto max-w-2xl text-center">
@@ -160,14 +186,18 @@ function CategoryPanel({ category }: { category: ServiceCategory }) {
       </div>
 
       <StaggerGroup className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2" stagger={0.06}>
-        {category.services.map((service, i) => (
-          <ServiceCard
-            key={service.name}
-            service={service}
-            gradient={BADGE_GRADIENTS[i % BADGE_GRADIENTS.length]}
-            defaultOpen={i === 0}
-          />
-        ))}
+        {category.services.map((service, i) => {
+          const pairIndex = Math.floor(i / 2);
+          return (
+            <ServiceCard
+              key={service.name}
+              service={service}
+              gradient={BADGE_GRADIENTS[i % BADGE_GRADIENTS.length]}
+              open={openPairs.has(pairIndex)}
+              onToggle={() => togglePair(pairIndex)}
+            />
+          );
+        })}
       </StaggerGroup>
     </div>
   );
