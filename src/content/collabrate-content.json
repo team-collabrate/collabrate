@@ -351,7 +351,7 @@
         {
           "name": "AI Chatbots",
           "summary": "We build hybrid chatbots, combining structured flows with AI, trained on your actual business data, not generic scripts, and deployed across your website, WhatsApp, Instagram, or wherever your customers already are.",
-          "points": ["Hybrid rule-based + AI/LLM chatbot development, trained on your docs and business data", "Multi-channel deployment across website, WhatsApp, Instagram, and more", "CRM and tool integrations, with ongoing monitoring and improvement (retainer-based)"]
+          "points": ["Hybrid rule-based + AI/LLM chatbot development", "Multi-channel deployment (website, WhatsApp, Instagram, and more)", "Trained on your docs, FAQs, and business data"]
         },
         {
           "name": "Workflow Automation",
