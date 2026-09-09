@@ -107,11 +107,11 @@ function ServiceCard({
   // clip so tooltips can float outside the card; re-clip immediately on close.
   const [settled, setSettled] = useState(open);
   useEffect(() => {
-    if (open) {
-      const timeout = setTimeout(() => setSettled(true), 300);
-      return () => clearTimeout(timeout);
-    }
-    setSettled(false);
+    // setTimeout(..., 0) rather than an immediate setState call, so the
+    // re-clip on close still happens on the next tick instead of
+    // synchronously within the effect body.
+    const timeout = setTimeout(() => setSettled(open), open ? 300 : 0);
+    return () => clearTimeout(timeout);
   }, [open]);
 
   return (

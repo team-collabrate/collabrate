@@ -19,14 +19,17 @@ export function CTABanner({
     <section className="relative py-12 sm:py-16">
       <div className="mx-auto max-w-6xl px-6">
         <Reveal>
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-[linear-gradient(120deg,#8A2BE2,#B154B3_35%,#CF6CAD_55%,#F7686F_75%,#FF9F43)] bg-[length:200%_auto] animate-gradient-move px-8 py-16 text-center sm:px-16 sm:py-20">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.25),transparent_45%)]" />
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-foreground px-8 py-16 text-center sm:px-16 sm:py-20">
+            <div className="absolute -top-1/2 right-0 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,159,67,0.18),transparent_65%)] blur-3xl" />
             <div className="relative flex flex-col items-center gap-8">
-              <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
+              <span className="h-1 w-16 rounded-full bg-[linear-gradient(90deg,#8A2BE2,#FF9F43)]" aria-hidden />
+              {/* !text-background: globals.css sets a color on every h1-h6 that
+                  otherwise beats this utility at equal specificity. */}
+              <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight !text-background sm:text-4xl md:text-5xl">
                 {heading}
               </h2>
-              <p className="max-w-xl text-balance text-white/85">{body}</p>
-              <Button variant="glass" size="lg" asChild>
+              <p className="max-w-xl text-balance text-background/70">{body}</p>
+              <Button variant="gradient" size="lg" asChild>
                 <a href={ctaHref}>
                   {ctaLabel} <ArrowUpRight className="size-4" />
                 </a>

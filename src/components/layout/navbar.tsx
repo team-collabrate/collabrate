@@ -29,17 +29,17 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 border-b transition-colors duration-500",
+        scrolled ? "border-border bg-background/85 backdrop-blur-md" : "border-transparent bg-transparent"
+      )}
+    >
       <motion.div
-        initial={{ y: -24, opacity: 0 }}
+        initial={{ y: -16, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={cn(
-          "flex w-full max-w-6xl items-center justify-between rounded-full px-4 py-2.5 transition-all duration-500",
-          scrolled
-            ? "glass shadow-[0_8px_30px_-12px_rgba(0,0,0,0.15)] border border-border"
-            : "border border-transparent bg-transparent"
-        )}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6"
       >
         <Logo />
 
@@ -52,17 +52,15 @@ export function Navbar() {
                 href={link.href}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "text-foreground bg-surface"
-                    : "text-muted-foreground hover:text-foreground hover:bg-surface"
+                  "relative px-3.5 py-2 text-sm font-medium transition-colors",
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {link.label}
                 {isActive && (
                   <motion.span
                     layoutId="navActiveDot"
-                    className="absolute inset-x-4 -bottom-0.5 h-0.5 rounded-full bg-brand-violet"
+                    className="absolute inset-x-3.5 -bottom-[1px] h-px rounded-full bg-brand-violet"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -80,7 +78,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="flex size-11 items-center justify-center rounded-full text-foreground lg:hidden"
+          className="flex size-11 items-center justify-center text-foreground lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}

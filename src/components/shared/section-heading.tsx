@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/shared/reveal";
 
 export function SectionHeading({
@@ -30,9 +29,15 @@ export function SectionHeading({
     >
       {eyebrow && (
         <Reveal>
-          <Badge variant="gradient" className="uppercase tracking-wider">
+          <span
+            className={cn(
+              "inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-violet",
+              align === "center" && "justify-center"
+            )}
+          >
+            <span className="h-px w-6 shrink-0 bg-brand-violet/50" aria-hidden />
             {eyebrow}
-          </Badge>
+          </span>
         </Reveal>
       )}
       <Reveal delay={0.08}>

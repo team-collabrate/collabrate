@@ -1,9 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Compass } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { AuroraBackground, GridBackground } from "@/components/shared/aurora-background";
+import { AuroraBackground } from "@/components/shared/aurora-background";
 import { site } from "@/lib/content";
 
 const heroSection = {
@@ -14,46 +14,59 @@ const heroSection = {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48 sm:pb-32">
+    <section className="relative overflow-hidden pt-40 pb-24 sm:pt-48 sm:pb-28">
       <AuroraBackground />
-      <GridBackground />
 
-      <div className="relative mx-auto flex max-w-6xl flex-col items-center px-6 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="max-w-4xl text-balance text-4xl font-semibold leading-[1.08] tracking-tight sm:text-6xl md:text-7xl"
-        >
-          {heroSection.headline}
-        </motion.h1>
+      <div className="relative mx-auto max-w-6xl px-6">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-violet"
+          >
+            <span className="h-px w-6 shrink-0 bg-brand-violet/50" aria-hidden />
+            Development · Marketing · AI
+          </motion.span>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25 }}
-          className="mt-6 max-w-2xl text-balance text-lg text-muted-foreground sm:text-xl"
-        >
-          {heroSection.subline}
-        </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.1] tracking-tight sm:text-6xl md:text-[4.5rem]"
+          >
+            {heroSection.headline}
+          </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
-        >
-          <Button variant="gradient" size="lg" asChild>
-            <a href={site.primaryCTA.href}>
-              {site.primaryCTA.label} <ArrowUpRight className="size-4" />
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.18 }}
+            className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-muted-foreground"
+          >
+            {heroSection.subline}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.28 }}
+            className="mt-10 flex flex-col items-center gap-6 sm:flex-row"
+          >
+            <Button variant="gradient" size="lg" asChild>
+              <a href={site.primaryCTA.href}>
+                {site.primaryCTA.label} <ArrowUpRight className="size-4" />
+              </a>
+            </Button>
+            <a
+              href={site.secondaryCTA.href}
+              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-foreground"
+            >
+              {site.secondaryCTA.label}
+              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-          </Button>
-          <Button variant="outline" size="lg" asChild>
-            <a href={site.secondaryCTA.href}>
-              <Compass className="size-4" /> {site.secondaryCTA.label}
-            </a>
-          </Button>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

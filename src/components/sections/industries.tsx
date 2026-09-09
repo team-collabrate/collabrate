@@ -7,25 +7,30 @@ import { industries } from "@/lib/content";
 
 export function Industries() {
   return (
-    <section className="relative py-24 sm:py-32">
+    <section className="relative py-24 sm:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
+          align="left"
           eyebrow="Industries"
-          title="Industries We Work With"
+          title="Industries we work with"
           description="From early-stage startups to large-scale enterprises, we build and manage digital infrastructure suited to the scale, complexity, and goals of every business we work with."
+          className="max-w-2xl"
         />
 
-        <StaggerGroup className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3" stagger={0.06}>
+        <StaggerGroup className="mt-14 flex flex-col border-t border-border" stagger={0.05}>
           {industries.map((industry, i) => (
             <motion.div
               key={industry.name}
               variants={staggerItem}
-              whileHover={{ y: -4 }}
-              className="flex flex-col gap-3 rounded-3xl border border-border bg-card p-7 shadow-sm transition-colors duration-300 hover:border-brand-purple/40"
+              className="group grid grid-cols-[3rem_1fr] items-baseline gap-x-6 gap-y-2 border-b border-border py-8 transition-colors duration-300 hover:bg-surface/60 sm:grid-cols-[4.5rem_16rem_1fr] sm:items-start sm:px-4"
             >
-              <span className="text-xs font-semibold text-brand-violet">{String(i + 1).padStart(2, "0")}</span>
-              <h3 className="text-lg font-semibold text-foreground">{industry.name}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground text-balance">{industry.description}</p>
+              <span className="font-display text-2xl font-semibold text-muted-foreground/40 transition-colors duration-300 group-hover:text-brand-violet sm:text-3xl">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="text-lg font-semibold text-foreground sm:pr-6">{industry.name}</h3>
+              <p className="col-span-2 text-sm leading-relaxed text-muted-foreground sm:col-span-1">
+                {industry.description}
+              </p>
             </motion.div>
           ))}
         </StaggerGroup>

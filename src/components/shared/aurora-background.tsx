@@ -2,12 +2,13 @@
 
 import { cn } from "@/lib/utils";
 
+// A single, static, low-opacity wash rather than three animated rainbow
+// blobs — enough to keep the page from feeling flat without reading as a
+// template's stock "gradient mesh" background.
 export function AuroraBackground({ className }: { className?: string }) {
   return (
     <div className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)} aria-hidden>
-      <div className="absolute -top-1/3 left-1/2 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(138,43,226,0.35),transparent_60%)] blur-3xl animate-aurora" />
-      <div className="absolute top-1/4 -left-1/4 h-[42rem] w-[42rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,159,67,0.28),transparent_60%)] blur-3xl animate-aurora [animation-delay:-6s]" />
-      <div className="absolute top-1/3 -right-1/4 h-[46rem] w-[46rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(247,104,111,0.25),transparent_60%)] blur-3xl animate-aurora [animation-delay:-11s]" />
+      <div className="absolute -top-1/2 left-1/2 h-[56rem] w-[56rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(138,43,226,0.16),transparent_65%)] blur-3xl" />
     </div>
   );
 }
@@ -16,7 +17,7 @@ export function GridBackground({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 grid-fade-mask opacity-[0.4] dark:opacity-[0.25]",
+        "pointer-events-none absolute inset-0 grid-fade-mask opacity-[0.25] dark:opacity-[0.15]",
         className
       )}
       style={{

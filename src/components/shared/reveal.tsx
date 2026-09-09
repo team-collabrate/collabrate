@@ -24,10 +24,12 @@ export function Reveal({
   children,
   direction = "up",
   delay = 0,
-  duration = 0.6,
+  duration = 0.5,
   className,
   once = true,
-  blur = true,
+  // Plain fade/translate by default — a blur-in entrance on every element is
+  // a generic "AI polish" tell. Opt in per-instance where it actually helps.
+  blur = false,
 }: {
   children: ReactNode;
   direction?: Direction;
@@ -105,11 +107,10 @@ export function StaggerGroup({
 }
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
   },
 };
