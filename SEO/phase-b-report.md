@@ -143,3 +143,31 @@ TODO(verify) and notes:
 3. Gym app: the JSON says scheduling and engagement; the problem also mentions progress tracking. Confirm what the app actually does.
 4. These pages are short because the JSON gives one sentence each for problem, solution and outcome. I did not pad them. They need real screenshots and one verifiable outcome each to carry weight; that is the biggest remaining credibility gap.
 5. The enterprise page mentions an "AI-driven platform" and "banking, insurance, and telecom" because the JSON does. Confirm the client is comfortable with that level of detail being public even without a name.
+
+## B4. Pricing page (done, new content gated as a draft)
+
+Pricing stays quote-only. `/pricing` is already live, so the new copy is gated by one flag: `pricingContent.published` in `src/content/pricing-page.ts` (false). While false, the live page is exactly what it was (JSON copy, no FAQ schema). The new sections render only in dev or in a `SHOW_UNPUBLISHED=1` build, with a "Draft preview" banner. Set the flag to true to publish.
+
+New sections (server-rendered, plain markup):
+- "What affects the cost?": 7 factors, one sentence each (scope, features, integrations, design depth, content, timeline, ongoing support). Replaces the old 4-item list when published.
+- "Which engagement fits?": project-based, ongoing, custom or enterprise, one line each on who it suits (sits under the existing engagement cards).
+- "What is included in a quote?": 5 items.
+- "How is a project scoped?": 4 steps, no durations (conversation, scoping, a clear quote, your approval; all four come from the JSON wording).
+- "Pricing questions": 6 FAQs with visible answers; FAQPage schema is emitted only when they are visible.
+- Links to `/services` and `/contact`.
+
+Meta title and description are unchanged.
+
+Verification:
+- Normal build: `/pricing` has none of the new sections, no FAQPage schema, no banner, and still shows the old "What affects your quote" list.
+- Preview build: JSON-LD is WebPage + BreadcrumbList + FAQPage; FAQ schema text equals the visible text; 1 H1; own canonical; 1 og:image; the new sections contain no `opacity:0`.
+- Copy lint (`check-service-copy.mjs`): the new content has no digits at all, no currency, no "from", "starting at", "per month", "free", "discount", "cheap", "affordable"; 6 FAQs, answers 40 to 80 words; 4 scoping steps.
+- Screenshot of the preview renders cleanly. lint, tsc, build clean.
+
+Existing issue (not from this step): the original `/pricing` blocks (title, intro, engagement cards) use the `Reveal` wrapper, so their raw HTML carries inline `opacity:0` until the client animates them in. The text is in the DOM, so crawlers that render JavaScript see it, but it is worth fixing site-wide later (same wrapper on other pages).
+
+TODO(verify) / for you:
+1. "What is included in a quote?": the JSON promises a clear quote but does not list what it contains. Confirm the 5 items match your real quotes.
+2. FAQ on fixed quotes: how scope changes are handled ("we talk to you about it before anything changes").
+3. FAQ on hidden costs: that advertising spend, domains and software subscriptions are paid to outside providers and called out in the quote.
+4. Decide whether the "Timeline" factor wording is fine; I avoided any time promise.

@@ -125,32 +125,6 @@ function webPage(type: PageSchemaType, path: string, name: string, description: 
   };
 }
 
-/** Every other page: page-level schema only (WebPage family + BreadcrumbList). */
-export function pageGraph({
-  type,
-  path,
-  name,
-  description,
-  crumb,
-}: {
-  type: PageSchemaType;
-  path: string;
-  name: string;
-  description: string;
-  /** Short label for the last breadcrumb, e.g. "Services". */
-  crumb: string;
-}) {
-  return {
-    "@context": CONTEXT,
-    "@graph": [
-      webPage(type, path, name, description),
-      breadcrumbList(path, [{ name: "Home", path: "" }, { name: crumb, path }]),
-    ],
-  };
-}
-
-type Graph = { "@context": string; "@graph": Record<string, unknown>[] };
-
 export interface FaqEntry {
   question: string;
   answer: string;
@@ -172,6 +146,36 @@ export function faqPage(pagePath: string, items: FaqEntry[]) {
     })),
   };
 }
+
+/** Every other page: page-level schema only (WebPage family + BreadcrumbList, + FAQPage when `faqs` is given). */
+export function pageGraph({
+  type,
+  path,
+  name,
+  description,
+  crumb,
+  faqs,
+}: {
+  type: PageSchemaType;
+  path: string;
+  name: string;
+  description: string;
+  /** Short label for the last breadcrumb, e.g. "Services". */
+  crumb: string;
+  /** Pass only when these questions and answers are visible on the page. */
+  faqs?: FaqEntry[];
+}) {
+  return {
+    "@context": CONTEXT,
+    "@graph": [
+      webPage(type, path, name, description),
+      breadcrumbList(path, [{ name: "Home", path: "" }, { name: crumb, path }]),
+      ...(faqs && faqs.length > 0 ? [faqPage(path, faqs)] : []),
+    ] as Record<string, unknown>[],
+  };
+}
+
+type Graph = { "@context": string; "@graph": Record<string, unknown>[] };
 
 interface DeepPageInput {
   path: string;

@@ -3,6 +3,7 @@ import { servicePages } from "../src/content/service-pages.ts";
 import { slugFor } from "../src/lib/slug.ts";
 import { readFileSync } from "node:fs";
 import { caseStudies } from "../src/content/case-studies.ts";
+import { pricingContent } from "../src/content/pricing-page.ts";
 import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
@@ -95,4 +96,19 @@ for (const c of caseStudies) {
 for (const p of json.portfolioProjects) if (!covered.has(p.title)) fail("case", `JSON project "${p.title}" has no case study`);
 for (const i of industryPages) for (const r of i.projects) if (!caseStudies.some((c) => c.slug === r)) fail(`industry:${i.slug}`, `project ${r} has no case study`);
 for (const sp of servicePages) for (const r of sp.relatedProjects) if (!caseStudies.some((c) => c.slug === r)) fail(sp.slug, `relatedProjects ${r} has no case study`);
+
+// ---- Pricing page: quote-only, no numbers at all ----
+{
+  const text = JSON.stringify({ ...pricingContent, published: undefined, updated: undefined });
+  for (const re of [...FORBIDDEN, /\d/, /from/i, /starting at/i, /per (month|hour|page)/i, /discount/i, /free/i]) {
+    if (re.test(text)) fail("pricing", `forbidden pattern ${re}`);
+  }
+  if (pricingContent.faqs.length !== 6) fail("pricing", `${pricingContent.faqs.length} faqs, expected 6`);
+  for (const f of pricingContent.faqs) {
+    const n = words(f.answer);
+    if (n < 40 || n > 80) fail("pricing", `faq "${f.question}" answer ${n} words`);
+  }
+  if (pricingContent.scopingSteps.length < 3 || pricingContent.scopingSteps.length > 4) fail("pricing", "scoping steps must be 3 to 4");
+  console.log(`pricing: ${pricingContent.costFactors.length} cost factors, ${pricingContent.faqs.length} faqs, published=${pricingContent.published}`);
+}
 process.exit(bad ? 1 : 0);

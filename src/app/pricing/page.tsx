@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
-import { PageJsonLd } from "@/components/seo/page-json-ld";
+import { JsonLd } from "@/components/seo/json-ld";
+import { pricingContent } from "@/content/pricing-page";
+import { SHOW_UNPUBLISHED } from "@/lib/publish";
+import { pageGraph } from "@/lib/schema";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
@@ -40,10 +44,24 @@ const engagementTypes: Step[] = [
   },
 ];
 
+// The new sections are live only once pricingContent.published is true (or in a preview build).
+const showNew = pricingContent.published || SHOW_UNPUBLISHED;
+
 export default function PricingPage() {
+  const faqs = pricingContent.faqs;
   return (
     <main>
-      <PageJsonLd type="WebPage" meta={pageMeta} crumb="Pricing" />
+      {/* FAQPage schema only when the FAQ is visible, i.e. when the new content is shown. */}
+      <JsonLd
+        data={pageGraph({
+          type: "WebPage",
+          path: pageMeta.path,
+          name: pageMeta.title,
+          description: pageMeta.description,
+          crumb: "Pricing",
+          faqs: showNew ? faqs : undefined,
+        })}
+      />
       <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
@@ -70,6 +88,26 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {showNew ? (
+        <section aria-labelledby="cost-factors" className="relative pb-16 sm:pb-20">
+          <div className="mx-auto max-w-4xl px-6">
+            {!pricingContent.published && (
+              <p className="mb-6 rounded-[10px] border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+                Draft preview. The sections below are not published yet; the live page shows the original copy.
+              </p>
+            )}
+            <h2 id="cost-factors" className="text-2xl font-semibold tracking-tight">What affects the cost?</h2>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {pricingContent.costFactors.map((factor) => (
+                <li key={factor.title} className="rounded-2xl border border-border bg-surface p-5">
+                  <h3 className="font-semibold text-foreground">{factor.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground">{factor.text}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      ) : (
       <section className="relative pb-16 sm:pb-20">
         <div className="mx-auto max-w-3xl px-6">
           <Reveal>
@@ -87,6 +125,7 @@ export default function PricingPage() {
           </Reveal>
         </div>
       </section>
+      )}
 
       <section className="relative pb-8 sm:pb-12">
         <div className="mx-auto max-w-3xl px-6">
@@ -96,6 +135,70 @@ export default function PricingPage() {
         </div>
         <HowItWorks features={engagementTypes} />
       </section>
+
+      {showNew && (
+        <section className="relative pb-16 sm:pb-20">
+          <div className="mx-auto max-w-4xl space-y-14 px-6">
+            <div aria-labelledby="engagement-fit" role="group">
+              <h2 id="engagement-fit" className="text-2xl font-semibold tracking-tight">Which engagement fits?</h2>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+                {pricingContent.engagementFit.map((item) => (
+                  <li key={item.title} className="rounded-2xl border border-border p-5">
+                    <h3 className="font-semibold text-foreground">{item.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{item.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div aria-labelledby="in-quote" role="group">
+              <h2 id="in-quote" className="text-2xl font-semibold tracking-tight">What is included in a quote?</h2>
+              <ul className="mt-5 list-disc space-y-2 pl-5 text-muted-foreground marker:text-brand-violet">
+                {pricingContent.includedInQuote.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div aria-labelledby="scoping" role="group">
+              <h2 id="scoping" className="text-2xl font-semibold tracking-tight">How is a project scoped?</h2>
+              <ol className="mt-5 grid gap-3 sm:grid-cols-2">
+                {pricingContent.scopingSteps.map((step, i) => (
+                  <li key={step.title} className="rounded-2xl border border-border p-5">
+                    <span className="text-sm font-semibold text-brand-violet">Step {i + 1}</span>
+                    <h3 className="mt-1 font-semibold text-foreground">{step.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{step.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div aria-labelledby="pricing-faq" role="group">
+              <h2 id="pricing-faq" className="text-2xl font-semibold tracking-tight">Pricing questions</h2>
+              <div className="mt-5 divide-y divide-black/10 rounded-2xl border border-border">
+                {faqs.map((faq) => (
+                  <div key={faq.question} className="p-5">
+                    <h3 className="text-lg font-semibold">{faq.question}</h3>
+                    <p className="mt-2 text-muted-foreground">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <p className="text-muted-foreground">
+              Not sure which services you need?{" "}
+              <Link href="/services" className="font-medium text-brand-violet underline-offset-4 hover:underline">
+                Browse our services
+              </Link>{" "}
+              or{" "}
+              <Link href="/contact" className="font-medium text-brand-violet underline-offset-4 hover:underline">
+                contact us for a quote
+              </Link>
+              .
+            </p>
+          </div>
+        </section>
+      )}
 
       <CTABanner
         heading="Tell us what you're building."
