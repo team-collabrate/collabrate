@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "Terms of Service | Collabrate",
   description:
     "Read the terms that govern the use of the Collabrate website and the digital development, marketing and AI services we provide to businesses.",
   path: "/terms",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 const sections = [
   { heading: "Services", body: "Collabrate provides web and mobile development, digital marketing, and AI solutions. All engagements are scoped and quoted individually based on client requirements, as outlined in a separate proposal or agreement." },
@@ -22,6 +25,7 @@ const sections = [
 export default function TermsPage() {
   return (
     <main>
+      <PageJsonLd type="WebPage" meta={pageMeta} crumb="Terms of Service" />
       <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-24">
         <div className="mx-auto max-w-2xl px-6">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Terms of Service</h1>

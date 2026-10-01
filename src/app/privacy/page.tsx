@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "Privacy Policy | Collabrate",
   description:
     "How Collabrate collects, uses, and protects your information when you visit collabrate.digital or contact us about a project.",
   path: "/privacy",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 const sections = [
   { heading: "Information We Collect", body: "We collect information you provide directly, such as your name, email, company name, and project details, when you submit a contact form, book a call, or communicate with us. We may also collect basic usage data (such as pages visited or general location) through standard website analytics tools." },
@@ -22,6 +25,7 @@ const sections = [
 export default function PrivacyPage() {
   return (
     <main>
+      <PageJsonLd type="WebPage" meta={pageMeta} crumb="Privacy Policy" />
       <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-24">
         <div className="mx-auto max-w-2xl px-6">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Privacy Policy</h1>

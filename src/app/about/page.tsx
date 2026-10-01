@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { AboutPillars } from "@/components/sections/about-pillars";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "About Collabrate, a Tamil Nadu Digital Agency",
   description:
     "Collabrate is a digital development and marketing company founded in 2025 and based in Tamil Nadu, working with businesses across India and beyond.",
   path: "/about",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 const facts = [
   "Founded 2025",
@@ -22,6 +25,7 @@ const facts = [
 export default function AboutPage() {
   return (
     <main>
+      <PageJsonLd type="AboutPage" meta={pageMeta} crumb="About" />
       <section className="relative pt-40 pb-20 sm:pt-48 sm:pb-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>

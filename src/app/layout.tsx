@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import "@fontsource-variable/geist";
 import "@fontsource-variable/hanken-grotesk";
 import "./globals.css";
-import { site, isPending } from "@/lib/content";
+import { site, siteUrl } from "@/lib/content";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 
-const siteUrl = `https://${site.domain}`;
 const description =
   "Collabrate designs, builds, and markets digital products for businesses that need one accountable team instead of multiple vendors. Web and app development, marketing, and AI solutions.";
 
@@ -69,19 +68,6 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: site.name,
-  url: siteUrl,
-  description,
-  email: site.email,
-  areaServed: site.serviceRegions,
-  foundingDate: site.founded,
-  ...(isPending(site.social.instagram) ? {} : { sameAs: [site.social.instagram] }),
-  makesOffer: ["Web & App Development", "Digital Marketing", "AI Solutions"],
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -89,12 +75,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-      </head>
       <body className="antialiased">
         <a href="#main-content" className="skip-link">
           Skip to content

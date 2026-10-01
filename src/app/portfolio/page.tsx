@@ -1,19 +1,23 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { PortfolioGrid } from "@/components/sections/portfolio-grid";
 import { CTABanner } from "@/components/sections/cta-banner";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "Our Work: Booking, HR and Vendor Platforms | Collabrate",
   description:
     "A look at the platforms and applications we've built across booking, HR, enterprise software, fitness, and vendor management.",
   path: "/portfolio",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 export default function PortfolioPage() {
   return (
     <main>
+      <PageJsonLd type="CollectionPage" meta={pageMeta} crumb="Our Work" />
       <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-20">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <SectionHeading

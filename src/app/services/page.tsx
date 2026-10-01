@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ServicesExplorer } from "@/components/sections/services-explorer";
 import { FAQ } from "@/components/sections/faq";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { servicesFaq } from "@/lib/content";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "Web, Marketing and AI Services | Collabrate",
   description:
     "Website and app development, digital marketing and AI automation from one team. Pick the services you need and get a clear, scoped quote.",
   path: "/services",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 export default function ServicesPage() {
   return (
     <main>
+      <PageJsonLd type="CollectionPage" meta={pageMeta} crumb="Services" />
       <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading

@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ContactOptions } from "@/components/sections/contact-options";
 import { DirectContact } from "@/components/sections/direct-contact";
 import { FAQ } from "@/components/sections/faq";
 import { contactFaq } from "@/lib/content";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "Contact Collabrate: Get a Quote",
   description:
     "Tell us what you are building and we will reply with next steps. Collabrate usually responds within one business day. Get a quote.",
   path: "/contact",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 export default function ContactPage() {
   return (
     <main>
+      <PageJsonLd type="ContactPage" meta={pageMeta} crumb="Contact" />
       <section className="relative pt-40 pb-12 sm:pt-48 sm:pb-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading

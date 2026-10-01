@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
 import HowItWorks, { type Step } from "@/components/ui/how-it-works";
 
-export const metadata: Metadata = buildMetadata({
+const pageMeta = {
   title: "How Collabrate Pricing Works | Collabrate",
   description:
     "Collabrate prices by scope, complexity, timeline and ongoing support, not fixed packages. See what affects your quote and how engagements work.",
   path: "/pricing",
-});
+};
+
+export const metadata: Metadata = buildMetadata(pageMeta);
 
 const factors = [
   "Type of service (development, marketing, AI, or a combination)",
@@ -40,6 +43,7 @@ const engagementTypes: Step[] = [
 export default function PricingPage() {
   return (
     <main>
+      <PageJsonLd type="WebPage" meta={pageMeta} crumb="Pricing" />
       <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-20">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
