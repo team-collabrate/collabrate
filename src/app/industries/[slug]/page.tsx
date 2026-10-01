@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Breadcrumbs } from "@/components/shared/breadcrumbs";
 import { PageCTA } from "@/components/shared/page-cta";
 import { buildableIndustryPages, getIndustryPage, industryPath, jsonIndustryFor } from "@/lib/industry-pages";
+import { caseStudyPath, getCaseStudy } from "@/lib/case-studies";
 import { getServicePage, serviceDisplayName, servicePath } from "@/lib/service-pages";
 import { SHOW_UNPUBLISHED, isPublished } from "@/lib/publish";
 import { buildMetadata } from "@/lib/seo";
@@ -51,6 +52,13 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
     .filter((x) => x.service !== undefined)
     .map(({ service, why }) => ({ service: service!, why }))
     .filter(({ service }) => isPublished(service) || SHOW_UNPUBLISHED);
+
+  // Projects in this industry: published case studies are links, drafts are plain text and
+  // only in preview builds.
+  const projects = page.projects
+    .map((p) => getCaseStudy(p))
+    .filter((p) => p !== undefined && (isPublished(p) || SHOW_UNPUBLISHED))
+    .map((p) => p!);
 
   return (
     <main>
@@ -117,6 +125,28 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
                     <span className="font-medium">{serviceDisplayName(service)} (draft, not linked)</span>
                   )}
                   <p className="mt-1 text-muted-foreground">{why}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {projects.length > 0 && (
+          <section aria-labelledby="work" className="mt-14">
+            <h2 id="work" className="text-2xl font-semibold tracking-tight">
+              Examples of our work
+            </h2>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {projects.map((project) => (
+                <li key={project.slug} className="rounded-[12px] border border-black/10 p-4">
+                  {isPublished(project) ? (
+                    <Link href={caseStudyPath(project.slug)} className="font-medium text-brand-violet underline-offset-4 hover:underline">
+                      {project.title}
+                    </Link>
+                  ) : (
+                    <span className="font-medium">{project.title} (draft, not linked)</span>
+                  )}
+                  <p className="mt-1 text-sm text-muted-foreground">{project.summary}</p>
                 </li>
               ))}
             </ul>

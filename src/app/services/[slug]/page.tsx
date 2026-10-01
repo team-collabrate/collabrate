@@ -13,6 +13,7 @@ import {
   servicePageTitle,
   servicePath,
 } from "@/lib/service-pages";
+import { caseStudyPath, getCaseStudy } from "@/lib/case-studies";
 import { getIndustryPage, industryPath } from "@/lib/industry-pages";
 import { isPublished } from "@/lib/publish";
 import { buildMetadata } from "@/lib/seo";
@@ -67,6 +68,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     .map((s) => getIndustryPage(s))
     .filter((p) => p !== undefined && isPublished(p))
     .map((p) => ({ label: p!.h1, href: industryPath(p!.slug) }));
+
+  const relatedProjects: RelatedLink[] = page.relatedProjects
+    .map((s) => getCaseStudy(s))
+    .filter((p) => p !== undefined && isPublished(p))
+    .map((p) => ({ label: p!.title, href: caseStudyPath(p!.slug), description: p!.summary }));
 
   return (
     <main>
@@ -161,6 +167,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
         <RelatedLinks title="Related services" links={relatedServices} />
         <RelatedLinks title="Industries we build for" links={relatedIndustries} />
+        <RelatedLinks title="Related work" links={relatedProjects} />
 
         <PageCTA whatsappMessage={`Hi Collabrate, I am interested in ${name}.`} />
       </article>

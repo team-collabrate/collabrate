@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { PortfolioGrid } from "@/components/sections/portfolio-grid";
+import { publishedProjectHrefs } from "@/lib/case-studies";
 import { CTABanner } from "@/components/sections/cta-banner";
 
 const pageMeta = {
@@ -31,7 +32,7 @@ export default function PortfolioPage() {
 
       <section className="relative pb-16 sm:pb-24">
         <div className="mx-auto max-w-6xl px-6">
-          <PortfolioGrid />
+          <PortfolioGrid pageHrefs={publishedProjectHrefs()} />
         </div>
       </section>
 

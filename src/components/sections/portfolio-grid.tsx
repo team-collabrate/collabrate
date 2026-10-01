@@ -1,21 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
 import { portfolioProjects, type PortfolioProject } from "@/lib/content";
 import { track } from "@/lib/analytics";
 
-export function PortfolioGrid() {
+export function PortfolioGrid({ pageHrefs = {} }: { pageHrefs?: Record<string, string> }) {
   return (
     <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-2" stagger={0.08}>
       {portfolioProjects.map((project) => (
-        <PortfolioCard key={project.title} project={project} />
+        <PortfolioCard key={project.title} project={project} href={pageHrefs[project.title]} />
       ))}
     </StaggerGroup>
   );
 }
 
-function PortfolioCard({ project }: { project: PortfolioProject }) {
+function PortfolioCard({ project, href }: { project: PortfolioProject; href?: string }) {
   return (
     <motion.article
       variants={staggerItem}
@@ -44,6 +45,11 @@ function PortfolioCard({ project }: { project: PortfolioProject }) {
           {project.outcome}
         </p>
       </div>
+      {href && (
+        <Link href={href} className="text-sm font-semibold text-brand-violet underline-offset-4 hover:underline">
+          Read the case study: {project.title}
+        </Link>
+      )}
     </motion.article>
   );
 }

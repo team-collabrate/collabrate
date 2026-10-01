@@ -38,12 +38,14 @@ const fail = (msg) => {
   failed = true;
 };
 
+const MERGED = new Set(["Dairy Vendor Management App (2)"]); // intentionally shares a page with the entry before it
+
 function check(label, names, expected) {
   const seen = new Map();
   for (const name of names) {
     const slug = slugFor(name);
     if (expected && expected[name] !== slug) fail(`${label}: "${name}" -> "${slug}", expected "${expected[name]}"`);
-    if (seen.has(slug)) fail(`${label}: duplicate slug "${slug}" ("${seen.get(slug)}" and "${name}")`);
+    if (seen.has(slug) && !MERGED.has(name)) fail(`${label}: duplicate slug "${slug}" ("${seen.get(slug)}" and "${name}")`);
     seen.set(slug, name);
   }
   if (expected) for (const name of Object.keys(expected)) if (!names.includes(name)) fail(`${label}: "${name}" no longer in the JSON`);

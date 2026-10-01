@@ -1,6 +1,8 @@
 // Copy lint for src/content/service-pages.ts. Run: node --no-warnings scripts/check-service-copy.mjs
 import { servicePages } from "../src/content/service-pages.ts";
 import { slugFor } from "../src/lib/slug.ts";
+import { readFileSync } from "node:fs";
+import { caseStudies } from "../src/content/case-studies.ts";
 import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
@@ -63,4 +65,34 @@ for (const p of industryPages) {
 }
 // Every service page's relatedIndustries must be a real industry page.
 for (const sp of servicePages) for (const r of sp.relatedIndustries) if (!industryPages.some((i) => i.slug === r)) fail(sp.slug, `relatedIndustries ${r} has no industry page`);
+
+// ---- Case studies ----
+const json = JSON.parse(readFileSync(new URL("../src/content/collabrate-content.json", import.meta.url), "utf8"));
+const covered = new Set();
+for (const c of caseStudies) {
+  const slug = `case:${c.slug}`;
+  if (c.metaTitle.length > 60) fail(slug, `title ${c.metaTitle.length} chars`);
+  if (c.description.length < 120 || c.description.length > 155) fail(slug, `description ${c.description.length} chars`);
+  if (!industryPages.some((i) => i.slug === c.industrySlug)) fail(slug, `unknown industry ${c.industrySlug}`);
+  for (const s of c.services) if (!SERVICE_SLUGS.has(s)) fail(slug, `unknown service ${s}`);
+  c.sourceTitles.forEach((title, i) => {
+    covered.add(title);
+    const src = json.portfolioProjects.find((p) => p.title === title);
+    if (!src) return fail(slug, `no JSON project titled "${title}"`);
+    const part = c.parts[i];
+    if (!part) return fail(slug, `no part for "${title}"`);
+    if (part.problem !== src.problem) fail(slug, `problem text differs from JSON for "${title}"`);
+    if (part.built !== src.solution) fail(slug, `built text differs from JSON solution for "${title}"`);
+    if (part.outcome !== src.outcome) fail(slug, `outcome text differs from JSON for "${title}"`);
+    if (c.industryLabel !== src.industry) fail(slug, `industryLabel differs from JSON for "${title}"`);
+  });
+  if (c.parts.length !== c.sourceTitles.length) fail(slug, "parts and sourceTitles differ in length");
+  const text = JSON.stringify({ ...c, parts: undefined });
+  for (const re of FORBIDDEN) if (re.test(text)) fail(slug, `forbidden pattern ${re}`);
+  if (/\d/.test(c.howItWorks.join(" ") + c.highlights.join(" "))) fail(slug, "digits in howItWorks or highlights (no metrics)");
+  console.log(`${slug}: title ${c.metaTitle.length}c, desc ${c.description.length}c, ${c.parts.length} part(s), published=${c.published}`);
+}
+for (const p of json.portfolioProjects) if (!covered.has(p.title)) fail("case", `JSON project "${p.title}" has no case study`);
+for (const i of industryPages) for (const r of i.projects) if (!caseStudies.some((c) => c.slug === r)) fail(`industry:${i.slug}`, `project ${r} has no case study`);
+for (const sp of servicePages) for (const r of sp.relatedProjects) if (!caseStudies.some((c) => c.slug === r)) fail(sp.slug, `relatedProjects ${r} has no case study`);
 process.exit(bad ? 1 : 0);

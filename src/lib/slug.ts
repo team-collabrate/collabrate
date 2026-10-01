@@ -30,9 +30,9 @@ export const SLUG_OVERRIDES: Record<string, string> = {
   // Projects
   "Enterprise Software Business Website": "enterprise-software-website",
   "HR & Recruitment Dashboard": "hr-recruitment-dashboard",
-  // Placeholder so slugs stay unique until B3 reads both dairy entries and sets the real slug
-  // (or merges them into one page). Do not publish this URL as it stands.
-  "Dairy Vendor Management App (2)": "dairy-vendor-management-app-2",
+  // The second dairy entry is merged into the first on one page (see case-studies.ts), so it
+  // intentionally shares the first entry's slug.
+  "Dairy Vendor Management App (2)": "dairy-vendor-management-app",
 };
 
 export function slugFor(name: string): string {

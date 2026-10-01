@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { publishedBlogPosts } from "@/content/blog-posts";
 import { siteUrl } from "@/lib/content";
+import { caseStudyPath, publishedCaseStudies } from "@/lib/case-studies";
 import { industryPath, publishedIndustryPages } from "@/lib/industry-pages";
 import { publishedServicePages, servicePath } from "@/lib/service-pages";
 
@@ -74,8 +75,17 @@ const industryPagesSitemap = (): SitemapEntry[] => {
   ];
 };
 
+// One entry per published case study; /portfolio itself is already a static route.
+const caseStudySitemap = (): SitemapEntry[] =>
+  publishedCaseStudies().map((study) => ({
+    url: `${siteUrl}${caseStudyPath(study.slug)}`,
+    lastModified: new Date(study.updated),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
 /**
  * Later phases append here: service pages (B1), industry pages (B2), case studies (B3),
  * location pages. Each source is a function returning its own entries.
  */
-export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, industryPagesSitemap, blogEntries];
+export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, industryPagesSitemap, caseStudySitemap, blogEntries];

@@ -107,3 +107,39 @@ TODO(verify) / for you:
 3. business page: CMS handover wording.
 4. e-commerce page has no project proof; add one when you have a real example.
 5. The general feature checklists and "problem" paragraphs are educational and mine, not from the JSON; skim them for accuracy about your market.
+
+## B3. Case-study pages, /portfolio/[slug] (done, all drafts)
+
+Files: `src/content/case-studies.ts`, `src/lib/case-studies.ts`, `src/app/portfolio/[slug]/page.tsx`, `caseStudySitemap`, `/portfolio` grid (adds a "Read the case study" link per card when published), industry pages (new "Examples of our work" section), service pages (new "Related work" section, published only), `scripts/check-slugs.mjs` and `scripts/check-service-copy.mjs` (case-study checks).
+
+Pages (5 for the 6 JSON projects): turf-booking-platform, hr-recruitment-dashboard, enterprise-software-website, gym-trainer-app, dairy-vendor-management-app.
+
+Dairy decision: MERGED into one page with two parts. Both JSON entries are a dairy distribution business with a near-identical problem (manual coordination), solution (a vendor management app) and outcome (smoother operations). Two pages would be near-duplicates and fail the 50 percent overlap rule in B9, and nothing in the JSON separates them. The page shows "First dairy distribution business" and "Second dairy distribution business" as two parts, with each part's problem, solution and outcome from the JSON. The placeholder slug is gone; the "(2)" entry now maps to the same slug. If you can tell me what really differs (a different workflow, platform, scale), I can split them.
+
+Template: typographic header (case study label, JSON industry string, title, summary), "What was the problem?", "What did we build?" (JSON text plus a short highlights list taken from it), "How does this kind of system work?" (clearly labelled as a general explanation), optional Screenshots, "What was the outcome?", services and industry links, PageCTA. No client name, no logo, no fake images, no stack section.
+- Outcome, problem and solution text is the JSON text word for word. The lint script fails if any differs, so no number or claim can slip in.
+- Screenshot slot: `screenshots?: {src, alt, width, height}[]` in the content type. Add images to `public/` and list them there; the page renders them through `next/image` with no code change. Until then, no gallery appears.
+- Schema: WebPage + BreadcrumbList (Home > Our Work > title) + CreativeWork (creator = the Organization). No rating, review, client or founder fields.
+
+Verification:
+- Preview build (`SHOW_UNPUBLISHED=1`), all 5 pages: 1 H1, title at most 60, description 120 to 155, own canonical and og:url, exactly 1 og:image, noindex, no opacity:0, no forbidden schema fields.
+- Normal build: no case-study pages exist (404); the sitemap has none.
+- Publish test (temporary, reverted): with one case study and its industry published, the sitemap listed both; the `/portfolio` grid and the industry page linked only the published case study (not the drafts); the case study linked its industry but not the draft service; it is indexable. Nothing is published now.
+- Copy lint: all 6 JSON projects are covered, every JSON text matches, no digits in the added lines.
+- lint, tsc, build clean.
+
+Project to industry to service mapping (for your review; mapping is mine, the industry comes from the JSON):
+| Case study | Industry page | Services |
+|---|---|---|
+| turf-booking-platform | booking-and-scheduling-platforms | website-development |
+| hr-recruitment-dashboard | workforce-and-recruitment-systems | dashboards-and-admin-panels |
+| enterprise-software-website | business-and-corporate-websites | business-websites, website-development |
+| gym-trainer-app | booking-and-scheduling-platforms | mobile-app-development (the JSON says Android app) |
+| dairy-vendor-management-app | vendor-and-distribution-management | dashboards-and-admin-panels, mobile-app-development |
+
+TODO(verify) and notes:
+1. The "How does this kind of system work?" lines are general descriptions; confirm each matches how the delivered system works, or reword.
+2. Dairy: the JSON does not say whether the apps are mobile or web. The mobile-app-development link is a guess.
+3. Gym app: the JSON says scheduling and engagement; the problem also mentions progress tracking. Confirm what the app actually does.
+4. These pages are short because the JSON gives one sentence each for problem, solution and outcome. I did not pad them. They need real screenshots and one verifiable outcome each to carry weight; that is the biggest remaining credibility gap.
+5. The enterprise page mentions an "AI-driven platform" and "banking, insurance, and telecom" because the JSON does. Confirm the client is comfortable with that level of detail being public even without a name.
