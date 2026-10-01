@@ -112,15 +112,15 @@ export function Hero() {
             <div className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
               <span className="size-2 rounded-full bg-brand-violet" aria-hidden /> Our work
             </div>
-            <div className="relative h-[160px] overflow-hidden rounded-[10px] bg-gradient-to-br from-[#5B2A9E] to-[#8A2BE2]">
-              <Image src="/video/work-poster.jpg" alt="" fill sizes="320px" className="object-cover" />
+            <div className="relative h-[160px] overflow-hidden rounded-[10px] bg-[#08241B]">
+              <Image src="/video/work-reel-poster.jpg" alt="" fill sizes="320px" className="object-cover" />
               <DeferredVideo
-                src="/video/work.mp4"
+                src="/video/work-reel.mp4"
                 minWidth={1024}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <span className="absolute left-1/2 top-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-violet text-white shadow-[0_6px_18px_rgba(106,29,184,0.55)] transition-transform group-hover:scale-110">
-                <ArrowUpRight className="size-6" />
+              <span className="absolute bottom-2.5 right-2.5 flex size-9 items-center justify-center rounded-full bg-brand-violet text-white shadow-[0_4px_12px_rgba(106,29,184,0.5)] transition-transform group-hover:scale-110">
+                <ArrowUpRight className="size-4" />
               </span>
             </div>
           </Link>
