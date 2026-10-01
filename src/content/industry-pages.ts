@@ -121,7 +121,7 @@ export const industryPages: IndustryPage[] = [
       { slug: "mobile-app-development", why: "Field staff and vendors can record orders and deliveries from their phones." },
       { slug: "workflow-automation", why: "Routine steps such as order confirmations can move between systems without manual handoffs." },
     ],
-    projects: ["dairy-vendor-management-app"], // TODO(verify): the second dairy entry (placeholder slug dairy-vendor-management-app-2) is added once B3 decides whether to merge it.
+    projects: ["dairy-vendor-management-app"], // The two dairy JSON entries are one merged case-study page (see case-studies.ts).
     faqs: [
       {
         question: "What does vendor management software do?",

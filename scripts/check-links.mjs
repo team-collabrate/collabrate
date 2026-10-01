@@ -111,4 +111,4 @@ report(
 );
 
 console.log(`\nCrawled ${seen.size} pages, ${sitemapPaths.length} sitemap URLs.`);
-process.exit(failures > 0 ? 1 : 0);
+process.exitCode = failures > 0 ? 1 : 0;

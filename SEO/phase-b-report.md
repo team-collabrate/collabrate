@@ -269,3 +269,42 @@ Why no copy (decision for you):
 - The CSV has 5 confirmed towns (Aruppukottai, Tirunelveli, Tenkasi, Sivakasi, Kovilpatti), enough to start. But every one has `service_delivered`, `industry_type` and `review_permission` blank.
 - The spec says to draft town copy only from those columns, the notes, and the playbook's local hooks (which are hypotheses). With nothing in those columns, five town pages would differ only by town name and a few guessed industries, which is the near-identical doorway-page pattern the spec tells me to stop and ask about. So I stopped.
 - To unblock: for each town, fill `service_delivered`, `industry_type` (and whether you have permission to mention it), plus any real local detail in `notes`. Tamil text for the town pages (D11) is optional. Then I write unique copy per town and per district, with every local claim marked TODO(verify).
+
+## B9. Verification (done)
+
+All checks were run against a production build (`next build` then `next start`) with every Phase B page temporarily published (all 17 services, 5 industries, 5 case studies, and the pricing and about blocks), then reverted. Nothing is published now. Location pages have no copy, so they were verified earlier with the synthetic fixture (see B7), not here.
+
+New scripts (all committed): `scripts/verify-templates.mjs`, `scripts/check-uniqueness.mjs`, `scripts/check-forbidden.mjs`, `scripts/todo-report.mjs`, plus `check-links.mjs`, `check-slugs.mjs` and `check-service-copy.mjs` from earlier steps. The four that crawl take a base URL (default `http://localhost:3000`).
+
+1. lint, tsc, build: `npx tsc --noEmit` clean; `npm run lint` 0 errors (1 existing warning in `ui/social-media.tsx`); `npm run build` clean. Build output with everything published: 74 static pages. Every new route is static: `/industries`, `/portfolio/[slug]`, `/services/[slug]`, `/locations/[slug]` and all their `opengraph-image` routes are `●` (SSG), `/llms.txt`, `/manifest.webmanifest`, `/locations`, `/industries`, `/pricing`, `/about` are `○` (static). Only `/api/contact` and `/api/newsletter` are dynamic (existing).
+2. Per-template HTML (`verify-templates.mjs`, 29 pages: 17 services, 5 industries, 5 case studies, pricing, about): all passed. Each page has exactly one H1; a unique `<title>` of at most 60 characters; a 120 to 155 character description; canonical and `og:url` equal to its own URL; exactly one `og:image` and one `twitter:image`; JSON-LD that parses with no forbidden field (aggregateRating, review, telephone, streetAddress, founder, offers, geo); a BreadcrumbList that equals the visible breadcrumb; FAQ schema whose text is visible on the page.
+3. Sitemap: 36 URLs, no duplicates, none noindex, all answer 200; with nothing published it has 8 URLs (the existing pages only).
+4. `check-links.mjs`: 0 broken links, 0 links to unpublished pages, 0 orphans, in both states (36 pages crawled with everything published, 8 with nothing published).
+5. Text uniqueness (`check-uniqueness.mjs`): 156 same-template pairs (services, industries, case studies); highest 5-word-shingle overlap 11.4% (turf-booking-platform and gym-trainer-app). None above 50%. The CTA block and breadcrumb are excluded as shared. Location pairs: none to compare yet.
+6. Forbidden content (`check-forbidden.mjs`; 7 content files and 36 rendered pages): no em dashes, currency amounts, superlatives or promises, client-style company names, invented counts, PENDING placeholders or unresolved placeholders. Two notes: (a) the existing services copy has an en dash in "Sales Navigator–driven prospecting" (from the content JSON; not an em dash, left alone); (b) "AI Solutions" (a service category name) is allow-listed so it is not mistaken for a company name.
+7. Lighthouse mobile (local production build, default mobile throttling), one page per template:
+
+| Page | Performance | SEO | Accessibility | Best practices | LCP | TBT | CLS |
+|---|---|---|---|---|---|---|---|
+| /services/seo | 93 | 100 | 96 | 100 | 3.2 s | 60 ms | 0.007 |
+| /industries/booking-and-scheduling-platforms | 93 | 100 | 96 | 100 | 3.2 s | 40 ms | 0 |
+| /portfolio/turf-booking-platform | 92 | 100 | 96 | 100 | 3.3 s | 50 ms | 0.008 |
+| /pricing (for comparison) | 89 | 100 | 96 | 100 | 3.6 s | 80 ms | 0 |
+
+   LCP is above the 2.5 s target on every template, as it already was on the home page (A8). On the service page the LCP element is the first paragraph (text), time to first byte is 7 ms, first contentful paint is 1.5 s, and the delay comes from render-blocking CSS (about 570 ms estimated saving: one 18 KB stylesheet plus a small one) and the webfont swap (about 240 ms render delay). It is the same cause diagnosed in Phase A, not something the new templates added (they are server-rendered text, no video, no animation wrappers). TBT and CLS are fine. Accessibility 96: the two failing audits are in the shared footer (the newsletter status text contrast, and two link `aria-label` values that do not contain their visible text), existing code.
+8. TODO(verify) and unpublished entries: generated into [SEO/phase-b-todo.md](phase-b-todo.md) (74 TODO(verify) items, every one with file, entry and line; 29 entries still `published: false`).
+
+What you must supply or decide (consolidated):
+
+| Item | Needed for | If you do not |
+|---|---|---|
+| Review the copy, resolve each TODO(verify) in `SEO/phase-b-todo.md`, then set `published: true` per entry (17 services, 5 industries, 5 case studies, pricing block, about block) | everything | stays unpublished; live site unchanged |
+| `service_delivered`, `industry_type`, `review_permission` (and any real local detail in `notes`) for each of the 5 confirmed towns in `SEO/locations-input.csv`; Tamil text if wanted (D11) | location pages (B7) | no location pages; the hub 404s |
+| Commit `SEO/locations-input.csv` (it is untracked) | location pages building on Vercel | the Vercel build sees no CSV and builds no locations |
+| Real screenshots with alt text and one verifiable outcome per case study | case-study credibility (B3) | text-only case studies |
+| WhatsApp number (D6) as `NEXT_PUBLIC_WHATSAPP_NUMBER` | PageCTA WhatsApp button | no WhatsApp button |
+| Real LinkedIn and Calendly URLs (A11) | sameAs, About, footer, CTAs | hidden |
+| `CONTACT_WEBHOOK_URL`, `NEXT_PUBLIC_GA_ID`, `NEXT_PUBLIC_CLARITY_ID` in Vercel | contact form and analytics | form shows its email fallback; no analytics |
+| Decide: soften the About page's existing "One team" wording; keep or drop the AI-screening line on the workforce page; keep or drop the turf project as an e-commerce example | copy accuracy | left as is |
+
+Open items outside Phase B: LCP target (render-blocking CSS and fonts, A8); the `Reveal` wrapper leaves inline `opacity:0` in the raw HTML of older pages; the footer a11y issues above; consent banner decision (D4).
