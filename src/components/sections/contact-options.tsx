@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import Script from "next/script";
 import { ArrowUpRight, Loader2, CheckCircle2, CalendarDays, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { Button } from "@/components/ui/button";
@@ -11,6 +13,15 @@ import { Select } from "@/components/ui/select";
 import { PendingLink } from "@/components/shared/pending-link";
 import { site } from "@/lib/content";
 import { track } from "@/lib/analytics";
+
+// Cloudflare Turnstile is optional: the widget only renders when the site key is set.
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
+declare global {
+  interface Window {
+    turnstile?: { reset: () => void };
+  }
+}
 
 const serviceOptions = ["Web/App Development", "Marketing", "AI Solutions", "Not Sure Yet"];
 const heardFromOptions = ["Google", "LinkedIn", "Instagram", "ChatGPT or other AI", "Referral", "Other"];
@@ -37,6 +48,9 @@ export function ContactOptions() {
       form.reset();
     } catch {
       setStatus("error");
+    } finally {
+      // A Turnstile token works once; get a fresh one for any retry.
+      window.turnstile?.reset();
     }
   };
 
@@ -105,9 +119,26 @@ export function ContactOptions() {
                 </Select>
               </div>
               <div className="flex flex-col gap-2">
+                <Label htmlFor="town">Which town are you in?</Label>
+                <Input id="town" name="town" maxLength={80} autoComplete="address-level2" placeholder="Optional" />
+              </div>
+              <div className="flex flex-col gap-2">
                 <Label htmlFor="details">Project Details <span className="text-brand-coral">*</span></Label>
                 <Textarea id="details" name="details" required />
               </div>
+
+              {/* Honeypot: hidden from people and screen readers, bots tend to fill it. */}
+              <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                <label htmlFor="hp_check">Leave this field empty</label>
+                <input id="hp_check" name="hp_check" type="text" tabIndex={-1} autoComplete="off" />
+              </div>
+
+              {TURNSTILE_SITE_KEY && (
+                <>
+                  <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+                  <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light" />
+                </>
+              )}
 
               <Button type="submit" variant="gradient" size="lg" disabled={status === "submitting" || status === "done"} className="mt-1 w-full">
                 {(status === "idle" || status === "error") && <>Send Message <ArrowUpRight className="size-4" /></>}
@@ -123,6 +154,13 @@ export function ContactOptions() {
                   .
                 </p>
               )}
+              <p className="text-xs leading-relaxed text-foreground/65">
+                We use your details only to reply to your enquiry. See our{" "}
+                <Link href="/privacy" className="underline underline-offset-2">
+                  Privacy Policy
+                </Link>
+                .
+              </p>
             </form>
           </Reveal>
         </div>
