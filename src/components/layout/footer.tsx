@@ -94,7 +94,7 @@ function Social({
 }
 
 export function Footer({ navData }: { navData: SiteNavData }) {
-  const { services, industries } = navData;
+  const { services, industries, areas } = navData;
   const marquee = [0, 1, 2, 3];
 
   return (
@@ -202,6 +202,33 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                           <Link href={l.href} className={linkCls}>
                             {l.label}
                           </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                )}
+                {areas.length > 0 && (
+                  <nav aria-label="Areas we serve" className="max-md:col-span-2 md:max-lg:col-span-3">
+                    <div className={`${eyebrow} mb-5`}>Areas we serve</div>
+                    <ul className="flex flex-col gap-4 max-lg:gap-3">
+                      {areas.map((area) => (
+                        <li key={area.name}>
+                          {area.district ? (
+                            <Link href={area.district.href} className="text-[15px] font-medium text-foreground transition-colors hover:text-brand-violet">
+                              {area.name}
+                            </Link>
+                          ) : (
+                            <span className="text-[15px] font-medium text-foreground">{area.name}</span>
+                          )}
+                          <ul className="mt-1 flex flex-col gap-1">
+                            {area.towns.map((t) => (
+                              <li key={t.href}>
+                                <Link href={t.href} className={linkCls}>
+                                  {t.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
                         </li>
                       ))}
                     </ul>

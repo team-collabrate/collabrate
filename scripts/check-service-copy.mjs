@@ -5,6 +5,9 @@ import { readFileSync } from "node:fs";
 import { caseStudies } from "../src/content/case-studies.ts";
 import { pricingContent } from "../src/content/pricing-page.ts";
 import { aboutContent } from "../src/content/about-page.ts";
+import { townCopy, districtCopy } from "../src/content/location-copy.ts";
+import { parseCsvObjects } from "../src/lib/csv.ts";
+import { slugify } from "../src/lib/slug.ts";
 import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
@@ -121,5 +124,42 @@ for (const sp of servicePages) for (const r of sp.relatedProjects) if (!caseStud
   }
   if (aboutContent.locationLine !== "Collabrate, Tamil Nadu, India") fail("about", "location line must match the schema");
   console.log(`about: ${aboutContent.howProjectRuns.length} steps, location line ok, published=${aboutContent.published}`);
+}
+
+// ---- Location copy (empty until the owner fills the CSV) ----
+{
+  const csvPath = new URL("../SEO/locations-input.csv", import.meta.url);
+  let confirmed = new Set();
+  try {
+    confirmed = new Set(parseCsvObjects(readFileSync(csvPath, "utf8")).filter((r) => r.confirmed?.toLowerCase() === "yes").map((r) => slugify(r.town)));
+  } catch {
+    console.log("locations: SEO/locations-input.csv not found, treating as no confirmed towns");
+  }
+  for (const t of townCopy) {
+    const slug = `town:${t.slug}`;
+    if (!confirmed.has(t.slug)) fail(slug, "copy exists for a town that is not confirmed=yes in the CSV");
+    if (t.description.length < 120 || t.description.length > 155) fail(slug, `description ${t.description.length} chars`);
+    const n = words(t.intro);
+    if (n < 50 || n > 70) fail(slug, `intro ${n} words`);
+    if (t.faqs.length !== 5) fail(slug, `${t.faqs.length} faqs, expected 5`);
+    for (const f of t.faqs) {
+      const w = words(f.answer);
+      if (w < 40 || w > 80) fail(slug, `faq "${f.question}" answer ${w} words`);
+    }
+    if (t.services.length < 3 || t.services.length > 5) fail(slug, "services must be 3 to 5");
+    for (const sv of t.services) if (!SERVICE_SLUGS.has(sv)) fail(slug, `unknown service ${sv}`);
+    if (t.industry && !industryPages.some((i) => i.slug === t.industry)) fail(slug, `unknown industry ${t.industry}`);
+    if (t.neighbours.length < 2 || t.neighbours.length > 3) fail(slug, "neighbours must be 2 to 3");
+    for (const nb of t.neighbours) if (!confirmed.has(nb)) fail(slug, `neighbour ${nb} is not a confirmed town`);
+    const text = JSON.stringify(t);
+    for (const re of [...FORBIDDEN, /the best/i, /\[city\]/i, /\d+\+? (clients|projects|years)/i]) if (re.test(text)) fail(slug, `forbidden pattern ${re}`);
+    console.log(`${slug}: ok, published=${t.published}`);
+  }
+  for (const d of districtCopy) {
+    const slug = `district:${d.slug}`;
+    if (d.description.length < 120 || d.description.length > 155) fail(slug, `description ${d.description.length} chars`);
+    for (const re of FORBIDDEN) if (re.test(JSON.stringify(d))) fail(slug, `forbidden pattern ${re}`);
+  }
+  console.log(`locations: ${confirmed.size} confirmed towns in the CSV, ${townCopy.length} town copies, ${districtCopy.length} district copies`);
 }
 process.exit(bad ? 1 : 0);

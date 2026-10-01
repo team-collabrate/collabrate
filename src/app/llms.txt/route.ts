@@ -1,4 +1,5 @@
 import { publishedCaseStudies, caseStudyPath } from "@/lib/case-studies";
+import { districtPath, publishedDistrictPages, publishedTownPages, townPath } from "@/lib/locations";
 import { industryPath, jsonIndustryFor, publishedIndustryPages } from "@/lib/industry-pages";
 import { publishedServicePages, serviceDisplayName, servicePath } from "@/lib/service-pages";
 import { serviceCategories, site, siteUrl } from "@/lib/content";
@@ -59,6 +60,18 @@ export function GET() {
 
   if (studies.length > 0) {
     sections.push(["## Case studies", ...studies.map((s) => line(s.title, caseStudyPath(s.slug), s.description))].join("\n"));
+  }
+
+  const districts = publishedDistrictPages();
+  const towns = publishedTownPages();
+  if (districts.length + towns.length > 0) {
+    sections.push(
+      [
+        "## Areas we serve",
+        ...districts.map((d) => line(`${d.name} district`, districtPath(d.slug), d.copy.description)),
+        ...towns.map((t) => line(t.name, townPath(t.slug), t.copy.description)),
+      ].join("\n")
+    );
   }
 
   return new Response(sections.join("\n\n") + "\n", {

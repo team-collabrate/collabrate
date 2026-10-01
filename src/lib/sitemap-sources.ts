@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { publishedBlogPosts } from "@/content/blog-posts";
 import { siteUrl } from "@/lib/content";
 import { caseStudyPath, publishedCaseStudies } from "@/lib/case-studies";
+import { districtPath, publishedDistrictPages, publishedTownPages, townPath } from "@/lib/locations";
 import { industryPath, publishedIndustryPages } from "@/lib/industry-pages";
 import { publishedServicePages, servicePath } from "@/lib/service-pages";
 
@@ -84,8 +85,31 @@ const caseStudySitemap = (): SitemapEntry[] =>
     priority: 0.7,
   }));
 
+// The /locations hub is listed only once at least one district or town page is published.
+const locationSitemap = (): SitemapEntry[] => {
+  const districts = publishedDistrictPages();
+  const towns = publishedTownPages();
+  if (districts.length + towns.length === 0) return [];
+  const newest = [...districts.map((d) => d.copy.updated), ...towns.map((t) => t.copy.updated)].sort().at(-1)!;
+  return [
+    { url: `${siteUrl}/locations`, lastModified: new Date(newest), changeFrequency: "monthly", priority: 0.6 },
+    ...districts.map((d) => ({
+      url: `${siteUrl}${districtPath(d.slug)}`,
+      lastModified: new Date(d.copy.updated),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...towns.map((t) => ({
+      url: `${siteUrl}${townPath(t.slug)}`,
+      lastModified: new Date(t.copy.updated),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+  ];
+};
+
 /**
  * Later phases append here: service pages (B1), industry pages (B2), case studies (B3),
  * location pages. Each source is a function returning its own entries.
  */
-export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, industryPagesSitemap, caseStudySitemap, blogEntries];
+export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, industryPagesSitemap, caseStudySitemap, locationSitemap, blogEntries];

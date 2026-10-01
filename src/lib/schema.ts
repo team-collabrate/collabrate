@@ -1,4 +1,5 @@
 import { isPending, site, siteUrl } from "@/lib/content";
+import { publishedTownPages } from "@/lib/locations";
 
 /**
  * schema.org builders. One stable entity graph: every node has an @id so search and AI
@@ -19,6 +20,8 @@ const AREA_SERVED = [
   ...["India", "Singapore", "Malaysia", "United Arab Emirates", "Saudi Arabia", "Qatar", "Kuwait", "Oman", "Bahrain"].map(
     (name) => ({ "@type": "Country", name })
   ),
+  // Only towns that have a published location page (none until the owner publishes one).
+  ...publishedTownPages().map((town) => ({ "@type": "City", name: town.name })),
 ];
 
 const KNOWS_ABOUT = [

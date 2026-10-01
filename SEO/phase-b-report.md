@@ -244,3 +244,28 @@ Notes:
 1. The image alt text is one fixed string per template ("Collabrate service", "Collabrate industry", "Collabrate case study"). Fine for now; it can be made page-specific later.
 2. The OG images use the framework's default font, not the site's Sora and Hanken fonts, because the installed font files are WOFF2 (the image renderer needs TTF, OTF or WOFF). It reads well; supplying a TTF would match the brand exactly.
 3. B7 will add its own `opengraph-image.tsx` for `/locations/[slug]` using the same helper.
+
+## B7. South Tamil Nadu location pages (scaffold only; no pages written)
+
+Built the machinery. No town or district page exists, because the copy cannot honestly be written yet (see "Why no copy").
+
+Files: `src/lib/csv.ts`, `src/lib/locations.ts`, `src/content/location-copy.ts` (empty), `src/app/locations/page.tsx` (hub), `src/app/locations/[slug]/page.tsx` (one route, a town template and a district template), `src/app/locations/[slug]/opengraph-image.tsx`, plus `locationSitemap`, the footer "Areas we serve" block, Organization `areaServed` (published towns only) and a "Areas we serve" section in `/llms.txt`. `scripts/check-service-copy.mjs` now lints location copy.
+
+Rules enforced in code:
+- A page exists only if the town has `confirmed=yes` in `SEO/locations-input.csv` AND an entry in `src/content/location-copy.ts`. Verified: copy for an unconfirmed town (Rajapalayam) produced a 404.
+- Only the public CSV fields (town, district, Tamil name, aliases) are read. `service_delivered`, `industry_type`, `review_permission` and `notes` are never loaded into anything that renders.
+- District slug is `<district>-district` (for example `tirunelveli-district`), so the Tirunelveli town and district do not collide.
+- Town page: title "Website Development in <Town> | Collabrate", H1 pattern from the playbook, intro, what local businesses need, 3 to 5 services (links to published pages), optional anonymised example and optional Tamil block (only if you supply them), 5 visible FAQs with FAQ schema, links to the district, 2 to 3 neighbouring towns and one industry (published targets only), PageCTA. Schema: Service with `areaServed` City + breadcrumbs. No address, geo, phone or rating.
+- Breadcrumb Home > Locations > District > Town; the district item is dropped when the district page is not published, so a breadcrumb never links to a draft.
+- Zero published entries: `/locations` returns 404 in a normal build; in a preview build it is noindex. It is out of the sitemap, the footer and `llms.txt` until the first page is published.
+- The CSV lives in `SEO/` (not in `src`) and is currently untracked in git. If it is not committed, the Vercel build will not see it and will build no location pages. Commit it when you publish locations. It contains only your confirmations and notes, never client names.
+
+Verification:
+- Normal build with no copy: `/locations`, a town URL and a district URL all 404; 0 location URLs in the sitemap; the home page and footer are unchanged.
+- Temporary synthetic fixture (3 towns, 2 districts, one published district, one unpublished district; reverted, 0 "TEST" strings remain): all routes built static, including OG images; the sitemap listed the hub, the published district and 3 towns; each page had 1 H1, 1 og:image and indexable robots; breadcrumbs were Home > Locations > Virudhunagar District > Sivakasi, but Home > Locations > Tirunelveli for the town whose district was unpublished; Organization `areaServed` gained the published cities; the footer "Areas we serve" grouped towns by district and did not link the unpublished district; `llms.txt` gained "Areas we serve"; `check-links` crawled 36 pages with 0 broken links, 0 links to unpublished pages and 0 orphans.
+- lint, tsc, build clean. Nothing is published.
+
+Why no copy (decision for you):
+- The CSV has 5 confirmed towns (Aruppukottai, Tirunelveli, Tenkasi, Sivakasi, Kovilpatti), enough to start. But every one has `service_delivered`, `industry_type` and `review_permission` blank.
+- The spec says to draft town copy only from those columns, the notes, and the playbook's local hooks (which are hypotheses). With nothing in those columns, five town pages would differ only by town name and a few guessed industries, which is the near-identical doorway-page pattern the spec tells me to stop and ask about. So I stopped.
+- To unblock: for each town, fill `service_delivered`, `industry_type` (and whether you have permission to mention it), plus any real local detail in `notes`. Tamil text for the town pages (D11) is optional. Then I write unique copy per town and per district, with every local claim marked TODO(verify).

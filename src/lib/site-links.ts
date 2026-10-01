@@ -1,3 +1,4 @@
+import { districtPath, publishedDistrictPages, publishedTownPages, townPath } from "@/lib/locations";
 import { publishedIndustryPages, industryPath, jsonIndustryFor } from "@/lib/industry-pages";
 import { publishedServicePages, serviceDisplayName, servicePath } from "@/lib/service-pages";
 
@@ -19,6 +20,23 @@ export interface SiteNavData {
   services: NavLinkItem[];
   /** Every published industry page. */
   industries: NavLinkItem[];
+  /** "Areas we serve": published towns grouped by district (the district link only if its page is published). */
+  areas: { district: NavLinkItem | null; name: string; towns: NavLinkItem[] }[];
+}
+
+function getAreas(): SiteNavData["areas"] {
+  const towns = publishedTownPages();
+  const districts = publishedDistrictPages();
+  const names = [...new Set(towns.map((t) => t.districtSlug))];
+  return names.map((slug) => {
+    const first = towns.find((t) => t.districtSlug === slug)!;
+    const districtPage = districts.find((d) => d.slug === slug);
+    return {
+      name: first.districtName,
+      district: districtPage ? { label: `${districtPage.name} district`, href: districtPath(districtPage.slug) } : null,
+      towns: towns.filter((t) => t.districtSlug === slug).map((t) => ({ label: t.name, href: townPath(t.slug) })),
+    };
+  });
 }
 
 export function getSiteNavData(): SiteNavData {
@@ -27,5 +45,6 @@ export function getSiteNavData(): SiteNavData {
     serviceHrefs: Object.fromEntries(servicePages.map((p) => [p.serviceName, servicePath(p.slug)])),
     services: servicePages.map((p) => ({ label: serviceDisplayName(p), href: servicePath(p.slug) })),
     industries: publishedIndustryPages().map((p) => ({ label: jsonIndustryFor(p).name, href: industryPath(p.slug) })),
+    areas: getAreas(),
   };
 }
