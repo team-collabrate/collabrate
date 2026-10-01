@@ -75,3 +75,35 @@ TODO(verify) items, by page (all marked in the content file):
 - ai-voice-assistants: phone and calendar integration scope; data retention and access.
 - custom-llm-integration: evaluation method; data-handling statements (kept deliberately mild).
 - All pages: related industry and project mapping is my judgement (not rendered until B2 and B3).
+
+## B2. Industry pages (5) and /industries hub (done, all drafts)
+
+Files: `src/content/industry-pages.ts` (copy, all `published: false`), `src/lib/industry-pages.ts`, `src/app/industries/[slug]/page.tsx`, `src/app/industries/page.tsx` (hub), `industryPagesSitemap` in `src/lib/sitemap-sources.ts`, and `scripts/check-service-copy.mjs` (now also lints industry pages and cross-checks service related industries).
+
+Pages: booking-and-scheduling-platforms, vendor-and-distribution-management, workforce-and-recruitment-systems, business-and-corporate-websites, ecommerce-websites-and-stores. Each has: H1, a 40 to 60 word answer, the JSON description, "What problem does this solve?", a general feature checklist, "Which services apply?" (one sentence each on why), a 4-question FAQ, PageCTA. Schema: Service + 3-level breadcrumbs + FAQPage.
+
+Project to industry mapping (from the JSON `industry` field; for your review):
+| Industry | Projects |
+|---|---|
+| Booking and scheduling | Turf Booking Platform (Sports & Recreation), Gym Trainer App (Fitness & Wellness) |
+| Vendor and distribution | Dairy Vendor Management App (Food & Dairy); the second dairy entry joins once B3 decides to merge or split it |
+| Workforce and recruitment | HR & Recruitment Dashboard |
+| Business and corporate | Enterprise Software Business Website |
+| E-commerce | none: the JSON has no e-commerce project, so the page has no proof section |
+
+Project links are not rendered yet; B3 creates those pages.
+
+Publish gate (same as services):
+- A normal build has no industry pages and `/industries` returns 404 (nothing published). Verified: `/industries` 404, industry URL 404, 0 industry URLs in the sitemap.
+- Preview build (`SHOW_UNPUBLISHED=1`): all 5 pages pass the template checks (1 H1, title at most 60, description 120 to 155, own canonical, 1 og:image, FAQ schema equals visible text, noindex, no opacity:0). The hub is noindex and labels each draft "(draft, not linked)".
+- Publish test (temporary, reverted): with one industry and one service published, the sitemap listed the hub, that industry and that service; the hub became indexable and linked only the published industry; the industry page linked only the published service (not drafts); the service page linked only the published industry; `/services` listed the published service. Nothing is published now.
+- The hub only appears in the sitemap and becomes indexable once at least one industry page is published.
+
+Cross-links added: service pages now show "Industries we build for" (published industries only). Industry pages link their services (published only; in preview builds drafts show as plain text "(draft, not linked)" so you can see the intent).
+
+TODO(verify) / for you:
+1. workforce page: the services list suggests custom-llm-integration ("AI can help with tasks such as summarizing applications"). AI in hiring has fairness and legal angles; keep, reword or drop.
+2. vendor page: migration approach in the last FAQ ("design around how your team already works", moving off spreadsheets).
+3. business page: CMS handover wording.
+4. e-commerce page has no project proof; add one when you have a real example.
+5. The general feature checklists and "problem" paragraphs are educational and mine, not from the JSON; skim them for accuracy about your market.

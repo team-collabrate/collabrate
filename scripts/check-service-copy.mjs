@@ -1,6 +1,7 @@
 // Copy lint for src/content/service-pages.ts. Run: node --no-warnings scripts/check-service-copy.mjs
 import { servicePages } from "../src/content/service-pages.ts";
 import { slugFor } from "../src/lib/slug.ts";
+import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
 const FORBIDDEN = [/—/, /–/, /\bbest\b/i, /\bleading\b/i, /number one/i, /guarantee/i, /\bcheap\b/i, /\baffordable\b/i, /PENDING_LINK/, /[₹$€£]\s?\d/, /\d\s?(INR|Rs)\b/i, /\bRs\.?\s?\d/];
@@ -37,6 +38,29 @@ for (const p of servicePages) {
   if (/\d/.test(p.howItWorks.map((s) => s.title + s.text).join(" "))) fail(p.slug, "digits in howItWorks (no timeframes or numbers)");
   console.log(`${p.slug}: answer ${a}w, title ${title.length}c, desc ${p.description.length}c, ${p.faqs.length} faqs, published=${p.published}`);
 }
-process.exit(bad ? 1 : 0);
 
 console.log(`${servicePages.length} of 17 service pages written`);
+
+// ---- Industry pages ----
+const SERVICE_SLUGS = new Set(servicePages.map((p) => p.slug));
+for (const p of industryPages) {
+  const slug = `industry:${p.slug}`;
+  if (slugFor(p.industryName) !== p.slug) fail(slug, `slug does not match "${p.industryName}"`);
+  if (p.title.length > 60) fail(slug, `title ${p.title.length} chars`);
+  if (p.description.length < 120 || p.description.length > 155) fail(slug, `description ${p.description.length} chars`);
+  const a = words(p.answer);
+  if (a < 40 || a > 60) fail(slug, `answer ${a} words`);
+  if (p.faqs.length < 4 || p.faqs.length > 6) fail(slug, `${p.faqs.length} faqs`);
+  for (const f of p.faqs) {
+    const n = words(f.answer);
+    if (n < 40 || n > 80) fail(slug, `faq "${f.question}" answer ${n} words`);
+  }
+  for (const s of p.services) if (!SERVICE_SLUGS.has(s.slug)) fail(slug, `unknown service ${s.slug}`);
+  for (const r of p.projects) if (!PROJECTS.has(r)) fail(slug, `unknown project ${r}`);
+  const text = JSON.stringify(p);
+  for (const re of FORBIDDEN) if (re.test(text)) fail(slug, `forbidden pattern ${re}`);
+  console.log(`${slug}: answer ${a}w, title ${p.title.length}c, desc ${p.description.length}c, ${p.faqs.length} faqs, ${p.services.length} services, ${p.projects.length} projects, published=${p.published}`);
+}
+// Every service page's relatedIndustries must be a real industry page.
+for (const sp of servicePages) for (const r of sp.relatedIndustries) if (!industryPages.some((i) => i.slug === r)) fail(sp.slug, `relatedIndustries ${r} has no industry page`);
+process.exit(bad ? 1 : 0);

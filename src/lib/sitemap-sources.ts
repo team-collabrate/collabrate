@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { publishedBlogPosts } from "@/content/blog-posts";
 import { siteUrl } from "@/lib/content";
+import { industryPath, publishedIndustryPages } from "@/lib/industry-pages";
 import { publishedServicePages, servicePath } from "@/lib/service-pages";
 
 export type SitemapEntry = MetadataRoute.Sitemap[number];
@@ -57,8 +58,24 @@ const servicePagesSitemap = (): SitemapEntry[] =>
     priority: 0.8,
   }));
 
+// The /industries hub is listed only once at least one industry page is published.
+const industryPagesSitemap = (): SitemapEntry[] => {
+  const pages = publishedIndustryPages();
+  if (pages.length === 0) return [];
+  const newest = pages.map((p) => p.updated).sort().at(-1)!;
+  return [
+    { url: `${siteUrl}/industries`, lastModified: new Date(newest), changeFrequency: "monthly", priority: 0.7 },
+    ...pages.map((page) => ({
+      url: `${siteUrl}${industryPath(page.slug)}`,
+      lastModified: new Date(page.updated),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
+  ];
+};
+
 /**
  * Later phases append here: service pages (B1), industry pages (B2), case studies (B3),
  * location pages. Each source is a function returning its own entries.
  */
-export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, blogEntries];
+export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, industryPagesSitemap, blogEntries];

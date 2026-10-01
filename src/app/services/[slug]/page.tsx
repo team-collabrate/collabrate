@@ -13,6 +13,7 @@ import {
   servicePageTitle,
   servicePath,
 } from "@/lib/service-pages";
+import { getIndustryPage, industryPath } from "@/lib/industry-pages";
 import { isPublished } from "@/lib/publish";
 import { buildMetadata } from "@/lib/seo";
 import { serviceGraph } from "@/lib/schema";
@@ -61,6 +62,11 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
       href: servicePath(p!.slug),
       description: jsonServiceFor(p!).tagline,
     }));
+
+  const relatedIndustries: RelatedLink[] = page.relatedIndustries
+    .map((s) => getIndustryPage(s))
+    .filter((p) => p !== undefined && isPublished(p))
+    .map((p) => ({ label: p!.h1, href: industryPath(p!.slug) }));
 
   return (
     <main>
@@ -154,6 +160,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </section>
 
         <RelatedLinks title="Related services" links={relatedServices} />
+        <RelatedLinks title="Industries we build for" links={relatedIndustries} />
 
         <PageCTA whatsappMessage={`Hi Collabrate, I am interested in ${name}.`} />
       </article>
