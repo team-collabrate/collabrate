@@ -6,6 +6,7 @@ import { Minus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/shared/reveal";
 import { contactFaq, servicesFaq, site } from "@/lib/content";
+import { track } from "@/lib/analytics";
 
 // Merge both FAQ sets, dropping the duplicate "outside India" question.
 const items = [
@@ -33,6 +34,7 @@ export function FaqSplit() {
             type="single"
             collapsible
             defaultValue={items[0]?.question}
+            onValueChange={(question) => question && track("scroll_faq_open", { question })}
             className="flex flex-col gap-4 rounded-[24px] border border-black/10 bg-panel p-4 dark:border-white/15"
           >
             {items.map((faq) => (

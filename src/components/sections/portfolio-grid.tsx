@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
 import { portfolioProjects, type PortfolioProject } from "@/lib/content";
+import { track } from "@/lib/analytics";
 
 export function PortfolioGrid() {
   return (
@@ -19,6 +20,8 @@ function PortfolioCard({ project }: { project: PortfolioProject }) {
     <motion.article
       variants={staggerItem}
       whileHover={{ y: -4 }}
+      onViewportEnter={() => track("view_portfolio_item", { item: project.title })}
+      viewport={{ once: true, amount: 0.6 }}
       className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-7 shadow-sm transition-colors duration-300 hover:border-brand-purple/40 sm:p-8"
     >
       <span className="text-xs font-semibold uppercase tracking-wider text-brand-violet">

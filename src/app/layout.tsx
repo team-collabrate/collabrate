@@ -5,6 +5,7 @@ import "./globals.css";
 import { site, siteUrl } from "@/lib/content";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { Analytics } from "@/components/analytics/analytics";
 
 const description =
   "Collabrate designs, builds, and markets digital products for businesses that need one accountable team instead of multiple vendors. Web and app development, marketing, and AI solutions.";
@@ -82,6 +83,7 @@ export default function RootLayout({
         <Navbar />
         <div id="main-content">{children}</div>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

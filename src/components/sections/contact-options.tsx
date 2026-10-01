@@ -10,16 +10,34 @@ import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
 import { PendingLink } from "@/components/shared/pending-link";
 import { site } from "@/lib/content";
+import { track } from "@/lib/analytics";
 
 const serviceOptions = ["Web/App Development", "Marketing", "AI Solutions", "Not Sure Yet"];
+const heardFromOptions = ["Google", "LinkedIn", "Instagram", "ChatGPT or other AI", "Referral", "Other"];
 
 export function ContactOptions() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "done">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "done" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Real submission: posts to /api/contact, which forwards to CONTACT_WEBHOOK_URL. Success
+  // (and the generate_lead event) only happen when the server confirms it.
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
     setStatus("submitting");
-    setTimeout(() => setStatus("done"), 1200);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      track("generate_lead", { service: String(data.service ?? ""), heard_from: String(data.heardFrom ?? "") });
+      setStatus("done");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -78,15 +96,33 @@ export function ContactOptions() {
                 </Select>
               </div>
               <div className="flex flex-col gap-2">
+                <Label htmlFor="heardFrom">How did you hear about us?</Label>
+                <Select id="heardFrom" name="heardFrom" defaultValue="">
+                  <option value="">Select one (optional)</option>
+                  {heardFromOptions.map((opt) => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </Select>
+              </div>
+              <div className="flex flex-col gap-2">
                 <Label htmlFor="details">Project Details <span className="text-brand-coral">*</span></Label>
                 <Textarea id="details" name="details" required />
               </div>
 
-              <Button type="submit" variant="gradient" size="lg" disabled={status !== "idle"} className="mt-1 w-full">
-                {status === "idle" && <>Send Message <ArrowUpRight className="size-4" /></>}
+              <Button type="submit" variant="gradient" size="lg" disabled={status === "submitting" || status === "done"} className="mt-1 w-full">
+                {(status === "idle" || status === "error") && <>Send Message <ArrowUpRight className="size-4" /></>}
                 {status === "submitting" && <><Loader2 className="size-4 animate-spin" /> Sending...</>}
                 {status === "done" && <><CheckCircle2 className="size-4" /> Sent, we&apos;ll be in touch</>}
               </Button>
+              {status === "error" && (
+                <p role="alert" className="text-sm text-brand-coral">
+                  We couldn&apos;t send your message right now. Please email us at{" "}
+                  <a href={`mailto:${site.email}`} className="font-medium underline underline-offset-2">
+                    {site.email}
+                  </a>
+                  .
+                </p>
+              )}
             </form>
           </Reveal>
         </div>

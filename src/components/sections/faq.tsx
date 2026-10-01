@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import type { FaqItem } from "@/lib/content";
+import { track } from "@/lib/analytics";
 
 export function FAQ({
   eyebrow = "FAQ",
@@ -24,7 +25,11 @@ export function FAQ({
         <SectionHeading eyebrow={eyebrow} title={title} description={description} />
 
         <Reveal delay={0.1} className="mt-16">
-          <Accordion type="single" collapsible className="rounded-3xl border border-border bg-card px-6 sm:px-8">
+          <Accordion
+            type="single"
+            collapsible
+            onValueChange={(question) => question && track("scroll_faq_open", { question })}
+            className="rounded-3xl border border-border bg-card px-6 sm:px-8">
             {items.map((faq) => (
               <AccordionItem key={faq.question} value={faq.question}>
                 <AccordionTrigger>{faq.question}</AccordionTrigger>
