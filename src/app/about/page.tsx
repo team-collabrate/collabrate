@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { ArrowUpRight } from "lucide-react";
@@ -6,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { AboutPillars } from "@/components/sections/about-pillars";
+import { aboutContent } from "@/content/about-page";
+import { isPending, serviceCategories, site, stripServiceParenthetical } from "@/lib/content";
+import { SHOW_UNPUBLISHED } from "@/lib/publish";
+import { publishedServicePages, servicePath } from "@/lib/service-pages";
 
 const pageMeta = {
   title: "About Collabrate, a Tamil Nadu Digital Agency",
@@ -22,7 +27,15 @@ const facts = [
   "Serving clients across India, Singapore, Malaysia, and the Gulf countries",
 ];
 
+// The new sections are live only once aboutContent.published is true (or in a preview build).
+const showNew = aboutContent.published || SHOW_UNPUBLISHED;
+
 export default function AboutPage() {
+  const liveServices = new Map(publishedServicePages().map((p) => [p.serviceName, p.slug]));
+  const profiles = [
+    { label: "LinkedIn", href: site.social.linkedin },
+    { label: "Instagram", href: site.social.instagram },
+  ].filter((p) => !isPending(p.href));
   return (
     <main>
       <PageJsonLd type="AboutPage" meta={pageMeta} crumb="About" />
@@ -67,6 +80,110 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
+
+      {showNew && (
+        <section className="relative pb-16 sm:pb-24">
+          <div className="mx-auto max-w-4xl space-y-14 px-6">
+            {!aboutContent.published && (
+              <p className="rounded-[10px] border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+                Draft preview. The sections below are not published yet; the live page shows the original copy.
+              </p>
+            )}
+
+            <div role="group" aria-labelledby="why">
+              <h2 id="why" className="text-2xl font-semibold tracking-tight">Why does Collabrate exist?</h2>
+              <div className="mt-5 max-w-3xl space-y-4 text-muted-foreground">
+                {aboutContent.whyWeExist.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            </div>
+
+            <div role="group" aria-labelledby="runs">
+              <h2 id="runs" className="text-2xl font-semibold tracking-tight">How does a project run?</h2>
+              <ol className="mt-5 grid gap-3 sm:grid-cols-2">
+                {aboutContent.howProjectRuns.map((step, i) => (
+                  <li key={step.title} className="rounded-2xl border border-border p-5">
+                    <span className="text-sm font-semibold text-brand-violet">Step {i + 1}</span>
+                    <h3 className="mt-1 font-semibold text-foreground">{step.title}</h3>
+                    <p className="mt-1.5 text-sm text-muted-foreground">{step.text}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <div role="group" aria-labelledby="what">
+              <h2 id="what" className="text-2xl font-semibold tracking-tight">What do we do, and with which tools?</h2>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+                {serviceCategories.map((category) => (
+                  <li key={category.id} className="rounded-2xl border border-border p-5">
+                    <h3 className="font-semibold text-foreground">{category.heading}</h3>
+                    <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+                      {category.services.map((service) => {
+                        const slug = liveServices.get(service.name);
+                        return (
+                          <li key={service.name}>
+                            {slug ? (
+                              <Link href={servicePath(slug)} className="underline-offset-4 hover:text-foreground hover:underline">
+                                {stripServiceParenthetical(service.name)}
+                              </Link>
+                            ) : (
+                              service.name
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-muted-foreground">{aboutContent.toolsLine}</p>
+              <p className="mt-2 text-muted-foreground">
+                See{" "}
+                <Link href="/services" className="font-medium text-brand-violet underline-offset-4 hover:underline">all services</Link>
+                , the{" "}
+                <Link href="/portfolio" className="font-medium text-brand-violet underline-offset-4 hover:underline">work we have built</Link>
+                , and{" "}
+                <Link href="/pricing" className="font-medium text-brand-violet underline-offset-4 hover:underline">how pricing works</Link>
+                .
+              </p>
+            </div>
+
+            <div role="group" aria-labelledby="where">
+              <h2 id="where" className="text-2xl font-semibold tracking-tight">Where do we operate?</h2>
+              <div className="mt-5 max-w-3xl space-y-3 text-muted-foreground">
+                {aboutContent.whereWeOperate.map((p) => (
+                  <p key={p}>{p}</p>
+                ))}
+              </div>
+            </div>
+
+            <div role="group" aria-labelledby="reach">
+              <h2 id="reach" className="text-2xl font-semibold tracking-tight">How can you reach us?</h2>
+              <address className="mt-5 not-italic text-muted-foreground">
+                <p className="font-medium text-foreground">{aboutContent.locationLine}</p>
+                <p className="mt-1">
+                  <a href={`mailto:${site.email}`} className="text-brand-violet underline-offset-4 hover:underline">
+                    {site.email}
+                  </a>
+                </p>
+                {profiles.length > 0 && (
+                  <p className="mt-1">
+                    {profiles.map((profile, i) => (
+                      <span key={profile.label}>
+                        {i > 0 && " · "}
+                        <a href={profile.href} rel="noopener noreferrer" className="text-brand-violet underline-offset-4 hover:underline">
+                          {profile.label}
+                        </a>
+                      </span>
+                    ))}
+                  </p>
+                )}
+              </address>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="relative py-16 sm:py-24">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 text-center">

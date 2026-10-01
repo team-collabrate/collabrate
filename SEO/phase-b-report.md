@@ -171,3 +171,27 @@ TODO(verify) / for you:
 2. FAQ on fixed quotes: how scope changes are handled ("we talk to you about it before anything changes").
 3. FAQ on hidden costs: that advertising spend, domains and software subscriptions are paid to outside providers and called out in the quote.
 4. Decide whether the "Timeline" factor wording is fine; I avoided any time promise.
+
+## B5. About page (done, new content gated as a draft)
+
+`/about` is already live, so the new copy is gated like pricing: `aboutContent.published` in `src/content/about-page.ts` (false). While false, the live page is exactly what it was. New sections render only in dev or a `SHOW_UNPUBLISHED=1` build, under a "Draft preview" banner. Set the flag to true to publish.
+
+New sections (server-rendered, plain markup), founder and team unnamed, no team-size or structure claims:
+- "Why does Collabrate exist?": the JSON's one idea only (no separate vendors for development and marketing).
+- "How does a project run?": 5 steps. Steps 1 to 3 are the JSON's wording (conversation, scope and clear quote, your approval); steps 4 and 5 (design and build with tools connected during the build; launch and optional ongoing support) are drawn from the JSON's website and engagement descriptions.
+- "What do we do, and with which tools?": the three JSON categories with every service (linked only when that service page is published), a sentence naming tools already in the repo's logo list, links to /services, /portfolio and /pricing.
+- "Where do we operate?": remote-first, based in Tamil Nadu; India, Singapore, Malaysia and the Gulf countries.
+- "How can you reach us?": the visible location line "Collabrate, Tamil Nadu, India" (matches the schema's addressRegion and addressCountry), the email, and Instagram. LinkedIn appears automatically once a real URL replaces PENDING_LINK in the JSON; nothing PENDING is rendered.
+
+Meta and AboutPage schema are unchanged.
+
+Verification:
+- Normal build: none of the new sections, no banner, no location line (live page unchanged).
+- Preview build: 1 H1, AboutPage + BreadcrumbList schema, own canonical, 1 og:image, no `opacity:0` in the new sections, location line, mailto and Instagram present, LinkedIn and PENDING_LINK absent, internal links present. Screenshot renders cleanly.
+- Copy lint: no digits (n8n excluded as a tool name), no "our team", "team of", "founder", "engineer", "years", currency or forbidden words; the location line equals the schema's.
+- lint, tsc, build clean.
+
+TODO(verify) / for you:
+1. Steps 4 and 5 of "How does a project run?" and the sentence "Remote-first means projects run through calls, messages and shared documents": confirm they describe how you actually work.
+2. The existing About copy (unchanged) says "Our team handles both" and "One team": that is the JSON's wording, but it conflicts with the rule against team-structure claims. I left it alone; decide whether to soften it.
+3. Add the real LinkedIn URL (A11) and it will show here, in the schema `sameAs`, and in the footer.

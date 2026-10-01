@@ -4,6 +4,7 @@ import { slugFor } from "../src/lib/slug.ts";
 import { readFileSync } from "node:fs";
 import { caseStudies } from "../src/content/case-studies.ts";
 import { pricingContent } from "../src/content/pricing-page.ts";
+import { aboutContent } from "../src/content/about-page.ts";
 import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
@@ -110,5 +111,15 @@ for (const sp of servicePages) for (const r of sp.relatedProjects) if (!caseStud
   }
   if (pricingContent.scopingSteps.length < 3 || pricingContent.scopingSteps.length > 4) fail("pricing", "scoping steps must be 3 to 4");
   console.log(`pricing: ${pricingContent.costFactors.length} cost factors, ${pricingContent.faqs.length} faqs, published=${pricingContent.published}`);
+}
+
+// ---- About page: no team claims, no founder, no invented numbers ----
+{
+  const text = JSON.stringify({ ...aboutContent, published: undefined, updated: undefined }).replace(/n8n/g, "n-eight-n"); // n8n is a tool name
+  for (const re of [...FORBIDDEN, /\d/, /our team/i, /team of/i, /founder/i, /engineers?/i, /developers? (on|in) /i, /years?/i]) {
+    if (re.test(text)) fail("about", `forbidden pattern ${re}`);
+  }
+  if (aboutContent.locationLine !== "Collabrate, Tamil Nadu, India") fail("about", "location line must match the schema");
+  console.log(`about: ${aboutContent.howProjectRuns.length} steps, location line ok, published=${aboutContent.published}`);
 }
 process.exit(bad ? 1 : 0);
