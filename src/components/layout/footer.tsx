@@ -84,7 +84,7 @@ function Social({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={label}
+        aria-label={text.toLowerCase().includes(label.toLowerCase()) ? text : `${label} ${text}`}
         className="inline-flex items-center gap-2 text-sm transition-opacity hover:opacity-70"
       >
         {inner}
@@ -254,7 +254,9 @@ export function Footer({ navData }: { navData: SiteNavData }) {
           <div className={divider} />
 
           {/* Email marquee: pauses on hover/focus, static for reduced motion. */}
-          <a href={`mailto:${site.email}`} aria-label={`Email ${site.email}`} className="group/mq relative z-[1] block overflow-hidden py-8">
+          <a href={`mailto:${site.email}`} className="group/mq relative z-[1] block overflow-hidden py-8">
+            {/* The scrolling copies below are aria-hidden; this is the link's accessible name (the address itself). */}
+            <span className="sr-only">{site.email}</span>
             <div
               aria-hidden
               className="flex w-max animate-marquee items-center whitespace-nowrap motion-reduce:animate-none group-hover/mq:[animation-play-state:paused] group-focus-visible/mq:[animation-play-state:paused]"
