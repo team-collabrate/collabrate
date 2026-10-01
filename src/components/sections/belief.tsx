@@ -44,7 +44,7 @@ export function Belief() {
         <div className="flex max-w-[1000px] flex-wrap items-center justify-center gap-x-10 gap-y-5 rounded-[16px] border border-black/10 bg-background px-8 py-5 shadow-soft">
           {STRIP_LOGOS.map(([file, label]) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <img loading="lazy" decoding="async"
               key={file}
               src={`/logos/${file}`}
               alt={label}

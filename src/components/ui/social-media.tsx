@@ -51,7 +51,7 @@ const SocialTooltip = React.forwardRef<HTMLUListElement, SocialTooltipProps>(
                 className={cn(baseFilledStyles)}
                 style={{ backgroundColor: item.color }}
               />
-              <img
+              <img loading="lazy" decoding="async"
                 src={item.svgUrl}
                 alt={item.ariaLabel}
                 className={cn(baseSvgStyles)}

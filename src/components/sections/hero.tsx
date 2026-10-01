@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DeferredVideo } from "@/components/shared/deferred-video";
 import { site } from "@/lib/content";
 
 const heroSection = {
@@ -27,27 +28,17 @@ const STRIP = [
 ] as const;
 
 export function Hero() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section className="px-4 pt-4">
       <div className="relative flex min-h-[680px] w-full flex-col overflow-hidden rounded-[16px] border border-black/10 bg-[#0A1022] lg:h-[800px]">
-        {/* Background video, untouched. Visitors who prefer reduced motion get the still frame. */}
-        {reduceMotion ? (
-          <Image src="/video/hero-poster.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
-        ) : (
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/video/hero.mp4"
-            poster="/video/hero-poster.jpg"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            aria-hidden
-          />
-        )}
+        {/* The poster is the LCP image: optimized, preloaded, painted first. The video mounts
+            after load (DeferredVideo) and plays on top of it, untouched. */}
+        <Image src="/video/hero-poster.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+        <DeferredVideo
+          src="/video/hero.mp4"
+          mobileSrc="/video/hero-mobile.mp4"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
 
         <div className="relative mx-auto w-full max-w-[1408px] px-6 pb-44 pt-32 sm:px-12 lg:pt-[150px]">
           <motion.h1
@@ -96,6 +87,8 @@ export function Hero() {
                 {[...STRIP, ...STRIP].map(([file, label], i) => (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
+                    loading="lazy"
+                    decoding="async"
                     key={i}
                     src={`/logos/${file}`}
                     alt=""
@@ -120,21 +113,12 @@ export function Hero() {
               <span className="size-2 rounded-full bg-brand-violet" aria-hidden /> Our work
             </div>
             <div className="relative h-[160px] overflow-hidden rounded-[10px] bg-gradient-to-br from-[#5B2A9E] to-[#8A2BE2]">
-              {reduceMotion ? (
-                <Image src="/video/work-poster.jpg" alt="" fill sizes="320px" className="object-cover" />
-              ) : (
-                <video
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  src="/video/work.mp4"
-                  poster="/video/work-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  aria-hidden
-                />
-              )}
+              <Image src="/video/work-poster.jpg" alt="" fill sizes="320px" className="object-cover" />
+              <DeferredVideo
+                src="/video/work.mp4"
+                minWidth={1024}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
               <span className="absolute left-1/2 top-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-violet text-white shadow-[0_6px_18px_rgba(106,29,184,0.55)] transition-transform group-hover:scale-110">
                 <ArrowUpRight className="size-6" />
               </span>

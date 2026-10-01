@@ -170,7 +170,7 @@ export function ServiceVisual({ name, wide, chipsOnly }: { name: string; wide?: 
           style={{ transform: `rotate(${c.rotate ?? 0}deg)` }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <img loading="lazy" decoding="async"
             src={`/logos/${c.logo}`}
             alt={c.label}
             className={cn("object-contain", c.size === "lg" ? "size-9" : "size-6")}

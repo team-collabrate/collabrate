@@ -318,7 +318,7 @@ export function CoverflowCarousel({
                 style={{ width: "var(--cf-card)" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <img loading="lazy" decoding="async"
                   src={slide.src}
                   alt={slide.alt}
                   draggable={false}
