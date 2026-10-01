@@ -8,11 +8,13 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import { nav, site, serviceCategories } from "@/lib/content";
+import type { SiteNavData } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
 
 const SERVICES_HREF = "/services";
 
-export function Navbar() {
+export function Navbar({ navData }: { navData: SiteNavData }) {
+  const { serviceHrefs, industries } = navData;
   const pathname = usePathname();
   // `compact`: page has scrolled, so the logo, links and CTA share one pill.
   const [compact, setCompact] = useState(false);
@@ -179,7 +181,7 @@ export function Navbar() {
                     {category.services.map((service) => (
                       <Link
                         key={service.name}
-                        href={SERVICES_HREF}
+                        href={serviceHrefs[service.name] ?? SERVICES_HREF}
                         onClick={() => setMenuOpen(false)}
                         className="rounded-lg px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground dark:hover:bg-white/10"
                       >
@@ -188,6 +190,27 @@ export function Navbar() {
                     ))}
                   </div>
                 ))}
+                {industries.length > 0 && (
+                  <div className="col-span-3 flex flex-wrap items-center gap-x-1 gap-y-1 border-t border-black/10 px-3 pt-3 dark:border-white/10">
+                    <Link
+                      href="/industries"
+                      onClick={() => setMenuOpen(false)}
+                      className="rounded-lg px-2 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+                    >
+                      Industries
+                    </Link>
+                    {industries.map((industry) => (
+                      <Link
+                        key={industry.href}
+                        href={industry.href}
+                        onClick={() => setMenuOpen(false)}
+                        className="rounded-lg px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-black/5 hover:text-foreground dark:hover:bg-white/10"
+                      >
+                        {industry.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -223,6 +246,17 @@ export function Navbar() {
                 );
               })}
             </nav>
+            {industries.length > 0 && (
+              <nav className="mt-2 flex flex-col gap-1 border-t border-border pt-2" aria-label="Industries">
+                <Link
+                  href="/industries"
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-4 py-2 text-sm font-semibold text-foreground hover:bg-black/[0.04]"
+                >
+                  Industries
+                </Link>
+              </nav>
+            )}
             <div className="mt-3 border-t border-border pt-3">
               <Button variant="primary" className="w-full" asChild>
                 <Link href={site.primaryCTA.href} onClick={() => setOpen(false)}>

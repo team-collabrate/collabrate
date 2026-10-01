@@ -195,3 +195,33 @@ TODO(verify) / for you:
 1. Steps 4 and 5 of "How does a project run?" and the sentence "Remote-first means projects run through calls, messages and shared documents": confirm they describe how you actually work.
 2. The existing About copy (unchanged) says "Our team handles both" and "One team": that is the JSON's wording, but it conflicts with the rule against team-structure claims. I left it alone; decide whether to soften it.
 3. Add the real LinkedIn URL (A11) and it will show here, in the schema `sameAs`, and in the footer.
+
+## B6. Navigation, internal links and the link checker (done)
+
+All navigation goes through the publish gate (`src/lib/site-links.ts`, `getSiteNavData()`), so a draft can never be linked. With nothing published the header and footer look exactly as before.
+
+Header (5 items unchanged, no new top-level items):
+- The Services mega-menu keeps its three categories. Each service now links to its own page when that page is published (otherwise to `/services`, as before).
+- When at least one industry is published, the menu gets an "Industries" row (hub link plus each published industry). The mobile menu gets an "Industries" link.
+
+Footer:
+- New "All services" block (every published service page, two columns on desktop) and "Industries" block (every published industry page). Both appear only when something is published.
+- The footer `solutions` labels from the JSON were not rendered in the footer before and still are not; the real industry links replace them.
+- "Areas we serve" is not added: B7 has no published locations.
+- Fixed an existing problem the new checker would flag: the footer linked to `/blog`, which is noindex and has no posts. The Blog link now appears only once a post is published (same condition as the sitemap).
+
+Cross-links (from B1 to B3, all published-only): service pages link 2 services, industries and projects; industry pages link their services and projects; case studies link their services and industry; hubs link their children.
+
+`scripts/check-links.mjs` (also `npm run check:links`): crawls a running production server from the home page and every sitemap URL, and fails on broken internal links, links to noindex (unpublished) pages, orphan sitemap pages (linked from nowhere), and sitemap entries that are broken or noindex. Usage: `npm run build`, `npx next start -p 3000`, then `node scripts/check-links.mjs http://localhost:3000`.
+
+Verification:
+- Normal build (nothing published): 8 pages crawled, 0 broken, 0 links to unpublished, 0 orphans.
+- All 36 pages published (temporary, reverted): 36 pages crawled, 0 broken, 0 links to unpublished pages, 0 orphans, so every published page has an inbound link.
+- Negative test (temporary, reverted): with a planted broken link, a link to `/blog` and an orphan sitemap entry, the checker reported all three and exited 1.
+- lint, tsc, build clean. Nothing is published now.
+
+Not verified visually: the header mega-menu "Industries" row and mobile link (they render only on hover or tap and only when an industry is published); the footer blocks were checked in a screenshot with everything published.
+
+Notes for you:
+1. The homepage "work" cards still use gradient placeholder art (not part of Phase B). Phase B asked for no gradient placeholders on case-study pages, which I followed; the homepage and `/portfolio` cards were not changed.
+2. The footer still contains a newsletter form (existing).

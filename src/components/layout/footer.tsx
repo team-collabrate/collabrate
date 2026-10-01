@@ -3,7 +3,9 @@ import Link from "next/link";
 import { Instagram, Linkedin } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { NewsletterForm } from "@/components/layout/newsletter-form";
+import { publishedBlogPosts } from "@/content/blog-posts";
 import { isPending, site, footer, serviceCategories } from "@/lib/content";
+import type { SiteNavData } from "@/lib/site-links";
 
 const eyebrow = "text-[11px] font-semibold uppercase tracking-[2px] text-brand-violet";
 const linkCls = "inline-flex items-center gap-2 text-[15px] text-foreground/80 transition-colors hover:text-foreground";
@@ -29,8 +31,9 @@ const company = [
   { label: "Work", href: "/portfolio" },
   { label: "About us", href: "/about" },
 ];
+// Blog is linked only once a post is published (until then /blog is noindex and out of the sitemap).
 const resources = [
-  { label: "Blog", href: "/blog" },
+  ...(publishedBlogPosts.length > 0 ? [{ label: "Blog", href: "/blog" }] : []),
   { label: "Pricing", href: "/pricing" },
   { label: "Contact", href: "/contact" },
 ];
@@ -90,7 +93,8 @@ function Social({
   );
 }
 
-export function Footer() {
+export function Footer({ navData }: { navData: SiteNavData }) {
+  const { services, industries } = navData;
   const marquee = [0, 1, 2, 3];
 
   return (
@@ -175,6 +179,34 @@ export function Footer() {
                     ))}
                   </ul>
                 </nav>
+                {services.length > 0 && (
+                  <nav aria-label="All services" className="max-md:col-span-2 md:max-lg:col-span-3">
+                    <div className={`${eyebrow} mb-5`}>All services</div>
+                    <ul className="flex flex-col gap-3 max-lg:gap-2 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8 lg:grid lg:grid-cols-2 lg:gap-x-10">
+                      {services.map((l) => (
+                        <li key={l.href}>
+                          <Link href={l.href} className={linkCls}>
+                            {l.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                )}
+                {industries.length > 0 && (
+                  <nav aria-label="Industries" className="max-md:col-span-2 md:max-lg:col-span-3">
+                    <div className={`${eyebrow} mb-5`}>Industries</div>
+                    <ul className="flex flex-col gap-3 max-lg:gap-2 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8">
+                      {industries.map((l) => (
+                        <li key={l.href}>
+                          <Link href={l.href} className={linkCls}>
+                            {l.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                )}
               </div>
             </div>
           </div>
