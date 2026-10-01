@@ -1,0 +1,61 @@
+{
+  "target": "https://collabrate.digital",
+  "robots_url": "https://collabrate.digital/robots.txt",
+  "declared": [
+    {
+      "url": "https://collabrate.digital/sitemap.xml",
+      "query_redacted": false
+    }
+  ],
+  "found": [
+    {
+      "url": "https://collabrate.digital/sitemap.xml",
+      "query_redacted": false,
+      "source": "robots.txt",
+      "status_code": 200,
+      "kind": "urlset",
+      "valid": true,
+      "error": null
+    }
+  ],
+  "checked": [
+    {
+      "url": "https://collabrate.digital/sitemap.xml",
+      "query_redacted": false,
+      "source": "robots.txt",
+      "status_code": 200,
+      "kind": "urlset",
+      "valid": true,
+      "error": null
+    },
+    {
+      "url": "https://collabrate.digital/sitemap_index.xml",
+      "query_redacted": false,
+      "source": "common_path",
+      "status_code": 404,
+      "kind": null,
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://collabrate.digital/sitemap-index.xml",
+      "query_redacted": false,
+      "source": "common_path",
+      "status_code": 404,
+      "kind": null,
+      "valid": false,
+      "error": "HTTP 404"
+    },
+    {
+      "url": "https://collabrate.digital/wp-sitemap.xml",
+      "query_redacted": false,
+      "source": "common_path",
+      "status_code": 404,
+      "kind": null,
+      "valid": false,
+      "error": "HTTP 404"
+    }
+  ],
+  "warnings": [],
+  "error": null
+}

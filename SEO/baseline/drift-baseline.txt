@@ -1,0 +1,20 @@
+{
+  "status": "ok",
+  "baseline_id": 1,
+  "url": "https://collabrate.digital/",
+  "timestamp": "2026-10-01T21:25:36.002896+00:00",
+  "summary": {
+    "title": "Collabrate: Web, App, Marketing and AI Agency in India",
+    "meta_description": "Collabrate is a web, app, marketing and AI agency based in Tamil Nadu, serving b...",
+    "canonical": "https://collabrate.digital",
+    "robots": "index, follow",
+    "h1": "We build high-performance websites and apps for growth-focused businesses.",
+    "h2_count": 7,
+    "h3_count": 27,
+    "schema_count": 3,
+    "og_tag_count": 10,
+    "cwv_captured": false,
+    "status_code": 200,
+    "html_hash": "dc073c2becc9..."
+  }
+}

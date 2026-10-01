@@ -1,0 +1,57 @@
+[
+ {
+  "site": "collabrate",
+  "perf": 78,
+  "seo": 100,
+  "a11y": 100,
+  "bp": 100,
+  "lcp": "3.7 s",
+  "tbt": "240 ms",
+  "cls": "0",
+  "kb": 1215
+ },
+ {
+  "site": "creatorsweb",
+  "perf": 71,
+  "seo": 92,
+  "a11y": 75,
+  "bp": 73,
+  "lcp": "3.4 s",
+  "tbt": "420 ms",
+  "cls": "0.162",
+  "kb": 2211
+ },
+ {
+  "site": "devoted",
+  "perf": 44,
+  "seo": 100,
+  "a11y": 93,
+  "bp": 96,
+  "lcp": "12.8 s",
+  "tbt": "170 ms",
+  "cls": "0.224",
+  "kb": 2001
+ },
+ {
+  "site": "disoads",
+  "perf": 74,
+  "seo": 100,
+  "a11y": 94,
+  "bp": 92,
+  "lcp": "3.5 s",
+  "tbt": "290 ms",
+  "cls": "0",
+  "kb": 969
+ },
+ {
+  "site": "nellaiseo",
+  "perf": 65,
+  "seo": 92,
+  "a11y": 89,
+  "bp": 96,
+  "lcp": "8.6 s",
+  "tbt": "10 ms",
+  "cls": "0.008",
+  "kb": 1293
+ }
+]
