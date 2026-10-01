@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
+  ArrowRight,
   ChevronDown,
   Check,
   Megaphone,
@@ -90,11 +92,14 @@ function ServiceCard({
   gradient,
   open,
   onToggle,
+  pageHref,
 }: {
   service: ServiceItem;
   gradient: string;
   open: boolean;
   onToggle: () => void;
+  /** Path of the service's own page, when it is published. */
+  pageHref?: string;
 }) {
   const Icon = SERVICE_ICONS[service.name] ?? Sparkles;
   const { heading, subtitle: parenthetical } = splitServiceName(service.name);
@@ -161,6 +166,16 @@ function ServiceCard({
 
             {service.note && <p className="text-xs italic text-muted-foreground/80">{service.note}</p>}
 
+            {pageHref && (
+              <Link
+                href={pageHref}
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-violet underline-offset-4 hover:underline"
+              >
+                Read more about {splitServiceName(service.name).heading}
+                <ArrowRight className="size-4" aria-hidden />
+              </Link>
+            )}
+
             {tools && tools.length > 0 && (
               <div className="flex flex-col gap-4 border-t border-border pt-4">
                 <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -176,7 +191,7 @@ function ServiceCard({
   );
 }
 
-function CategoryPanel({ category }: { category: ServiceCategory }) {
+function CategoryPanel({ category, pageHrefs }: { category: ServiceCategory; pageHrefs: Record<string, string> }) {
   // Cards pair up by row (two per row on sm+). Opening either card in a row
   // opens both, so the pair expands and collapses together and the row
   // stays visually matched instead of one side ballooning past the other.
@@ -210,6 +225,7 @@ function CategoryPanel({ category }: { category: ServiceCategory }) {
               gradient={BADGE_GRADIENTS[i % BADGE_GRADIENTS.length]}
               open={openPairs.has(pairIndex)}
               onToggle={() => togglePair(pairIndex)}
+              pageHref={pageHrefs[service.name]}
             />
           );
         })}
@@ -218,7 +234,7 @@ function CategoryPanel({ category }: { category: ServiceCategory }) {
   );
 }
 
-export function ServicesExplorer() {
+export function ServicesExplorer({ pageHrefs = {} }: { pageHrefs?: Record<string, string> }) {
   const [activeTab, setActiveTab] = useState(serviceCategories[0]?.id ?? "");
 
   return (
@@ -239,7 +255,7 @@ export function ServicesExplorer() {
 
           {serviceCategories.map((category) => (
             <TabsContent key={category.id} value={category.id} className="w-full">
-              <CategoryPanel category={category} />
+              <CategoryPanel category={category} pageHrefs={pageHrefs} />
             </TabsContent>
           ))}
         </Tabs>

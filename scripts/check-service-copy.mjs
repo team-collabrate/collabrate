@@ -1,0 +1,34 @@
+// Copy lint for src/content/service-pages.ts. Run: node --no-warnings scripts/check-service-copy.mjs
+import { servicePages } from "../src/content/service-pages.ts";
+import { slugFor } from "../src/lib/slug.ts";
+
+const words = (s) => s.trim().split(/\s+/).length;
+const FORBIDDEN = [/—/, /–/, /\bbest\b/i, /\bleading\b/i, /number one/i, /guarantee/i, /\bcheap\b/i, /\baffordable\b/i, /PENDING_LINK/, /[₹$€£]\s?\d/, /\d\s?(INR|Rs)\b/i, /\bRs\.?\s?\d/];
+let bad = 0;
+const fail = (slug, msg) => { console.error(`FAIL ${slug}: ${msg}`); bad++; };
+
+const seen = new Set();
+for (const p of servicePages) {
+  if (seen.has(p.slug)) fail(p.slug, "duplicate slug");
+  seen.add(p.slug);
+  if (slugFor(p.serviceName) !== p.slug) fail(p.slug, `slug does not match "${p.serviceName}"`);
+  const title = p.metaTitle ?? `${p.serviceName.replace(/\s*\([^)]*\)\s*$/, "")} in Tamil Nadu and India | Collabrate`;
+  if (title.length > 60) fail(p.slug, `title ${title.length} chars: ${title}`);
+  if (p.description.length < 120 || p.description.length > 155) fail(p.slug, `description ${p.description.length} chars`);
+  const a = words(p.answer);
+  if (a < 40 || a > 60) fail(p.slug, `answer ${a} words`);
+  if (p.included.length < 3) fail(p.slug, "fewer than 3 included items");
+  if (p.howItWorks.length !== 4) fail(p.slug, "howItWorks is not 4 steps");
+  if (p.faqs.length < 4 || p.faqs.length > 6) fail(p.slug, `${p.faqs.length} faqs`);
+  for (const f of p.faqs) {
+    const n = words(f.answer);
+    if (n < 40 || n > 80) fail(p.slug, `faq "${f.question}" answer ${n} words`);
+  }
+  if (p.relatedServices.length !== 2) fail(p.slug, "relatedServices must be 2");
+  if (p.relatedIndustries.length < 1 || p.relatedIndustries.length > 2) fail(p.slug, "relatedIndustries must be 1 to 2");
+  const text = JSON.stringify(p);
+  for (const re of FORBIDDEN) if (re.test(text)) fail(p.slug, `forbidden pattern ${re}`);
+  if (/\d/.test(p.howItWorks.map((s) => s.title + s.text).join(" "))) fail(p.slug, "digits in howItWorks (no timeframes or numbers)");
+  console.log(`${p.slug}: answer ${a}w, title ${title.length}c, desc ${p.description.length}c, ${p.faqs.length} faqs, published=${p.published}`);
+}
+process.exit(bad ? 1 : 0);

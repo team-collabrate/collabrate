@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { publishedBlogPosts } from "@/content/blog-posts";
 import { siteUrl } from "@/lib/content";
+import { publishedServicePages, servicePath } from "@/lib/service-pages";
 
 export type SitemapEntry = MetadataRoute.Sitemap[number];
 
@@ -47,8 +48,17 @@ const blogEntries = (): SitemapEntry[] => {
   ];
 };
 
+// One entry per published service page; lastModified is the content file's `updated` date.
+const servicePagesSitemap = (): SitemapEntry[] =>
+  publishedServicePages().map((page) => ({
+    url: `${siteUrl}${servicePath(page.slug)}`,
+    lastModified: new Date(page.updated),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
 /**
  * Later phases append here: service pages (B1), industry pages (B2), case studies (B3),
  * location pages. Each source is a function returning its own entries.
  */
-export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, blogEntries];
+export const sitemapSources: Array<() => SitemapEntry[]> = [staticEntries, servicePagesSitemap, blogEntries];
