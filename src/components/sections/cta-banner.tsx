@@ -1,8 +1,21 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/shared/reveal";
+import { site } from "@/lib/content";
+import { cn } from "@/lib/utils";
+
+// Floating skeleton "screens" clipped at the card edges, echoing the reference's tilted previews.
+const FLOATERS: { pos: string; tone: string }[] = [
+  { pos: "-left-16 top-6 w-[300px] -rotate-6", tone: "from-[#8A2BE2] to-[#CF6CAD]" },
+  { pos: "-left-24 top-[46%] w-[320px] rotate-3", tone: "from-[#FFC9A3] to-[#F7686F]" },
+  { pos: "-left-14 bottom-2 w-[300px] -rotate-3", tone: "from-[#B98CF0] to-[#F6B5D6]" },
+  { pos: "-right-16 top-6 w-[300px] rotate-6", tone: "from-[#1A1433] to-[#5B2A9E]" },
+  { pos: "-right-24 top-[46%] w-[320px] -rotate-3", tone: "from-[#F6B5D6] to-[#FFE4CF]" },
+  { pos: "-right-14 bottom-2 w-[300px] rotate-3", tone: "from-[#5B1FB0] to-[#B154B3]" },
+];
 
 export function CTABanner({
   heading = "Ready to build something that works?",
@@ -16,28 +29,38 @@ export function CTABanner({
   ctaHref?: string;
 }) {
   return (
-    <section className="relative py-12 sm:py-16">
-      <div className="mx-auto max-w-6xl px-6">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-foreground px-8 py-16 text-center sm:px-16 sm:py-20">
-            <div className="absolute -top-1/2 right-0 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(255,159,67,0.18),transparent_65%)] blur-3xl" />
-            <div className="relative flex flex-col items-center gap-8">
-              <span className="h-1 w-16 rounded-full bg-[linear-gradient(90deg,#8A2BE2,#FF9F43)]" aria-hidden />
-              {/* !text-background: globals.css sets a color on every h1-h6 that
-                  otherwise beats this utility at equal specificity. */}
-              <h2 className="max-w-2xl text-balance text-3xl font-semibold tracking-tight !text-background sm:text-4xl md:text-5xl">
-                {heading}
-              </h2>
-              <p className="max-w-xl text-balance text-background/70">{body}</p>
-              <Button variant="gradient" size="lg" asChild>
-                <a href={ctaHref}>
-                  {ctaLabel} <ArrowUpRight className="size-4" />
+    <section className="px-4 section-pad">
+      <Reveal>
+        <div className="dot-grid-host relative mx-auto flex min-h-[502px] max-w-[1312px] items-center justify-center overflow-hidden rounded-[24px] border border-[color-mix(in_srgb,var(--brand-violet)_40%,white)] bg-gradient-to-b from-background via-tint-sky to-[#C9B6F2] px-6 py-16 text-center shadow-[0_24px_60px_-24px_rgba(106,29,184,0.35)] dark:border-white/15 dark:to-[#3a2358]">
+          <div className="dot-grid pointer-events-none absolute inset-0 opacity-70" aria-hidden />
+          {FLOATERS.map((f, i) => (
+            <div
+              key={i}
+              aria-hidden
+              className={cn(
+                "absolute hidden aspect-[3/2] overflow-hidden rounded-[16px] border-2 border-white/70 bg-background p-3 shadow-[0_16px_40px_-12px_rgba(26,20,51,0.35)] lg:block",
+                f.pos
+              )}
+            >
+              <div className={`h-full rounded-xl bg-gradient-to-br ${f.tone}`} />
+            </div>
+          ))}
+          <div className="relative mx-auto flex max-w-[560px] flex-col items-center gap-5">
+            <h2 className="display-2 text-balance">{heading}</h2>
+            <p className="text-lg leading-[1.45] text-muted-foreground">{body}</p>
+            <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+              <Button variant="primary" asChild>
+                <Link href={ctaHref}>{ctaLabel}</Link>
+              </Button>
+              <Button variant="soft" asChild>
+                <a href={`mailto:${site.email}`}>
+                  Send a message <ArrowRight className="size-4" />
                 </a>
               </Button>
             </div>
           </div>
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

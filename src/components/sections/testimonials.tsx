@@ -1,31 +1,57 @@
 "use client";
 
-import { Quote } from "lucide-react";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
 import { motion } from "framer-motion";
+import { Reveal, StaggerGroup, staggerItem } from "@/components/shared/reveal";
 import { testimonials } from "@/lib/content";
+import { cn } from "@/lib/utils";
+
+// Placeholder names in the source content ("[Client Name]") are never rendered.
+const isPlaceholder = (value: string) => value.trim().startsWith("[");
 
 export function Testimonials() {
-  return (
-    <section className="relative py-24 sm:py-28">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading align="left" eyebrow="Client stories" title="What clients say" className="max-w-2xl" />
+  const quotes = testimonials.slice(0, 4);
+  // Three columns: outer columns hold one tall card, the middle holds two shorter ones.
+  const columns = [[0], [1, 3], [2]].map((idxs) => idxs.map((i) => quotes[i]).filter(Boolean));
 
-        <StaggerGroup className="mt-14 grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2" stagger={0.08}>
-          {testimonials.map((t) => (
-            <motion.figure key={t.quote} variants={staggerItem} className="flex flex-col gap-5 border-t border-border pt-6">
-              <Quote className="size-5 text-brand-violet/60" />
-              <blockquote className="text-balance text-lg leading-relaxed text-foreground">
-                &ldquo;{t.quote}&rdquo;
-              </blockquote>
-              <figcaption className="mt-auto text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">{t.author}</span> — {t.role}
-              </figcaption>
-            </motion.figure>
-          ))}
-        </StaggerGroup>
-      </div>
+  return (
+    <section className="mx-auto w-full max-w-[1344px] px-4 section-pad">
+      <Reveal className="mb-14 max-w-[600px] lg:mb-[64px]">
+        <h2 className="display-2 text-balance">What clients say</h2>
+      </Reveal>
+
+      <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-3 md:items-stretch" stagger={0.08}>
+        {columns.map((col, c) => (
+          <div key={c} className="flex flex-col gap-6">
+            {col.map((t) => {
+              const tall = col.length === 1;
+              return (
+                <motion.figure
+                  key={t.quote}
+                  variants={staggerItem}
+                  className={cn(
+                    "flex flex-col justify-between gap-8 rounded-[20px] border border-[color-mix(in_srgb,var(--brand-violet)_28%,white)] p-6 dark:border-white/15",
+                    tall
+                      ? "min-h-[380px] flex-1 bg-gradient-to-b from-background to-tint-sky"
+                      : "min-h-[250px] bg-background"
+                  )}
+                >
+                  <blockquote className="text-xl leading-[1.35] text-foreground">
+                    &ldquo;{t.quote}&rdquo;
+                  </blockquote>
+                  {(!isPlaceholder(t.author) || !isPlaceholder(t.role)) && (
+                    <figcaption className="border-t border-border pt-4 text-sm">
+                      {!isPlaceholder(t.author) && (
+                        <span className="block font-medium text-foreground">{t.author}</span>
+                      )}
+                      {!isPlaceholder(t.role) && <span className="block text-muted-foreground">{t.role}</span>}
+                    </figcaption>
+                  )}
+                </motion.figure>
+              );
+            })}
+          </div>
+        ))}
+      </StaggerGroup>
     </section>
   );
 }

@@ -10,6 +10,12 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-foreground text-background shadow-[0_1px_0_0_rgba(255,255,255,0.15)_inset] hover:shadow-lg hover:-translate-y-0.5",
+        primary:
+          "rounded-[10px] font-semibold text-white bg-[linear-gradient(180deg,#A45AF0_0%,#8A2BE2_55%,#6A1DB8_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.18),0_1px_2px_rgba(106,29,184,0.45),0_6px_16px_-4px_rgba(106,29,184,0.5)] hover:-translate-y-0.5 hover:brightness-110 active:brightness-90",
+        soft:
+          "rounded-[10px] font-semibold border border-[color-mix(in_srgb,var(--brand-violet)_28%,white)] bg-background text-foreground shadow-[0_1px_2px_rgba(32,32,32,0.06)] hover:-translate-y-0.5 hover:bg-surface",
+        frost:
+          "rounded-lg border border-white/40 bg-white/20 text-white backdrop-blur-md hover:bg-white/30 hover:-translate-y-0.5",
         gradient:
           "text-white bg-[linear-gradient(90deg,#FF9F43,#F7686F,#CF6CAD,#B154B3,#8A2BE2)] bg-[length:200%_auto] hover:bg-[position:100%_0] shadow-[0_8px_30px_-6px_rgba(138,43,226,0.55)] hover:shadow-[0_12px_40px_-4px_rgba(138,43,226,0.7)] hover:-translate-y-0.5",
         outline:

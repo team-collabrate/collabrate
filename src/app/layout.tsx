@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/inter";
-import "@fontsource-variable/sora";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/hanken-grotesk";
 import "./globals.css";
 import { site, isPending } from "@/lib/content";
 import { Navbar } from "@/components/layout/navbar";

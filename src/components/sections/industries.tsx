@@ -1,40 +1,71 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { SectionHeading } from "@/components/shared/section-heading";
-import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
-import { industries } from "@/lib/content";
+import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Reveal, StaggerGroup, staggerItem } from "@/components/shared/reveal";
+import { industries, site } from "@/lib/content";
+import { cn } from "@/lib/utils";
+
+// Bento arrangement for five industries: two tall cards flanking a stacked pair, then one wide card.
+const LAYOUT = [
+  "lg:col-span-4 lg:row-span-2 bg-tint-sky",
+  "lg:col-span-4 bg-tint-lilac",
+  "lg:col-span-4 lg:row-span-2 bg-tint-lime",
+  "lg:col-span-4 bg-tint-cream",
+  "lg:col-span-12 bg-tint-cream",
+];
 
 export function Industries() {
   return (
-    <section className="relative py-24 sm:py-28">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          align="left"
-          eyebrow="Industries"
-          title="Industries we work with"
-          description="From early-stage startups to large-scale enterprises, we build and manage digital infrastructure suited to the scale, complexity, and goals of every business we work with."
-          className="max-w-2xl"
-        />
+    <section className="mx-auto w-full max-w-[1344px] px-4 section-pad">
+      <Reveal className="mb-12 grid gap-8 lg:mb-[60px] lg:grid-cols-2 lg:items-start">
+        <h2 className="display-2 max-w-[520px] text-balance">Industries We Work With</h2>
+        <div className="flex flex-col items-start gap-6">
+          <p className="max-w-[560px] text-lg leading-[1.45] text-muted-foreground">
+            From early-stage startups to large-scale enterprises, we build and manage digital infrastructure
+            suited to the scale, complexity, and goals of every business we work with.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="primary" asChild>
+              <Link href={site.primaryCTA.href}>{site.primaryCTA.label}</Link>
+            </Button>
+            <Button variant="soft" asChild>
+              <Link href={site.secondaryCTA.href}>
+                {site.secondaryCTA.label} <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </Reveal>
 
-        <StaggerGroup className="mt-14 flex flex-col border-t border-border" stagger={0.05}>
-          {industries.map((industry, i) => (
-            <motion.div
+      <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[220px]" stagger={0.06}>
+        {industries.map((industry, i) => {
+          const tall = LAYOUT[i]?.includes("row-span-2");
+          const wide = LAYOUT[i]?.includes("col-span-12");
+          return (
+            <motion.article
               key={industry.name}
               variants={staggerItem}
-              className="group grid grid-cols-[3rem_1fr] items-baseline gap-x-6 gap-y-2 border-b border-border py-8 transition-colors duration-300 hover:bg-surface/60 sm:grid-cols-[4.5rem_16rem_1fr] sm:items-start sm:px-4"
+              className={cn(
+                "group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[16px] border border-black/[0.08] p-6 dark:border-white/10",
+                LAYOUT[i],
+                wide && "md:col-span-2"
+              )}
             >
-              <span className="font-display text-2xl font-semibold text-muted-foreground/40 transition-colors duration-300 group-hover:text-brand-violet sm:text-3xl">
+              <div className="dot-grid pointer-events-none absolute inset-x-0 bottom-0 h-1/2 [mask-image:linear-gradient(to_top,black,transparent)]" />
+              <span className="relative flex size-11 items-center justify-center rounded-[10px] border border-brand-violet/25 bg-background font-[family-name:var(--font-display)] text-base text-brand-violet">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="text-lg font-semibold text-foreground sm:pr-6">{industry.name}</h3>
-              <p className="col-span-2 text-sm leading-relaxed text-muted-foreground sm:col-span-1">
-                {industry.description}
-              </p>
-            </motion.div>
-          ))}
-        </StaggerGroup>
-      </div>
+              <div className={cn("relative flex flex-col gap-2", tall && "lg:mt-auto")}>
+                <h3 className="card-title">{industry.name}</h3>
+                <p className="max-w-[560px] text-base leading-[1.4] text-muted-foreground">{industry.description}</p>
+              </div>
+            </motion.article>
+          );
+        })}
+      </StaggerGroup>
     </section>
   );
 }
