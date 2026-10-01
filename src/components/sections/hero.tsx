@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HeroArt } from "@/components/shared/hero-art";
 import { site } from "@/lib/content";
 
 const heroSection = {
@@ -28,17 +27,34 @@ const STRIP = [
 ] as const;
 
 export function Hero() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="px-4 pt-4">
-      <div className="relative flex min-h-[680px] w-full flex-col overflow-hidden rounded-[16px] border border-border lg:h-[800px]">
-        <HeroArt />
+      <div className="relative flex min-h-[680px] w-full flex-col overflow-hidden rounded-[16px] border border-black/10 bg-[#0A1022] lg:h-[800px]">
+        {/* Background video, untouched. Visitors who prefer reduced motion get the still frame. */}
+        {reduceMotion ? (
+          <Image src="/video/hero-poster.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+        ) : (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/video/hero.mp4"
+            poster="/video/hero-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-hidden
+          />
+        )}
 
         <div className="relative mx-auto w-full max-w-[1408px] px-6 pb-44 pt-32 sm:px-12 lg:pt-[150px]">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="display-1 max-w-[1100px] text-balance"
+            className="display-1 max-w-[1100px] text-balance !text-white [text-shadow:0_0_2px_rgba(0,0,0,0.35),0_2px_14px_rgba(0,0,0,0.4),0_10px_40px_rgba(0,0,0,0.3)]"
           >
             {heroSection.headline}
           </motion.h1>
@@ -47,7 +63,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.12 }}
-            className="mt-6 max-w-[760px] text-lg leading-[1.45] text-foreground/70 sm:text-xl"
+            className="mt-6 max-w-[760px] text-lg leading-[1.45] font-medium text-white [text-shadow:0_0_2px_rgba(0,0,0,0.4),0_2px_12px_rgba(0,0,0,0.45),0_8px_30px_rgba(0,0,0,0.3)] sm:text-xl"
           >
             {heroSection.subline}
           </motion.p>
@@ -104,13 +120,21 @@ export function Hero() {
               <span className="size-2 rounded-full bg-brand-violet" aria-hidden /> Our work
             </div>
             <div className="relative h-[160px] overflow-hidden rounded-[10px] bg-gradient-to-br from-[#5B2A9E] to-[#8A2BE2]">
-              <Image
-                src="/services/web-development.jpg"
-                alt=""
-                width={640}
-                height={640}
-                className="absolute left-0 top-1/2 w-full -translate-y-[46%] scale-110 object-cover transition-transform duration-500 group-hover:scale-125"
-              />
+              {reduceMotion ? (
+                <Image src="/video/work-poster.jpg" alt="" fill sizes="320px" className="object-cover" />
+              ) : (
+                <video
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  src="/video/work.mp4"
+                  poster="/video/work-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  aria-hidden
+                />
+              )}
               <span className="absolute left-1/2 top-1/2 flex size-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-violet text-white shadow-[0_6px_18px_rgba(106,29,184,0.55)] transition-transform group-hover:scale-110">
                 <ArrowUpRight className="size-6" />
               </span>

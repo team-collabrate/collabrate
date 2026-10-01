@@ -56,7 +56,7 @@ export function ServicesBento() {
               key={card.name}
               variants={staggerItem}
               className={cn(
-                "group relative h-[410px] overflow-hidden rounded-[16px] border border-[color-mix(in_srgb,var(--brand-violet)_22%,white)] shadow-[0_1px_2px_rgba(26,20,51,0.04)] dark:border-white/10",
+                "group relative h-[410px] overflow-hidden rounded-[16px] border border-black/10 shadow-[0_1px_2px_rgba(26,20,51,0.04)] dark:border-white/10",
                 card.tint,
                 card.wide && "md:col-span-2"
               )}

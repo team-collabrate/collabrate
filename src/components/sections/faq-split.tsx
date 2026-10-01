@@ -33,7 +33,7 @@ export function FaqSplit() {
             type="single"
             collapsible
             defaultValue={items[0]?.question}
-            className="flex flex-col gap-4 rounded-[24px] border border-[color-mix(in_srgb,var(--brand-violet)_35%,white)] bg-panel p-4 dark:border-white/15"
+            className="flex flex-col gap-4 rounded-[24px] border border-black/10 bg-panel p-4 dark:border-white/15"
           >
             {items.map((faq) => (
               <AccordionPrimitive.Item

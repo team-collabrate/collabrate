@@ -1,20 +1,36 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/shared/reveal";
 import { site } from "@/lib/content";
-import { cn } from "@/lib/utils";
 
-// Floating skeleton "screens" clipped at the card edges, echoing the reference's tilted previews.
-const FLOATERS: { pos: string; tone: string }[] = [
-  { pos: "-left-16 top-6 w-[300px] -rotate-6", tone: "from-[#8A2BE2] to-[#CF6CAD]" },
-  { pos: "-left-24 top-[46%] w-[320px] rotate-3", tone: "from-[#FFC9A3] to-[#F7686F]" },
-  { pos: "-left-14 bottom-2 w-[300px] -rotate-3", tone: "from-[#B98CF0] to-[#F6B5D6]" },
-  { pos: "-right-16 top-6 w-[300px] rotate-6", tone: "from-[#1A1433] to-[#5B2A9E]" },
-  { pos: "-right-24 top-[46%] w-[320px] -rotate-3", tone: "from-[#F6B5D6] to-[#FFE4CF]" },
-  { pos: "-right-14 bottom-2 w-[300px] rotate-3", tone: "from-[#5B1FB0] to-[#B154B3]" },
+// Six preview cards clipped at the card edges. Each frames one of our own illustrations.
+// On entry they rise in one by one; on hover the whole banner "wakes up": tiles straighten
+// and slide toward the centre.
+const EASE = [0.23, 1, 0.32, 1] as const;
+
+interface Floater {
+  img: string;
+  /** Position + size of the wrapper inside the banner. */
+  box: React.CSSProperties;
+  rot: number;
+  rotHover: number;
+  tx: number;
+  ty: number;
+  delay: number;
+}
+
+const FLOATERS: Floater[] = [
+  { img: "/services/web-development.jpg", box: { width: 275, height: 185, left: "-10%", top: -51 }, rot: -8, rotHover: 2.8, tx: 90, ty: 16, delay: 0 },
+  { img: "/services/seo.jpg", box: { width: 307, height: 204, left: "-16%", top: "50%", marginTop: -110 }, rot: -4, rotHover: 1.4, tx: 90, ty: 0, delay: 0.08 },
+  { img: "/services/ecommerce.jpg", box: { width: 298, height: 200, left: "-10.5%", bottom: -56 }, rot: 6, rotHover: -2.1, tx: 90, ty: -16, delay: 0.16 },
+  { img: "/services/ai-chatbots.jpg", box: { width: 275, height: 185, right: "-10%", top: -51 }, rot: 8, rotHover: -2.8, tx: -90, ty: 16, delay: 0.04 },
+  { img: "/services/paid-ads.jpg", box: { width: 307, height: 204, right: "-16%", top: "50%", marginTop: -110 }, rot: 4, rotHover: -1.4, tx: -90, ty: 0, delay: 0.12 },
+  { img: "/services/mobile-app.jpg", box: { width: 298, height: 200, right: "-10.5%", bottom: -56 }, rot: -6, rotHover: 2.1, tx: -90, ty: -16, delay: 0.2 },
 ];
 
 export function CTABanner({
@@ -28,24 +44,44 @@ export function CTABanner({
   ctaLabel?: string;
   ctaHref?: string;
 }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section className="px-4 section-pad">
       <Reveal>
-        <div className="dot-grid-host relative mx-auto flex min-h-[502px] max-w-[1312px] items-center justify-center overflow-hidden rounded-[24px] border border-[color-mix(in_srgb,var(--brand-violet)_40%,white)] bg-gradient-to-b from-background via-tint-sky to-[#C9B6F2] px-6 py-16 text-center shadow-[0_24px_60px_-24px_rgba(106,29,184,0.35)] dark:border-white/15 dark:to-[#3a2358]">
+        <div className="group relative mx-auto flex min-h-[502px] max-w-[1312px] items-center justify-center overflow-hidden rounded-[24px] border border-black/10 bg-gradient-to-b from-background via-tint-sky to-[#CFE6FA] px-6 py-16 text-center shadow-[0_24px_60px_-24px_rgba(20,50,100,0.28)] dark:border-white/15 dark:to-[#1d3550]">
           <div className="dot-grid pointer-events-none absolute inset-0 opacity-70" aria-hidden />
+
           {FLOATERS.map((f, i) => (
-            <div
+            <motion.div
               key={i}
               aria-hidden
-              className={cn(
-                "absolute hidden aspect-[3/2] overflow-hidden rounded-[16px] border-2 border-white/70 bg-background p-3 shadow-[0_16px_40px_-12px_rgba(26,20,51,0.35)] lg:block",
-                f.pos
-              )}
+              initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: f.delay, ease: EASE }}
+              className="pointer-events-none absolute z-0 hidden md:block"
+              style={f.box}
             >
-              <div className={`h-full rounded-xl bg-gradient-to-br ${f.tone}`} />
-            </div>
+              <div
+                className="size-full rounded-[16px] border border-black/[0.06] bg-white p-1.5 shadow-[0_18px_44px_-14px_rgba(20,40,90,0.35)] [transform:rotate(var(--rot))] [transition:transform_500ms_cubic-bezier(0.23,1,0.32,1)] lg:group-hover:[transform:rotate(var(--rot-hover))_translateX(var(--tx))_translateY(var(--ty))] motion-reduce:transition-none"
+                style={
+                  {
+                    "--rot": `${f.rot}deg`,
+                    "--rot-hover": `${f.rotHover}deg`,
+                    "--tx": `${f.tx}px`,
+                    "--ty": `${f.ty}px`,
+                  } as React.CSSProperties
+                }
+              >
+                <div className="relative size-full overflow-hidden rounded-[11px] bg-white">
+                  <Image src={f.img} alt="" fill sizes="310px" className="object-cover" />
+                </div>
+              </div>
+            </motion.div>
           ))}
-          <div className="relative mx-auto flex max-w-[560px] flex-col items-center gap-5">
+
+          <div className="relative z-10 mx-auto flex max-w-[560px] flex-col items-center gap-5">
             <h2 className="display-2 text-balance">{heading}</h2>
             <p className="text-lg leading-[1.45] text-muted-foreground">{body}</p>
             <div className="mt-2 flex flex-col gap-3 sm:flex-row">

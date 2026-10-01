@@ -29,7 +29,7 @@ export function Testimonials() {
                   key={t.quote}
                   variants={staggerItem}
                   className={cn(
-                    "flex flex-col justify-between gap-8 rounded-[20px] border border-[color-mix(in_srgb,var(--brand-violet)_28%,white)] p-6 dark:border-white/15",
+                    "flex flex-col justify-between gap-8 rounded-[20px] border border-black/10 p-6 dark:border-white/15",
                     tall
                       ? "min-h-[380px] flex-1 bg-gradient-to-b from-background to-tint-sky"
                       : "min-h-[250px] bg-background"

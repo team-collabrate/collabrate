@@ -16,11 +16,11 @@
   --tint-violet: #F0E9FC;
   --tint-peach: #FFF1E3;
   --tint-mint: #E5F6EE;
-  --tint-sky: #EFE7FD;
+  --tint-sky: #E1F3FF;
   --tint-lilac: #F4F5FF;
   --tint-cream: #FBF5DE;
   --tint-lime: #F2FBE6;
-  --panel-blue: #EFE7FD;
+  --panel-blue: #E1F3FF;
   --nav-ink: #202020;
   --shadow-soft: 0 8px 24px rgba(32, 32, 32, 0.08);
 
@@ -46,11 +46,11 @@
   --tint-violet: #241A38;
   --tint-peach: #2E2218;
   --tint-mint: #172A22;
-  --tint-sky: #241A38;
+  --tint-sky: #14263A;
   --tint-lilac: #1B1B2E;
   --tint-cream: #2E2818;
   --tint-lime: #1C2814;
-  --panel-blue: #241A38;
+  --panel-blue: #14263A;
   --nav-ink: #FAFAFA;
   --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
@@ -189,7 +189,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Dot-grid texture used on tinted panels. */
 .dot-grid {
-  background-image: radial-gradient(color-mix(in srgb, var(--brand-violet) 22%, transparent) 1px, transparent 1.4px);
+  background-image: radial-gradient(color-mix(in srgb, var(--heading) 16%, transparent) 1px, transparent 1.4px);
   background-size: 14px 14px;
 }
 

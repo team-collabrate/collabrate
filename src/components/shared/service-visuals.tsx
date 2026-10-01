@@ -140,7 +140,7 @@ export function ServiceVisual({ name, wide, chipsOnly }: { name: string; wide?: 
       {/* Soft glow behind the illustration */}
       <div
         className={cn(
-          "absolute rounded-full bg-brand-violet/15 blur-3xl",
+          "absolute rounded-full bg-sky-300/20 blur-3xl",
           wide ? "right-6 top-8 size-[380px]" : "left-1/2 top-4 size-[260px] -translate-x-1/2"
         )}
       />

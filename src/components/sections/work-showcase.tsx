@@ -70,13 +70,13 @@ export function WorkShowcase() {
             <motion.div key={`${project.title}-${i}`} variants={staggerItem}>
               <Link
                 href="/portfolio"
-                className="group block rounded-[28px] border border-[color-mix(in_srgb,var(--brand-violet)_30%,white)] p-px transition-shadow duration-300 hover:shadow-[0_24px_48px_-20px_rgba(106,29,184,0.35)] dark:border-white/15"
+                className="group block rounded-[28px] border border-black/10 p-px transition-shadow duration-300 hover:shadow-[0_24px_48px_-20px_rgba(106,29,184,0.35)] dark:border-white/15"
               >
                 <article className="flex h-full min-h-[623px] flex-col overflow-hidden rounded-[27px] bg-background">
                   <div
                     className={`grain relative h-[387px] shrink-0 overflow-hidden bg-gradient-to-br ${COVERS[i % COVERS.length]}`}
                   >
-                    <span className="absolute left-0 top-0 z-10 rounded-br-2xl border-b border-r border-[color-mix(in_srgb,var(--brand-violet)_35%,white)] bg-background px-4 py-2.5 text-sm font-medium uppercase text-foreground">
+                    <span className="absolute left-0 top-0 z-10 rounded-br-2xl border-b border-r border-black/10 bg-background px-4 py-2.5 text-sm font-medium uppercase text-foreground">
                       {project.industry}
                     </span>
                     <div className="transition-transform duration-500 group-hover:-translate-y-2">
@@ -86,7 +86,7 @@ export function WorkShowcase() {
                   <div className="flex flex-1 flex-col gap-4 p-6">
                     <h3 className="card-title">{project.title}</h3>
                     <p className="line-clamp-3 text-base leading-[1.45] text-muted-foreground">{project.outcome}</p>
-                    <div className="mt-auto flex items-center justify-between border-t border-[color-mix(in_srgb,var(--brand-violet)_25%,white)] pt-4 text-sm font-medium text-foreground dark:border-white/15">
+                    <div className="mt-auto flex items-center justify-between border-t border-black/10 pt-4 text-sm font-medium text-foreground dark:border-white/15">
                       View project
                       <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                     </div>

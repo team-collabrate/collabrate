@@ -13,7 +13,7 @@ const buttonVariants = cva(
         primary:
           "rounded-[10px] font-semibold text-white bg-[linear-gradient(180deg,#A45AF0_0%,#8A2BE2_55%,#6A1DB8_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.18),0_1px_2px_rgba(106,29,184,0.45),0_6px_16px_-4px_rgba(106,29,184,0.5)] hover:-translate-y-0.5 hover:brightness-110 active:brightness-90",
         soft:
-          "rounded-[10px] font-semibold border border-[color-mix(in_srgb,var(--brand-violet)_28%,white)] bg-background text-foreground shadow-[0_1px_2px_rgba(32,32,32,0.06)] hover:-translate-y-0.5 hover:bg-surface",
+          "rounded-[10px] font-semibold border border-black/10 bg-background text-foreground shadow-[0_1px_2px_rgba(32,32,32,0.06)] hover:-translate-y-0.5 hover:bg-surface",
         frost:
           "rounded-lg border border-white/40 bg-white/20 text-white backdrop-blur-md hover:bg-white/30 hover:-translate-y-0.5",
         gradient:

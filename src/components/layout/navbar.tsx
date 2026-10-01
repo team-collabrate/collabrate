@@ -71,8 +71,8 @@ export function Navbar() {
 
   const linkClass = (active: boolean) =>
     cn(
-      "inline-flex h-9 items-center gap-1.5 rounded-[6px] px-[18px] text-sm font-medium transition-colors duration-150 hover:bg-black/[0.04] dark:hover:bg-white/10",
-      active ? "text-nav-ink" : "text-nav-ink/75 hover:text-nav-ink"
+      "inline-flex h-9 items-center gap-1.5 rounded-[8px] px-[18px] text-sm font-medium transition-colors duration-200 hover:bg-black/[0.05] dark:hover:bg-white/10",
+      active ? "text-nav-ink" : "text-nav-ink/80 hover:text-nav-ink"
     );
 
   return (
@@ -91,7 +91,7 @@ export function Navbar() {
         {/* Glass layer lives apart from the content so the blur can never swallow the links. */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[18px] border border-white/60 bg-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_10px_32px_-8px_rgba(60,30,120,0.28)] ring-1 ring-black/[0.05] backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_32px_-8px_rgba(0,0,0,0.6)] dark:ring-white/5"
+          className="pointer-events-none absolute inset-0 rounded-[18px] border border-white/80 bg-white/92 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_30px_-10px_rgba(20,30,60,0.22)] ring-1 ring-black/[0.06] backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_32px_-8px_rgba(0,0,0,0.6)] dark:ring-white/5"
         />
         <Logo className="relative z-10" />
 
