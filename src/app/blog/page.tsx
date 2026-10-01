@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "Collabrate's blog is on the way. Notes on development, marketing, and AI, coming soon.",
-  alternates: { canonical: "/blog" },
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Blog | Collabrate",
+  description:
+    "Collabrate's blog is on the way. Notes on development, marketing, and AI, coming soon.",
+  path: "/blog",
+  noindex: true, // thin "coming soon" page: out of search until the first real post exists
+});
 
 const pillars = [
   "Web & App Development",

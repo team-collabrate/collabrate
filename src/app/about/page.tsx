@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { AboutPillars } from "@/components/sections/about-pillars";
 
-export const metadata: Metadata = {
-  title: "About",
+export const metadata: Metadata = buildMetadata({
+  title: "About Collabrate, a Tamil Nadu Digital Agency",
   description:
-    "Collabrate is a digital development and marketing company founded in 2025, working with businesses across India, Singapore, Malaysia, and the Gulf.",
-  alternates: { canonical: "/about" },
-};
+    "Collabrate is a digital development and marketing company founded in 2025 and based in Tamil Nadu, working with businesses across India and beyond.",
+  path: "/about",
+});
 
 const facts = [
   "Founded 2025",

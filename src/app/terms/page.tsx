@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
-  description: "The terms that govern use of Collabrate's website and services.",
-  alternates: { canonical: "/terms" },
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Terms of Service | Collabrate",
+  description:
+    "Read the terms that govern the use of the Collabrate website and the digital development, marketing and AI services we provide to businesses.",
+  path: "/terms",
+});
 
 const sections = [
   { heading: "Services", body: "Collabrate provides web and mobile development, digital marketing, and AI solutions. All engagements are scoped and quoted individually based on client requirements, as outlined in a separate proposal or agreement." },

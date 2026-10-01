@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description: "How Collabrate collects, uses, and protects your information.",
-  alternates: { canonical: "/privacy" },
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Privacy Policy | Collabrate",
+  description:
+    "How Collabrate collects, uses, and protects your information when you visit collabrate.digital or contact us about a project.",
+  path: "/privacy",
+});
 
 const sections = [
   { heading: "Information We Collect", body: "We collect information you provide directly, such as your name, email, company name, and project details, when you submit a contact form, book a call, or communicate with us. We may also collect basic usage data (such as pages visited or general location) through standard website analytics tools." },

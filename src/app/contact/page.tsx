@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ContactOptions } from "@/components/sections/contact-options";
 import { DirectContact } from "@/components/sections/direct-contact";
 import { FAQ } from "@/components/sections/faq";
 import { contactFaq } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Contact",
+export const metadata: Metadata = buildMetadata({
+  title: "Contact Collabrate: Get a Quote",
   description:
-    "Have a project in mind or just exploring options? Tell us what you're working on, and we'll get back with next steps.",
-  alternates: { canonical: "/contact" },
-};
+    "Tell us what you are building and we will reply with next steps. Collabrate usually responds within one business day. Get a quote.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

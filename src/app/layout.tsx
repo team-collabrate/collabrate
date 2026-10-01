@@ -33,10 +33,11 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
+  // Defaults only: no url here. Pages build their full openGraph/twitter/canonical with
+  // buildMetadata() in src/lib/seo.ts, because Next.js replaces these objects per page.
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: siteUrl,
+    locale: "en_IN",
     title: `${site.name} | Digital Development & Marketing`,
     description,
     siteName: site.name,
@@ -65,9 +66,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  },
-  alternates: {
-    canonical: siteUrl,
   },
 };
 

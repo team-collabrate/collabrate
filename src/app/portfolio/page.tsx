@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { PortfolioGrid } from "@/components/sections/portfolio-grid";
 import { CTABanner } from "@/components/sections/cta-banner";
 
-export const metadata: Metadata = {
-  title: "Our Work",
+export const metadata: Metadata = buildMetadata({
+  title: "Our Work: Booking, HR and Vendor Platforms | Collabrate",
   description:
     "A look at the platforms and applications we've built across booking, HR, enterprise software, fitness, and vendor management.",
-  alternates: { canonical: "/portfolio" },
-};
+  path: "/portfolio",
+});
 
 export default function PortfolioPage() {
   return (

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ServicesExplorer } from "@/components/sections/services-explorer";
 import { FAQ } from "@/components/sections/faq";
 import { CTABanner } from "@/components/sections/cta-banner";
 import { servicesFaq } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Services",
+export const metadata: Metadata = buildMetadata({
+  title: "Web, Marketing and AI Services | Collabrate",
   description:
-    "Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to achieve.",
-  alternates: { canonical: "/services" },
-};
+    "Website and app development, digital marketing and AI automation from one team. Pick the services you need and get a clear, scoped quote.",
+  path: "/services",
+});
 
 export default function ServicesPage() {
   return (

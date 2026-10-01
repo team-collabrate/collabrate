@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { CTABanner } from "@/components/sections/cta-banner";
 import HowItWorks, { type Step } from "@/components/ui/how-it-works";
 
-export const metadata: Metadata = {
-  title: "Pricing",
+export const metadata: Metadata = buildMetadata({
+  title: "How Collabrate Pricing Works | Collabrate",
   description:
-    "Every business is different, so we don't force projects into fixed packages. Pricing is based on scope, complexity, and what you actually need.",
-  alternates: { canonical: "/pricing" },
-};
+    "Collabrate prices by scope, complexity, timeline and ongoing support, not fixed packages. See what affects your quote and how engagements work.",
+  path: "/pricing",
+});
 
 const factors = [
   "Type of service (development, marketing, AI, or a combination)",
