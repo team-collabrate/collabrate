@@ -58,7 +58,7 @@ export function NewsletterForm() {
       <p
         role="status"
         aria-live="polite"
-        className={`mt-2 text-[13px] ${status === "error" ? "text-red-600" : status === "success" ? "text-emerald-600" : "text-foreground/50"}`}
+        className={`mt-2 text-[13px] ${status === "error" ? "text-red-600" : status === "success" ? "text-emerald-600" : "text-foreground/65"}`}
       >
         {message || "We don't spam you or sell the data."}
       </p>
