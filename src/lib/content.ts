@@ -97,6 +97,8 @@ export const content = raw as unknown as Content;
 // ---------- Convenience exports ----------
 
 export const site = content.site;
+// Canonical origin, built from the one domain in the content JSON (no trailing slash).
+export const siteUrl = `https://${content.site.domain}`;
 export const nav = content.nav;
 export const serviceCategories = content.serviceCategories;
 export const industries = content.industries;
