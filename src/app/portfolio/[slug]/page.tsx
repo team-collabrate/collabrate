@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: study.metaTitle,
     description: study.description,
     path: caseStudyPath(study.slug),
+    image: null, // the opengraph-image file next to this page supplies og:image and twitter:image
     noindex: !isPublished(study),
   });
 }

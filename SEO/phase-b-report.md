@@ -225,3 +225,22 @@ Not verified visually: the header mega-menu "Industries" row and mobile link (th
 Notes for you:
 1. The homepage "work" cards still use gradient placeholder art (not part of Phase B). Phase B asked for no gradient placeholders on case-study pages, which I followed; the homepage and `/portfolio` cards were not changed.
 2. The footer still contains a newsletter form (existing).
+
+## B8. Supporting files (done)
+
+Files: `src/app/llms.txt/route.ts`, `src/app/manifest.ts`, `src/lib/og-image.tsx`, and an `opengraph-image.tsx` in each of `src/app/services/[slug]/`, `src/app/industries/[slug]/`, `src/app/portfolio/[slug]/`. `buildMetadata` (`src/lib/seo.ts`) now accepts `image: null`, which the three templates pass so that the file convention supplies the only og:image and twitter:image.
+
+- `/llms.txt`: generated from the content files, published entries only, prerendered (static). Contains the company summary (from the JSON), the main pages, then services (grouped by the JSON categories), industries and case studies as each is published. A normal build (nothing published) lists only the five main pages. No search engine has confirmed a ranking benefit from this file; it is a low-cost convention.
+- `/manifest.webmanifest`: name and short name Collabrate, start URL `/`, display `browser`, background `#FEFFFF` and theme `#8A2BE2` (the `--background` and `--brand-violet` values in `globals.css`), icons `/brand/icons/icon-192.png` and `icon-512.png`. `display` is "browser" on purpose: this is not an installable app.
+- Open Graph images: 1200x630 PNG, text only. Colour logo on a light background (brand rule), violet accent bar, the page name as the headline (service display name, industry name from the JSON, case-study title), the domain at the bottom. No photos, no invented text. Static (generated at build for every buildable page).
+
+Verification:
+- Build output: `/llms.txt` and `/manifest.webmanifest` static; each template has an `opengraph-image` route for every buildable page.
+- One URL per template (`/services/seo`, `/industries/booking-and-scheduling-platforms`, `/portfolio/turf-booking-platform`): exactly 1 `og:image` and 1 `twitter:image`, both pointing at that page's own generated image, width 1200, alt text present, image served as `image/png` (51 to 68 KB). Viewed two of them: logo, headline and layout are readable and on brand.
+- All-published run (temporary, reverted): `/llms.txt` listed 32 links, all answering 200; all 27 template pages have exactly one `og:image` and one `twitter:image` and the image URL answers 200.
+- lint, tsc, build clean. Nothing is published now.
+
+Notes:
+1. The image alt text is one fixed string per template ("Collabrate service", "Collabrate industry", "Collabrate case study"). Fine for now; it can be made page-specific later.
+2. The OG images use the framework's default font, not the site's Sora and Hanken fonts, because the installed font files are WOFF2 (the image renderer needs TTF, OTF or WOFF). It reads well; supplying a TTF would match the brand exactly.
+3. B7 will add its own `opengraph-image.tsx` for `/locations/[slug]` using the same helper.

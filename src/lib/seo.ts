@@ -28,13 +28,18 @@ interface BuildMetadataInput {
   description: string;
   /** Route path starting with "/". Resolved against metadataBase in the root layout. */
   path: string;
-  image?: { url: string; width?: number; height?: number; alt?: string };
+  /**
+   * Social image. Omit for the default site image. Pass `null` when the route has its own
+   * opengraph-image file (services, industries, case studies): Next then adds og:image and
+   * twitter:image from that file, and this helper adds none, so there is only ever one.
+   */
+  image?: { url: string; width?: number; height?: number; alt?: string } | null;
   /** Use for pages that must stay out of search (e.g. /blog while it has no posts). */
   noindex?: boolean;
 }
 
 export function buildMetadata({ title, description, path, image, noindex }: BuildMetadataInput): Metadata {
-  const ogImage = image ?? DEFAULT_OG_IMAGE;
+  const ogImage = image === null ? null : (image ?? DEFAULT_OG_IMAGE);
   return {
     title: { absolute: title },
     description,
@@ -46,13 +51,13 @@ export function buildMetadata({ title, description, path, image, noindex }: Buil
       siteName: site.name,
       locale: OG_LOCALE,
       type: "website",
-      images: [ogImage],
+      ...(ogImage ? { images: [ogImage] } : {}),
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage.url],
+      ...(ogImage ? { images: [ogImage.url] } : {}),
     },
     ...(noindex ? { robots: { index: false, follow: false } } : {}),
   };

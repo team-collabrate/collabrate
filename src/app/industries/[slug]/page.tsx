@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: page.title,
     description: page.description,
     path: industryPath(page.slug),
+    image: null, // the opengraph-image file next to this page supplies og:image and twitter:image
     noindex: !isPublished(page),
   });
 }

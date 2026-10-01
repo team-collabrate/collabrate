@@ -35,6 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: servicePageTitle(page),
     description: page.description,
     path: servicePath(page.slug),
+    image: null, // the opengraph-image file next to this page supplies og:image and twitter:image
     noindex: !isPublished(page),
   });
 }
