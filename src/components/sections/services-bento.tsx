@@ -86,7 +86,7 @@ export function ServicesBento() {
                 </p>
                 <Button variant="soft" size="sm" className="mt-3 h-9 px-4 text-sm" asChild>
                   <Link href="/services">
-                    Learn more <ArrowRight className="size-3.5" />
+                    Learn more<span className="sr-only"> about {title}</span> <ArrowRight className="size-3.5" />
                   </Link>
                 </Button>
               </div>
