@@ -47,3 +47,31 @@ TODO(verify) items in these three pages (all marked in the content file):
 4. Related industries and projects (my mapping, not in the JSON). They are not rendered yet; B2 and B3 resolve them.
 
 Needed from you: read the three pages, correct anything untrue, then reply "next" (I write the web 6) or tell me what to change. Say which pages you want flipped to `published: true`.
+
+## B1 (continued). Remaining 14 service pages written, all still drafts
+
+All 17 service pages now exist in `src/content/service-pages.ts` with `published: false`. Order written: marketing (linkedin-outreach, seo, digital-marketing-strategy), web (website-development, mobile-app-development, landing-pages, business-websites, dashboards-and-admin-panels, ecommerce-websites), AI (ai-chatbots, workflow-automation, ai-support-systems, ai-voice-assistants, custom-llm-integration).
+
+Changes in this step:
+- Spelling normalised to the JSON's American style (optimize, inquiry, behavior) across all 17 pages, including the first three you reviewed (word swap only, no meaning change).
+- `scripts/check-service-copy.mjs` now also checks that related services, industries and projects point at real slugs.
+- Extra `metaTitle` overrides where the default title would exceed 60 characters: digital-marketing-strategy, mobile-app-development, dashboards-and-admin-panels, ai-support-systems.
+
+Verification: all 17 pages, production build with SHOW_UNPUBLISHED=1: 1 H1, title at most 60, description 120 to 155, own canonical, exactly 1 og:image, no opacity:0, FAQ schema text equals visible text, copy lint clean. A normal build still produces zero service pages (all unpublished). lint, tsc, build clean.
+
+Thin-page check: every page has at least 3 included items and 4 or more FAQs. None needed to stay hidden for being thin, but the thinnest are digital-marketing-strategy, landing-pages, mobile-app-development and AI voice assistants (3 included items each, general FAQs). They are shorter than the rest; I did not pad them.
+
+TODO(verify) items, by page (all marked in the content file):
+- linkedin-outreach: who sends the messages and how; client review of messages; follow-up and hand-off process.
+- seo: ongoing review as part of the service.
+- digital-marketing-strategy: reporting format and cadence.
+- website-development: launch-stage tasks; "same people" wording in the design FAQ (team-structure implication, reword if unsure).
+- mobile-app-development: store account ownership; confirm the gym and dairy projects were mobile apps.
+- business-websites, ecommerce-websites: handover and training; post-launch refinement; the turf project as an e-commerce example (it has food ordering listings; drop if unfair).
+- dashboards-and-admin-panels: feedback and refinement stage.
+- ai-chatbots: human hand-over capability; post-launch improvement.
+- workflow-automation: monitoring and error notification approach.
+- ai-support-systems: integration with Zendesk, Intercom and Freshdesk (their logos are listed, integration is not stated in the JSON).
+- ai-voice-assistants: phone and calendar integration scope; data retention and access.
+- custom-llm-integration: evaluation method; data-handling statements (kept deliberately mild).
+- All pages: related industry and project mapping is my judgement (not rendered until B2 and B3).

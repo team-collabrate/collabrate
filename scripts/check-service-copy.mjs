@@ -4,9 +4,12 @@ import { slugFor } from "../src/lib/slug.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
 const FORBIDDEN = [/—/, /–/, /\bbest\b/i, /\bleading\b/i, /number one/i, /guarantee/i, /\bcheap\b/i, /\baffordable\b/i, /PENDING_LINK/, /[₹$€£]\s?\d/, /\d\s?(INR|Rs)\b/i, /\bRs\.?\s?\d/];
+const INDUSTRIES = new Set(["booking-and-scheduling-platforms","vendor-and-distribution-management","workforce-and-recruitment-systems","business-and-corporate-websites","ecommerce-websites-and-stores"]);
+const PROJECTS = new Set(["turf-booking-platform","hr-recruitment-dashboard","enterprise-software-website","gym-trainer-app","dairy-vendor-management-app"]);
 let bad = 0;
 const fail = (slug, msg) => { console.error(`FAIL ${slug}: ${msg}`); bad++; };
 
+const ALL_SERVICE_SLUGS = new Set(servicePages.map((p) => p.slug));
 const seen = new Set();
 for (const p of servicePages) {
   if (seen.has(p.slug)) fail(p.slug, "duplicate slug");
@@ -26,9 +29,14 @@ for (const p of servicePages) {
   }
   if (p.relatedServices.length !== 2) fail(p.slug, "relatedServices must be 2");
   if (p.relatedIndustries.length < 1 || p.relatedIndustries.length > 2) fail(p.slug, "relatedIndustries must be 1 to 2");
+  for (const r of p.relatedServices) if (!servicePages.some((x) => x.slug === r) && !ALL_SERVICE_SLUGS.has(r)) fail(p.slug, `unknown related service ${r}`);
+  for (const r of p.relatedIndustries) if (!INDUSTRIES.has(r)) fail(p.slug, `unknown industry ${r}`);
+  for (const r of p.relatedProjects) if (!PROJECTS.has(r)) fail(p.slug, `unknown project ${r}`);
   const text = JSON.stringify(p);
   for (const re of FORBIDDEN) if (re.test(text)) fail(p.slug, `forbidden pattern ${re}`);
   if (/\d/.test(p.howItWorks.map((s) => s.title + s.text).join(" "))) fail(p.slug, "digits in howItWorks (no timeframes or numbers)");
   console.log(`${p.slug}: answer ${a}w, title ${title.length}c, desc ${p.description.length}c, ${p.faqs.length} faqs, published=${p.published}`);
 }
 process.exit(bad ? 1 : 0);
+
+console.log(`${servicePages.length} of 17 service pages written`);
