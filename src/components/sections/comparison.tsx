@@ -53,28 +53,30 @@ export function Comparison() {
             aria-label="Comparison"
             className="grid min-w-[720px] grid-cols-[1.15fr_1fr_1fr_1fr] text-sm"
           >
-            {/* Header row */}
-            <div role="columnheader" className="px-2 py-4">
-              <span className="sr-only">Capability</span>
-            </div>
-            <div
-              role="columnheader"
-              className="flex items-center justify-center gap-2 rounded-t-[16px] border border-b-0 border-brand-violet/40 bg-tint-sky px-4 py-5"
-            >
-              <Image src="/logo-mark.png" alt="" width={28} height={28} className="size-7" />
-              <span className="font-[family-name:var(--font-display)] text-xl font-semibold text-foreground">
-                Collabrate
-              </span>
-            </div>
-            {others.map((o) => (
-              <div
-                key={o}
-                role="columnheader"
-                className="mx-1.5 mt-1.5 flex items-center justify-center rounded-[16px] bg-surface px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground"
-              >
-                {o}
+            {/* Header row: column headers must sit inside a role="row" (display: contents keeps the grid layout). */}
+            <div role="row" className="contents">
+              <div role="columnheader" className="px-2 py-4">
+                <span className="sr-only">Capability</span>
               </div>
-            ))}
+              <div
+                role="columnheader"
+                className="flex items-center justify-center gap-2 rounded-t-[16px] border border-b-0 border-brand-violet/40 bg-tint-sky px-4 py-5"
+              >
+                <Image src="/logo-mark.png" alt="" width={28} height={28} className="size-7" />
+                <span className="font-[family-name:var(--font-display)] text-xl font-semibold text-foreground">
+                  Collabrate
+                </span>
+              </div>
+              {others.map((o) => (
+                <div
+                  key={o}
+                  role="columnheader"
+                  className="mx-1.5 mt-1.5 flex items-center justify-center rounded-[16px] bg-surface px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-foreground"
+                >
+                  {o}
+                </div>
+              ))}
+            </div>
 
             {rows.map((row, r) => {
               const last = r === rows.length - 1;
