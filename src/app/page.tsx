@@ -5,6 +5,7 @@ import { homeGraph } from "@/lib/schema";
 import { Hero } from "@/components/sections/hero";
 import { Belief } from "@/components/sections/belief";
 import { ServicesBento } from "@/components/sections/services-bento";
+import { HowWeWork } from "@/components/sections/how-we-work";
 import { WorkShowcase } from "@/components/sections/work-showcase";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Comparison } from "@/components/sections/comparison";
@@ -28,6 +29,7 @@ export default function Home() {
       <Hero />
       <Belief />
       <ServicesBento />
+      <HowWeWork />
       <WorkShowcase />
       <Testimonials />
       <Comparison />

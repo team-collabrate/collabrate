@@ -8,6 +8,7 @@ import { aboutContent } from "../src/content/about-page.ts";
 import { townCopy, districtCopy } from "../src/content/location-copy.ts";
 import { parseCsvObjects } from "../src/lib/csv.ts";
 import { slugify } from "../src/lib/slug.ts";
+import { homeProcess } from "../src/content/home-process.ts";
 import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
@@ -161,5 +162,19 @@ for (const sp of servicePages) for (const r of sp.relatedProjects) if (!caseStud
     for (const re of FORBIDDEN) if (re.test(JSON.stringify(d))) fail(slug, `forbidden pattern ${re}`);
   }
   console.log(`locations: ${confirmed.size} confirmed towns in the CSV, ${townCopy.length} town copies, ${districtCopy.length} district copies`);
+}
+
+// ---- Homepage "How we work": every step must be built from verbatim site wording ----
+{
+  const sourceText = readFileSync(new URL("../src/content/collabrate-content.json", import.meta.url), "utf8").replace(/\\"/g, '"')
+    + readFileSync(new URL("../src/lib/content.ts", import.meta.url), "utf8");
+  for (const step of homeProcess.steps) {
+    for (const frag of step.sources) if (!sourceText.includes(frag)) fail(`home-process:${step.title}`, `source fragment not found in the JSON or content.ts: "${frag}"`);
+    if (!step.sources.some((frag) => step.text.toLowerCase().includes(frag.slice(0, 24).toLowerCase()))) fail(`home-process:${step.title}`, "text does not use its source wording");
+    if (/\d/.test(step.text + step.title)) fail(`home-process:${step.title}`, "digits in step copy (no timeframes or numbers)");
+    for (const re of FORBIDDEN) if (re.test(step.text)) fail(`home-process:${step.title}`, `forbidden pattern ${re}`);
+  }
+  if (homeProcess.steps.length < 4 || homeProcess.steps.length > 5) fail("home-process", "needs 4 to 5 steps");
+  console.log(`home-process: ${homeProcess.steps.length} steps, sources verified`);
 }
 process.exit(bad ? 1 : 0);
