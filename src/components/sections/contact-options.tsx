@@ -54,8 +54,10 @@ export function ContactOptions() {
     }
   };
 
+  // overflow-x-clip on the section: the two cards start 28px off to the side until they scroll into
+  // view, and clip stops that adding sideways scroll on phones.
   return (
-    <section className="relative py-16 sm:py-20">
+    <section className="relative overflow-x-clip py-16 sm:py-20">
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <Reveal direction="left" className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">

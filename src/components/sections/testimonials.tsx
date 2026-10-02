@@ -31,8 +31,8 @@ export function Testimonials() {
                   className={cn(
                     "flex flex-col justify-between gap-8 rounded-[20px] border border-black/10 p-6 dark:border-white/15",
                     tall
-                      ? "min-h-[380px] flex-1 bg-gradient-to-b from-background to-tint-sky"
-                      : "min-h-[250px] bg-background"
+                      ? "flex-1 bg-gradient-to-b from-background to-tint-sky md:min-h-[380px]"
+                      : "bg-background md:min-h-[250px]"
                   )}
                 >
                   <blockquote className="text-xl leading-[1.35] text-foreground">

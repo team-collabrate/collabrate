@@ -20,7 +20,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
                   {item.name}
                 </span>
               ) : (
-                <Link href={item.path || "/"} className="underline-offset-4 hover:text-foreground hover:underline">
+                <Link href={item.path || "/"} className="inline-flex min-h-6 items-center underline-offset-4 hover:text-foreground hover:underline">
                   {item.name}
                 </Link>
               )}

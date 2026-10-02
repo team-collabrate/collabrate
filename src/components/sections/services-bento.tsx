@@ -63,7 +63,7 @@ export function ServicesBento() {
             >
               {card.cover ? (
                 // Full-card artwork (it carries its own headline and button), so the live text is screen-reader only.
-                <Link href="/services" className="absolute inset-0 z-20" aria-label={`${title}: learn more`}>
+                <Link href="/services" className="absolute inset-0 z-20 max-md:hidden" aria-label={`${title}: learn more`}>
                   <Image
                     src={card.cover}
                     alt=""
@@ -75,11 +75,11 @@ export function ServicesBento() {
               ) : null}
               {card.cover ? (
                 // The full-card artwork covers the built-in visual, so float the tool logos on top of it.
-                <div className="pointer-events-none absolute inset-0 z-30">
+                <div className="pointer-events-none absolute inset-0 z-30 max-md:hidden">
                   <ServiceVisual name={card.name} wide={card.wide} chipsOnly />
                 </div>
               ) : null}
-              <div className={cn("relative z-10 flex flex-col items-start gap-2 p-6", card.cover && "sr-only")}>
+              <div className={cn("relative z-10 flex flex-col items-start gap-2 p-6", card.cover && "md:sr-only")}>
                 <h3 className="card-title">{title}</h3>
                 <p className={cn("line-clamp-3 text-base leading-[1.4] text-muted-foreground", card.wide ? "max-w-[380px]" : "max-w-[460px]")}>
                   {service.summary}
@@ -91,14 +91,21 @@ export function ServicesBento() {
                 </Button>
               </div>
               <div className="dot-grid pointer-events-none absolute bottom-0 left-0 h-1/2 w-1/2 [mask-image:radial-gradient(ellipse_at_bottom_left,black,transparent_70%)]" aria-hidden />
+              {/* On phones every card is a narrow, single-column card, so wide cards use the narrow
+                  illustration there and switch to the wide one from md up (where they span two columns). */}
               <div
                 className={cn(
-                  "pointer-events-none absolute inset-x-0 bottom-0 transition-transform duration-500 ease-out group-hover:-translate-y-1.5",
-                  card.wide ? "top-0" : "top-[190px]"
+                  "pointer-events-none absolute inset-x-0 bottom-0 top-[190px] transition-transform duration-500 ease-out group-hover:-translate-y-1.5",
+                  card.wide && "md:hidden"
                 )}
               >
-                <ServiceVisual name={card.name} wide={card.wide} />
+                <ServiceVisual name={card.name} />
               </div>
+              {card.wide && (
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 top-0 hidden transition-transform duration-500 ease-out group-hover:-translate-y-1.5 md:block">
+                  <ServiceVisual name={card.name} wide />
+                </div>
+              )}
             </motion.article>
           );
         })}

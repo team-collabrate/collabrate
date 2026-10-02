@@ -46,7 +46,34 @@ export function Comparison() {
         </div>
       </Reveal>
 
-      <Reveal delay={0.08}>
+      {/* Phones: one card per capability, so nothing needs sideways scrolling. */}
+      <Reveal delay={0.08} className="md:hidden">
+        <ul className="flex flex-col gap-3">
+          {rows.map((row) => (
+            <li key={row.label} className="rounded-[16px] border border-border bg-background p-5">
+              <p className="text-base font-medium leading-snug text-foreground">{row.label}</p>
+              <dl className="mt-4 grid grid-cols-1 gap-2.5">
+                {[["Collabrate", row.values[0]], [others[0], row.values[1]], [others[1], row.values[2]]].map(([label, yes], i) => (
+                  <div
+                    key={label as string}
+                    className={cn(
+                      "flex items-center justify-between gap-3 rounded-[10px] px-3 py-2.5",
+                      i === 0 ? "border border-brand-violet/40 bg-tint-sky" : "bg-surface"
+                    )}
+                  >
+                    <dt className={cn("text-sm", i === 0 ? "font-semibold text-foreground" : "text-muted-foreground")}>{label as string}</dt>
+                    <dd>
+                      <Mark yes={yes as boolean} label={label as string} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+
+      <Reveal delay={0.08} className="hidden md:block">
         <div className="overflow-x-auto pb-2">
           <div
             role="table"

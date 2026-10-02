@@ -139,7 +139,7 @@ function ServiceCard({
           <Icon className="size-5" />
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-base font-semibold text-foreground">{heading}</span>
+          <span className="block text-base font-semibold text-foreground sm:truncate">{heading}</span>
           {subtitle && <span className="block text-xs text-muted-foreground">{subtitle}</span>}
         </span>
         <ChevronDown
@@ -152,7 +152,7 @@ function ServiceCard({
 
       <div className={cn("grid transition-all duration-300 ease-out", open ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
         <div className={cn("rounded-b-3xl", settled ? "overflow-visible" : "overflow-hidden")}>
-          <div className="flex flex-col gap-5 px-6 pb-6">
+          <div className="flex min-w-0 flex-col gap-5 px-6 pb-6">
             <p className="text-sm leading-relaxed text-muted-foreground">{service.summary}</p>
 
             <ul className="flex flex-col gap-2 border-t border-border pt-4">
@@ -181,7 +181,7 @@ function ServiceCard({
                 <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Tools we use
                 </span>
-                <SocialTooltip items={tools} className="justify-start gap-3" />
+                <SocialTooltip items={tools} className="flex-wrap justify-start gap-3" />
               </div>
             )}
           </div>
@@ -245,7 +245,7 @@ export function ServicesExplorer({ pageHrefs = {} }: { pageHrefs?: Record<string
             {serviceCategories.map((category) => {
               const CatIcon = CATEGORY_ICONS[category.id] ?? Sparkles;
               return (
-                <TabsTrigger key={category.id} value={category.id} className="gap-2">
+                <TabsTrigger key={category.id} value={category.id} className="gap-1.5 px-2.5 sm:gap-2 sm:px-4">
                   <CatIcon className="size-4" />
                   {CATEGORY_SHORT_LABELS[category.id] ?? category.heading}
                 </TabsTrigger>
