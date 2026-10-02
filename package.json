@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "check:links": "node scripts/check-links.mjs"
+    "check:links": "node scripts/check-links.mjs",
+    "check:csp": "node scripts/csp-check.mjs"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.3.0",
