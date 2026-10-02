@@ -13,6 +13,7 @@ export function DeferredVideo({
   src,
   mobileSrc,
   minWidth,
+  poster,
   className,
 }: {
   src: string;
@@ -20,6 +21,13 @@ export function DeferredVideo({
   mobileSrc?: string;
   /** Only mount at or above this viewport width in px (e.g. 1024 for desktop-only art). */
   minWidth?: number;
+  /**
+   * Poster image URL. When given, the <video> element is rendered in the server HTML with this
+   * poster and no source, and the source is attached later. The same element then paints the
+   * poster first and the video's first frame later, with identical area, so the first frame never
+   * becomes a new, later Largest Contentful Paint candidate (a video mounted after load did).
+   */
+  poster?: string;
   className?: string;
 }) {
   const reduceMotion = useReducedMotion();
@@ -40,6 +48,22 @@ export function DeferredVideo({
     return () => window.removeEventListener("load", schedule);
   }, [reduceMotion, minWidth, src, mobileSrc]);
 
+  if (poster) {
+    // Reduced motion: no source is ever attached, so it stays a still poster.
+    return (
+      <video
+        className={className}
+        src={chosen ?? undefined}
+        poster={poster}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload={chosen ? "auto" : "none"}
+        aria-hidden
+      />
+    );
+  }
   if (reduceMotion || !chosen) return null;
   return (
     <video className={className} src={chosen} autoPlay muted loop playsInline preload="auto" aria-hidden />

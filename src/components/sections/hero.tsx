@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { preload } from "react-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,16 +28,22 @@ const STRIP = [
   ["google-ads.svg", "Google Ads"],
 ] as const;
 
+// The hero poster is the LCP element. It is the <video poster> itself (see DeferredVideo), so it is
+// preloaded here with high priority instead of being discovered when the video element is parsed.
+// One 1200px-wide variant serves phones and desktops; the video replaces it within seconds.
+const HERO_POSTER = "/_next/image?url=%2Fvideo%2Fhero-poster.jpg&w=1080&q=75";
+
 export function Hero() {
+  preload(HERO_POSTER, { as: "image", fetchPriority: "high" });
   return (
     <section className="px-4 pt-4">
       <div className="relative flex min-h-[680px] w-full flex-col overflow-hidden rounded-[16px] border border-black/10 bg-[#0A1022] lg:h-[800px]">
-        {/* The poster is the LCP image: optimized, preloaded, painted first. The video mounts
-            after load (DeferredVideo) and plays on top of it, untouched. */}
-        <Image src="/video/hero-poster.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+        {/* The video element carries the poster (LCP) in the server HTML; its source is attached
+            after load, so the video plays in place of the poster, untouched. */}
         <DeferredVideo
           src="/video/hero.mp4"
           mobileSrc="/video/hero-mobile.mp4"
+          poster={HERO_POSTER}
           className="absolute inset-0 h-full w-full object-cover"
         />
 
