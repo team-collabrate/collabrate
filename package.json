@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "check:copy": "node --no-warnings scripts/check-service-copy.mjs",
+    "check:slugs": "node --no-warnings scripts/check-slugs.mjs",
+    "check:site": "node scripts/check-links.mjs && node scripts/verify-templates.mjs && node scripts/check-uniqueness.mjs && node scripts/check-forbidden.mjs",
     "check:links": "node scripts/check-links.mjs",
     "check:csp": "node scripts/csp-check.mjs"
   },

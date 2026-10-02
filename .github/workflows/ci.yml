@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Static checks first: they fail fast and need no build.
+      - name: Lint
+        run: npm run lint
+      - name: Type check
+        run: npm run typecheck
+      - name: Content copy checks (word counts, forbidden words, source wording, location CSV)
+        run: npm run check:copy
+      - name: Slug checks
+        run: npm run check:slugs
+
+      - name: Build
+        run: npm run build
+
+      # Crawl the production build: broken links, orphan pages, links to unpublished pages,
+      # per-page title/description/canonical/schema checks, text uniqueness, forbidden content.
+      - name: Site checks against the production build
+        run: |
+          npx next start -p 3000 &
+          for i in $(seq 1 30); do curl -sf http://localhost:3000/ >/dev/null && break; sleep 1; done
+          npm run check:site
