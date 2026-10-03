@@ -1,7 +1,7 @@
 "use client";
 
 import { Mail, MapPin, Globe2 } from "lucide-react";
-import { Linkedin, Instagram } from "@/components/shared/brand-icons";
+import { Linkedin, Instagram, XLogo } from "@/components/shared/brand-icons";
 import { Reveal } from "@/components/shared/reveal";
 import { PendingIconLink } from "@/components/shared/pending-link";
 import { site } from "@/lib/content";
@@ -27,6 +27,7 @@ export function DirectContact() {
             <div className="flex items-center gap-2">
               <PendingIconLink href={site.social.linkedin} icon={Linkedin} label="LinkedIn" />
               <PendingIconLink href={site.social.instagram} icon={Instagram} label="Instagram" />
+              <PendingIconLink href={site.social.x} icon={XLogo} label="X" />
             </div>
           </div>
         </Reveal>

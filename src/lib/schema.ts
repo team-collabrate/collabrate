@@ -35,7 +35,7 @@ const KNOWS_ABOUT = [
 
 // Only real profile URLs; isPending() hides any PENDING_LINK, so adding the real LinkedIn
 // URL to the content JSON extends this list automatically.
-const sameAs = [site.social.linkedin, site.social.instagram].filter((url) => !isPending(url));
+const sameAs = [site.social.linkedin, site.social.instagram, site.social.x].filter((url) => !isPending(url));
 
 const organization = {
   "@type": "Organization",

@@ -3,15 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import Script from "next/script";
-import { ArrowUpRight, Loader2, CheckCircle2, CalendarDays, MessageSquare } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Loader2, CheckCircle2, CalendarDays, MessageSquare } from "lucide-react";
 import { Reveal } from "@/components/shared/reveal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select } from "@/components/ui/select";
-import { PendingLink } from "@/components/shared/pending-link";
-import { site } from "@/lib/content";
+import { site, isPending } from "@/lib/content";
 import { track } from "@/lib/analytics";
 
 // Cloudflare Turnstile is optional: the widget only renders when the site key is set.
@@ -69,15 +68,13 @@ export function ContactOptions() {
               Prefer to talk it through? Book a slot that works for you, no pressure, just a quick
               conversation about what you&apos;re building.
             </p>
-            <PendingLink
-              href={site.calendlyUrl}
-              variant="outline"
-              size="lg"
-              className="mt-2 w-full"
-              pendingLabel="Calendly link coming soon"
-            >
-              Schedule on Calendly <ArrowUpRight className="size-4" />
-            </PendingLink>
+            {!isPending(site.calendlyUrl) && (
+              <Button variant="outline" size="lg" className="mt-2 w-full" asChild>
+                <a href="#book" onClick={() => track("click_calendly", { link_url: "#book" })}>
+                  Pick a time below <ArrowDown className="size-4" />
+                </a>
+              </Button>
+            )}
           </Reveal>
 
           <Reveal direction="right" delay={0.08} className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-8 shadow-sm sm:p-10">

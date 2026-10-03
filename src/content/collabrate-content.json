@@ -7,8 +7,9 @@
     "serviceRegions": ["India", "Singapore", "Malaysia", "Gulf countries"],
     "email": "hello@collabrate.digital",
     "social": {
-      "linkedin": "PENDING_LINK",
-      "instagram": "https://instagram.com/collab.rate"
+      "linkedin": "https://www.linkedin.com/company/collabrate/",
+      "instagram": "https://instagram.com/collab.rate",
+      "x": "https://x.com/collab_rate"
     },
     "calendlyUrl": "https://calendly.com/team-collabrate/30min",
     "tone": "Corporate, trustworthy, plain-language. Complete sentences, no fragments, no hype punctuation.",
@@ -211,7 +212,7 @@
           "email": "hello@collabrate.digital",
           "location": "Remote-first, based in Tamil Nadu, India",
           "regions": "Serving businesses across India, Singapore, Malaysia, and the Gulf countries",
-          "social": { "linkedin": "PENDING_LINK", "instagram": "https://instagram.com/collab.rate" }
+          "social": { "linkedin": "https://www.linkedin.com/company/collabrate/", "instagram": "https://instagram.com/collab.rate", "x": "https://x.com/collab_rate" }
         },
         { "type": "closingNote", "body": "We usually respond within one business day." }
       ]

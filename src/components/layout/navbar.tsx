@@ -346,15 +346,13 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                       <ArrowRight className="size-4 transition-transform group-hover/cta:translate-x-0.5" aria-hidden />
                     </Link>
                     {!isPending(site.calendlyUrl) && (
-                      <a
-                        href={site.calendlyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Link
+                        href="/contact#book"
                         onClick={() => setMenuOpen(false)}
                         className="flex items-center justify-center rounded-xl border border-white/40 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/15"
                       >
                         Book a call
-                      </a>
+                      </Link>
                     )}
                     <a href={`mailto:${site.email}`} className="mt-1 text-center text-xs text-white/85 underline-offset-4 hover:underline">
                       {site.email}

@@ -14,7 +14,7 @@ export interface SiteConfig {
   location: string;
   serviceRegions: string[];
   email: string;
-  social: { linkedin: string; instagram: string };
+  social: { linkedin: string; instagram: string; x: string };
   calendlyUrl: string;
   tone: string;
   primaryCTA: CTA;

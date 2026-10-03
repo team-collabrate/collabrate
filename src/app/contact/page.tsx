@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { ContactOptions } from "@/components/sections/contact-options";
+import { BookingEmbed } from "@/components/sections/booking-embed";
 import { DirectContact } from "@/components/sections/direct-contact";
 import { FAQ } from "@/components/sections/faq";
 import { contactFaq } from "@/lib/content";
@@ -32,6 +33,7 @@ export default function ContactPage() {
       </section>
 
       <ContactOptions />
+      <BookingEmbed />
       <DirectContact />
 
       <section className="relative pb-4 sm:pb-8">

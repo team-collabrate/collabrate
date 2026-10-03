@@ -35,6 +35,7 @@ export default function AboutPage() {
   const profiles = [
     { label: "LinkedIn", href: site.social.linkedin },
     { label: "Instagram", href: site.social.instagram },
+    { label: "X", href: site.social.x },
   ].filter((p) => !isPending(p.href));
   return (
     <main>

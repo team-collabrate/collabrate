@@ -21,7 +21,7 @@ const isProductionBuild = process.env.VERCEL_ENV === "production";
 // ---- Security headers ----
 // Third parties the site loads (each only when its env var is set, see src/components/analytics and
 // contact-options): GA4 (googletagmanager.com, google-analytics.com), Microsoft Clarity (clarity.ms,
-// c.bing.com) and Cloudflare Turnstile (challenges.cloudflare.com). Add a host here when adding a
+// c.bing.com), Cloudflare Turnstile (challenges.cloudflare.com) and the Calendly booking iframe (calendly.com). Add a host here when adding a
 // new third-party script, embed or API, or the browser will block it.
 //
 // 'unsafe-inline' for scripts and styles is deliberate: Next.js emits inline bootstrap scripts and
@@ -36,7 +36,7 @@ const CSP = [
   "font-src 'self' data:",
   "media-src 'self'",
   `connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.clarity.ms https://c.bing.com https://challenges.cloudflare.com${isDev ? " ws: wss:" : ""}`,
-  "frame-src https://challenges.cloudflare.com",
+  "frame-src https://challenges.cloudflare.com https://calendly.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
