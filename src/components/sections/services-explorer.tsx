@@ -2,69 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  ChevronDown,
-  Check,
-  Megaphone,
-  Code2,
-  BrainCircuit,
-  MessageCircle,
-  Mail,
-  Linkedin,
-  Search,
-  BarChart3,
-  Smartphone,
-  Layers,
-  Globe,
-  LayoutDashboard,
-  ShoppingBag,
-  Bot,
-  Workflow,
-  Headphones,
-  Mic,
-  Sparkles,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, ChevronDown, Check, Sparkles } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SocialTooltip } from "@/components/ui/social-media";
 import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
 import { motion } from "framer-motion";
 import { serviceCategories, type ServiceCategory, type ServiceItem } from "@/lib/content";
 import { serviceToolLogos } from "@/lib/service-logos";
+import { CATEGORY_ICONS, CATEGORY_SHORT_LABELS, SERVICE_ICONS } from "@/lib/service-icons";
 import { cn } from "@/lib/utils";
-
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  marketing: Megaphone,
-  "web-app-development": Code2,
-  "ai-solutions": BrainCircuit,
-};
-
-const CATEGORY_SHORT_LABELS: Record<string, string> = {
-  marketing: "Marketing",
-  "web-app-development": "Web & App",
-  "ai-solutions": "AI Solutions",
-};
-
-const SERVICE_ICONS: Record<string, LucideIcon> = {
-  "Social Media Marketing": MessageCircle,
-  "Performance Marketing (Paid Ads)": Megaphone,
-  "Email Marketing and Campaigns": Mail,
-  "LinkedIn Outreach (Lead Generation)": Linkedin,
-  SEO: Search,
-  "Digital Marketing Strategy": BarChart3,
-  "Website Development": Code2,
-  "Mobile Application Development": Smartphone,
-  "Landing Pages": Layers,
-  "Business Websites": Globe,
-  "Dashboards and Admin Panels": LayoutDashboard,
-  "E-commerce Websites": ShoppingBag,
-  "AI Chatbots": Bot,
-  "Workflow Automation": Workflow,
-  "AI-Powered Support Systems": Headphones,
-  "AI Voice Assistants": Mic,
-  "Custom LLM Integration": BrainCircuit,
-};
 
 // Rotating set of icon-badge gradients, cycled per card for visual variety
 // without going as heavy as the full 3D tilt-card treatment used elsewhere.

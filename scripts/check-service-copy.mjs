@@ -9,6 +9,7 @@ import { townCopy, districtCopy } from "../src/content/location-copy.ts";
 import { parseCsvObjects } from "../src/lib/csv.ts";
 import { slugify } from "../src/lib/slug.ts";
 import { homeProcess } from "../src/content/home-process.ts";
+import { menuLines } from "../src/content/menu-lines.ts";
 import { industryPages } from "../src/content/industry-pages.ts";
 
 const words = (s) => s.trim().split(/\s+/).length;
@@ -176,5 +177,20 @@ for (const sp of servicePages) for (const r of sp.relatedProjects) if (!caseStud
   }
   if (homeProcess.steps.length < 4 || homeProcess.steps.length > 5) fail("home-process", "needs 4 to 5 steps");
   console.log(`home-process: ${homeProcess.steps.length} steps, sources verified`);
+}
+// ---- Navbar mega menu: each one-liner must be cut from the service's own summary ----
+{
+  const json = JSON.parse(readFileSync(new URL("../src/content/collabrate-content.json", import.meta.url), "utf8"));
+  const services = json.serviceCategories.flatMap((c) => c.services);
+  for (const [name, entry] of Object.entries(menuLines)) {
+    const svc = services.find((x) => x.name === name);
+    if (!svc) { fail(`menu-line:${name}`, "no such service in the JSON"); continue; }
+    if (!svc.summary.includes(entry.source)) fail(`menu-line:${name}`, `source fragment not found in the service summary: "${entry.source}"`);
+    if (entry.line.length > 38) fail(`menu-line:${name}`, `line is ${entry.line.length} chars (max 38, one line in the menu)`);
+    if (/\d|[–—]/.test(entry.line)) fail(`menu-line:${name}`, "digits or dashes in the line");
+    for (const re of FORBIDDEN) if (re.test(entry.line)) fail(`menu-line:${name}`, `forbidden pattern ${re}`);
+  }
+  for (const svc of services) if (!svc.tagline && !menuLines[svc.name]) fail(`menu-line:${svc.name}`, "service has neither a tagline nor a menu line");
+  console.log(`menu-lines: ${Object.keys(menuLines).length} lines, sources verified`);
 }
 process.exit(bad ? 1 : 0);
