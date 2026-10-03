@@ -19,11 +19,10 @@ export default function ContactPage() {
   return (
     <main>
       <PageJsonLd type="ContactPage" meta={pageMeta} crumb="Contact" />
-      <section className="relative pt-40 pb-12 sm:pt-48 sm:pb-16">
+      <section className="relative pt-32 pb-6 sm:pt-36 sm:pb-8">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
             as="h1"
-            eyebrow="Contact"
             title="Contact"
             description="Have a project in mind or just exploring options? Tell us what you're working on, and we'll get back with next steps."
           />
@@ -32,14 +31,11 @@ export default function ContactPage() {
 
       <ContactOptions />
 
-      <section className="relative pb-4 sm:pb-8">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="text-sm font-medium text-foreground">Your message goes straight to our team.</p>
-          <p className="mt-1 text-sm text-muted-foreground">We usually respond within one business day.</p>
-        </div>
-      </section>
+      <p className="mx-auto max-w-3xl px-6 pb-2 text-center text-sm text-muted-foreground">
+        <span className="font-medium text-foreground">Your message goes straight to our team.</span> We usually respond within one business day.
+      </p>
 
-      <FAQ eyebrow="FAQ" title="Still have questions?" items={contactFaq} id="faq" />
+      <FAQ eyebrow="FAQ" title="Still have questions?" items={contactFaq} id="faq" compact />
     </main>
   );
 }

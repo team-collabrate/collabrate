@@ -12,19 +12,22 @@ export function FAQ({
   description,
   items,
   id = "faq",
+  compact = false,
 }: {
   eyebrow?: string;
   title?: string;
   description?: string;
   items: FaqItem[];
   id?: string;
+  /** Tighter vertical rhythm, for pages where the FAQ follows a dense block (the Contact page). */
+  compact?: boolean;
 }) {
   return (
-    <section id={id} className="relative py-24 sm:py-32">
+    <section id={id} className={compact ? "relative py-10 sm:py-14" : "relative py-24 sm:py-32"}>
       <div className="mx-auto max-w-3xl px-6">
         <SectionHeading eyebrow={eyebrow} title={title} description={description} />
 
-        <Reveal delay={0.1} className="mt-16">
+        <Reveal delay={0.1} className={compact ? "mt-8" : "mt-16"}>
           <Accordion
             type="single"
             collapsible
