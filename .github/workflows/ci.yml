@@ -24,6 +24,10 @@ jobs:
       - run: npm ci
 
       # Static checks first: they fail fast and need no build.
+      # Production dependencies only: the open advisory on `braces` (no patched release exists) sits in
+      # the dev-only lint toolchain and never ships.
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
       - name: Lint
         run: npm run lint
       - name: Type check
