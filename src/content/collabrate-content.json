@@ -10,7 +10,7 @@
       "linkedin": "PENDING_LINK",
       "instagram": "https://instagram.com/collab.rate"
     },
-    "calendlyUrl": "PENDING_LINK",
+    "calendlyUrl": "https://calendly.com/team-collabrate/30min",
     "tone": "Corporate, trustworthy, plain-language. Complete sentences, no fragments, no hype punctuation.",
     "primaryCTA": { "label": "Get a Quote", "href": "/contact" },
     "secondaryCTA": { "label": "View Our Work", "href": "/portfolio" }
@@ -182,7 +182,7 @@
             {
               "title": "Schedule a Call",
               "body": "Prefer to talk it through? Book a slot that works for you, no pressure, just a quick conversation about what you're building.",
-              "cta": { "label": "Schedule on Calendly", "href": "PENDING_CALENDLY_LINK" }
+              "cta": { "label": "Schedule on Calendly", "href": "https://calendly.com/team-collabrate/30min" }
             },
             {
               "title": "Send Details",
