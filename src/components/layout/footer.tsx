@@ -272,7 +272,13 @@ export function Footer({ navData }: { navData: SiteNavData }) {
           {/* Bottom bar */}
           <div className="relative z-[1] flex items-center justify-between gap-6 px-6 pb-8 pt-8 max-md:flex-col max-md:items-start sm:px-10 sm:pb-10">
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-3">
-              <Social href={site.social.linkedin} label="LinkedIn" icon={Linkedin} text="LinkedIn" textClass="text-[#0A66C2]" />
+              <Social
+                href={site.social.linkedin}
+                label="LinkedIn"
+                icon={Linkedin}
+                text={isPending(site.social.linkedin) ? "LinkedIn" : "/" + site.social.linkedin.replace(/\/+$/, "").split("/").pop()}
+                textClass="text-[#0A66C2]"
+              />
               <Social
                 href={site.social.x}
                 label="X"
