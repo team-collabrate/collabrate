@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+const subscribeReducedMotion = (cb: () => void) => {
+  const query = window.matchMedia(REDUCED_MOTION);
+  query.addEventListener("change", cb);
+  return () => query.removeEventListener("change", cb);
+};
+const getReducedMotion = () => window.matchMedia(REDUCED_MOTION).matches;
 
 /**
  * Muted looping background video that never competes with first paint. The poster image
@@ -30,7 +37,7 @@ export function DeferredVideo({
   poster?: string;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, () => false);
   const [chosen, setChosen] = useState<string | null>(null);
 
   useEffect(() => {

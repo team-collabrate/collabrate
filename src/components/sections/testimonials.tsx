@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Reveal, StaggerGroup, staggerItem } from "@/components/shared/reveal";
+import { Reveal, StaggerGroup } from "@/components/shared/reveal";
 import { testimonials } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -25,9 +24,8 @@ export function Testimonials() {
             {col.map((t) => {
               const tall = col.length === 1;
               return (
-                <motion.figure
+                <figure
                   key={t.quote}
-                  variants={staggerItem}
                   className={cn(
                     "flex flex-col justify-between gap-8 rounded-[20px] border border-black/10 p-6 dark:border-white/15",
                     tall
@@ -46,7 +44,7 @@ export function Testimonials() {
                       {!isPlaceholder(t.role) && <span className="block text-muted-foreground">{t.role}</span>}
                     </figcaption>
                   )}
-                </motion.figure>
+                </figure>
               );
             })}
           </div>

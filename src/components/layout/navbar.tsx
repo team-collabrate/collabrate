@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LazyMotion, m } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import { menuLines } from "@/content/menu-lines";
 import { CATEGORY_SHORT_LABELS, SERVICE_ICONS } from "@/lib/service-icons";
 import type { SiteNavData } from "@/lib/site-links";
 import { cn } from "@/lib/utils";
+
+const loadMotionFeatures = () => import("@/lib/motion-features").then((mod) => mod.default);
 
 const SERVICES_HREF = "/services";
 const MENU_CARD_IMAGE = "/images/menu-card.webp";
@@ -117,6 +119,7 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
     );
 
   return (
+    <LazyMotion features={loadMotionFeatures}>
     <header
       className={cn(
         "fixed inset-x-4 top-5 z-50 transition-transform duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)] lg:top-8",
@@ -200,7 +203,7 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
             icon tiles and one-line descriptions, plus a contact card on the right. */}
         <AnimatePresence>
           {menuOpen && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 10, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.99 }}
@@ -217,7 +220,7 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                     {serviceCategories.map((category, index) => {
                       const accent = CATEGORY_ACCENTS[category.id];
                       return (
-                        <motion.div
+                        <m.div
                           key={category.id}
                           initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -264,7 +267,7 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                               </Link>
                             );
                           })}
-                        </motion.div>
+                        </m.div>
                       );
                     })}
                   </div>
@@ -325,14 +328,14 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                   </div>
                 </aside>
               </div>
-            </motion.div>
+            </m.div>
           )}
 </AnimatePresence>
       </div>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
@@ -377,9 +380,10 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                 </Link>
               </Button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>
+    </LazyMotion>
   );
 }

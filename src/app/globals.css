@@ -291,3 +291,58 @@ h1, h2, h3, h4, h5, h6 {
 .footer-tile:hover {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 10px 22px -4px rgba(60, 30, 120, 0.22);
 }
+
+/* Scroll reveal (components/shared/reveal.tsx). Visible by default; JS only hides what starts below the fold. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--rx, 0px), var(--ry, 0px));
+    filter: blur(var(--rblur, 0px));
+  }
+}
+[data-reveal="hidden"] {
+  opacity: 0;
+}
+[data-reveal="in"] {
+  animation: reveal-in var(--reveal-duration, 0.5s) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0s) backwards;
+}
+[data-stagger][data-reveal="hidden"] {
+  opacity: 1;
+}
+[data-stagger][data-reveal="hidden"] > * {
+  opacity: 0;
+}
+[data-stagger][data-reveal="in"] {
+  animation: none;
+}
+[data-stagger][data-reveal="in"] > * {
+  --ry: 16px;
+  animation: reveal-in 0.45s cubic-bezier(0.22, 1, 0.36, 1)
+    calc(var(--reveal-delay, 0s) + var(--i, 0) * var(--stagger, 0.06s)) backwards;
+}
+[data-stagger] > :nth-child(2) { --i: 1; }
+[data-stagger] > :nth-child(3) { --i: 2; }
+[data-stagger] > :nth-child(4) { --i: 3; }
+[data-stagger] > :nth-child(5) { --i: 4; }
+[data-stagger] > :nth-child(6) { --i: 5; }
+[data-stagger] > :nth-child(7) { --i: 6; }
+[data-stagger] > :nth-child(8) { --i: 7; }
+[data-stagger] > :nth-child(n + 9) { --i: 8; }
+
+/* Hero entrance: pure CSS so the text is in the server HTML and animates on first paint, no JS. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--hero-rise, 14px));
+  }
+}
+.hero-rise {
+  animation: hero-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--hero-delay, 0s) backwards;
+}
+
+/* Skip style, layout and paint work for the footer until it is near the viewport. Not applied to
+   page sections: Chrome stops IntersectionObserver (the scroll reveal) from firing inside them. */
+footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}

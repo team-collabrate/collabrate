@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { preload } from "react-dom";
-import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DeferredVideo } from "@/components/shared/deferred-video";
@@ -48,29 +47,23 @@ export function Hero() {
         />
 
         <div className="relative mx-auto w-full max-w-[1408px] px-6 pb-44 pt-32 sm:px-12 lg:pt-[150px]">
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="display-1 max-w-[1100px] text-balance !text-white [text-shadow:0_0_2px_rgba(0,0,0,0.35),0_2px_14px_rgba(0,0,0,0.4),0_10px_40px_rgba(0,0,0,0.3)]"
+          <h1
+            style={{ "--hero-rise": "16px" } as React.CSSProperties}
+            className="hero-rise display-1 max-w-[1100px] text-balance !text-white [text-shadow:0_0_2px_rgba(0,0,0,0.35),0_2px_14px_rgba(0,0,0,0.4),0_10px_40px_rgba(0,0,0,0.3)]"
           >
             {heroSection.headline}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.12 }}
-            className="mt-6 max-w-[760px] text-lg leading-[1.45] font-medium text-white [text-shadow:0_0_2px_rgba(0,0,0,0.4),0_2px_12px_rgba(0,0,0,0.45),0_8px_30px_rgba(0,0,0,0.3)] sm:text-xl"
+          <p
+            style={{ "--hero-delay": "0.12s" } as React.CSSProperties}
+            className="hero-rise mt-6 max-w-[760px] text-lg leading-[1.45] font-medium text-white [text-shadow:0_0_2px_rgba(0,0,0,0.4),0_2px_12px_rgba(0,0,0,0.45),0_8px_30px_rgba(0,0,0,0.3)] sm:text-xl"
           >
             {heroSection.subline}
-          </motion.p>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.22 }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row"
+          <div
+            style={{ "--hero-delay": "0.22s" } as React.CSSProperties}
+            className="hero-rise mt-8 flex flex-col gap-3 sm:flex-row"
           >
             <Button variant="primary" asChild>
               <Link href={site.primaryCTA.href}>{site.primaryCTA.label}</Link>
@@ -80,7 +73,7 @@ export function Hero() {
                 {site.secondaryCTA.label} <ArrowRight className="size-4" />
               </Link>
             </Button>
-          </motion.div>
+          </div>
         </div>
 
         {/* Tool-logo strip along the bottom edge (desktop). */}
@@ -109,11 +102,9 @@ export function Hero() {
         </div>
 
         {/* Floating "Our work" card, bottom-right. */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="absolute bottom-4 right-4 hidden w-[320px] rounded-[16px] border border-white/40 bg-white/20 p-1.5 shadow-[0_8px_24px_rgba(32,32,32,0.18)] backdrop-blur-md lg:block"
+        <div
+          style={{ "--hero-delay": "0.4s", "--hero-rise": "20px" } as React.CSSProperties}
+          className="hero-rise absolute bottom-4 right-4 hidden w-[320px] rounded-[16px] border border-white/40 bg-white/20 p-1.5 shadow-[0_8px_24px_rgba(32,32,32,0.18)] backdrop-blur-md lg:block"
         >
           <Link href="/portfolio" className="group block rounded-[10px] bg-background p-3">
             <div className="mb-3 flex items-center gap-2 text-sm font-medium text-foreground">
@@ -131,7 +122,7 @@ export function Hero() {
               </span>
             </div>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,24 +1,62 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import { ReactNode } from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+
+/**
+ * Scroll-in entrances without any animation library.
+ *
+ * The server HTML is fully visible (no inline opacity:0), so crawlers, no-JS visitors and slow
+ * hydration all see the content. After hydration, only elements that start below the fold are
+ * hidden (data-reveal="hidden") and then played in once (data-reveal="in") when they scroll into
+ * view. Elements already on screen at load are left alone: no flash and nothing delays first paint.
+ * The animation itself is CSS (see "Scroll reveal" in globals.css); reduced motion gets a short fade.
+ */
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 
-const distanceFor = (direction: Direction) => {
+const offsetFor = (direction: Direction): CSSProperties => {
   switch (direction) {
     case "up":
-      return { y: 28 };
+      return { "--ry": "28px" } as CSSProperties;
     case "down":
-      return { y: -28 };
+      return { "--ry": "-28px" } as CSSProperties;
     case "left":
-      return { x: 28 };
+      return { "--rx": "28px" } as CSSProperties;
     case "right":
-      return { x: -28 };
+      return { "--rx": "-28px" } as CSSProperties;
     default:
       return {};
   }
 };
+
+function useRevealOnView<T extends HTMLElement>(once: boolean) {
+  const ref = useRef<T>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) return; // already on screen: stay visible
+
+    el.dataset.reveal = "hidden";
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.dataset.reveal = "in";
+          if (once) observer.disconnect();
+        } else if (!once) {
+          el.dataset.reveal = "hidden";
+        }
+      },
+      { rootMargin: "0px 0px -10% 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [once]);
+
+  return ref;
+}
 
 export function Reveal({
   children,
@@ -26,57 +64,48 @@ export function Reveal({
   delay = 0,
   duration = 0.5,
   className,
+  style,
   once = true,
-  // Plain fade/translate by default — a blur-in entrance on every element is
-  // a generic "AI polish" tell. Opt in per-instance where it actually helps.
+  // Plain fade/translate by default; a blur-in on every element is a generic "AI polish" tell.
   blur = false,
+  ariaHidden,
 }: {
   children: ReactNode;
   direction?: Direction;
   delay?: number;
   duration?: number;
   className?: string;
+  style?: CSSProperties;
   once?: boolean;
   blur?: boolean;
+  ariaHidden?: boolean;
 }) {
-  const reducedMotion = useReducedMotion();
-
-  // A user who has asked the OS for reduced motion should still see content
-  // appear (no permanently-hidden sections), just without the blur/translate
-  // entrance animation — a plain, near-instant fade.
-  const variants: Variants = reducedMotion
-    ? {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.15 } },
-      }
-    : {
-        hidden: {
-          opacity: 0,
-          filter: blur ? "blur(8px)" : "blur(0px)",
-          ...distanceFor(direction),
-        },
-        visible: {
-          opacity: 1,
-          filter: "blur(0px)",
-          x: 0,
-          y: 0,
-          transition: { duration, delay, ease: [0.22, 1, 0.36, 1] },
-        },
-      };
+  const ref = useRevealOnView<HTMLDivElement>(once);
 
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once, amount: 0.25 }}
-      variants={variants}
+    <div
+      ref={ref}
+      aria-hidden={ariaHidden}
       className={className}
+      style={
+        {
+          ...offsetFor(direction),
+          "--reveal-delay": `${delay}s`,
+          "--reveal-duration": `${duration}s`,
+          ...(blur ? { "--rblur": "8px" } : {}),
+          ...style,
+        } as CSSProperties
+      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
+/**
+ * Plays its direct children in one after another. Children need no props: the CSS targets
+ * `[data-stagger] > *` and spaces them with `--stagger` (seconds).
+ */
 export function StaggerGroup({
   children,
   className,
@@ -88,29 +117,16 @@ export function StaggerGroup({
   stagger?: number;
   delay?: number;
 }) {
+  const ref = useRevealOnView<HTMLDivElement>(true);
+
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: { staggerChildren: stagger, delayChildren: delay },
-        },
-      }}
+    <div
+      ref={ref}
+      data-stagger=""
       className={className}
+      style={{ "--stagger": `${stagger}s`, "--reveal-delay": `${delay}s` } as CSSProperties}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
-
-export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-  },
-};

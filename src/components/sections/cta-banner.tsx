@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/shared/reveal";
@@ -11,8 +10,6 @@ import { site } from "@/lib/content";
 // Six preview cards clipped at the card edges. Each frames one of our own illustrations.
 // On entry they rise in one by one; on hover the whole banner "wakes up": tiles straighten
 // and slide toward the centre.
-const EASE = [0.23, 1, 0.32, 1] as const;
-
 interface Floater {
   img: string;
   /** Position + size of the wrapper inside the banner. */
@@ -44,8 +41,6 @@ export function CTABanner({
   ctaLabel?: string;
   ctaHref?: string;
 }) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section className="px-4 section-pad">
       <Reveal>
@@ -53,13 +48,11 @@ export function CTABanner({
           <div className="dot-grid pointer-events-none absolute inset-0 opacity-70" aria-hidden />
 
           {FLOATERS.map((f, i) => (
-            <motion.div
+            <Reveal
               key={i}
-              aria-hidden
-              initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.7, delay: f.delay, ease: EASE }}
+              ariaHidden
+              delay={f.delay}
+              duration={0.7}
               className="pointer-events-none absolute z-0 hidden md:block"
               style={f.box}
             >
@@ -78,7 +71,7 @@ export function CTABanner({
                   <Image src={f.img} alt="" fill sizes="310px" className="object-cover" />
                 </div>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
 
           <div className="relative z-10 mx-auto flex max-w-[560px] flex-col items-center gap-5">

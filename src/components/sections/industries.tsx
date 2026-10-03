@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Reveal, StaggerGroup, staggerItem } from "@/components/shared/reveal";
+import { Reveal, StaggerGroup } from "@/components/shared/reveal";
 import { industries, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
@@ -45,9 +44,8 @@ export function Industries() {
           const tall = LAYOUT[i]?.includes("row-span-2");
           const wide = LAYOUT[i]?.includes("col-span-12");
           return (
-            <motion.article
+            <article
               key={industry.name}
-              variants={staggerItem}
               className={cn(
                 "group relative flex min-h-[220px] flex-col justify-between overflow-hidden rounded-[16px] border border-black/[0.08] p-6 dark:border-white/10",
                 LAYOUT[i],
@@ -62,7 +60,7 @@ export function Industries() {
                 <h3 className="card-title">{industry.name}</h3>
                 <p className="max-w-[560px] text-base leading-[1.4] text-muted-foreground">{industry.description}</p>
               </div>
-            </motion.article>
+            </article>
           );
         })}
       </StaggerGroup>

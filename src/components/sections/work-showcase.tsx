@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { Reveal, StaggerGroup, staggerItem } from "@/components/shared/reveal";
+import { Reveal, StaggerGroup } from "@/components/shared/reveal";
 import { content, portfolioProjects } from "@/lib/content";
 
 interface PortfolioIntro {
@@ -67,7 +66,7 @@ export function WorkShowcase() {
 
         <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-2" stagger={0.06}>
           {portfolioProjects.map((project, i) => (
-            <motion.div key={`${project.title}-${i}`} variants={staggerItem}>
+            <div key={`${project.title}-${i}`}>
               <Link
                 href="/portfolio"
                 className="group block rounded-[28px] border border-black/10 p-px transition-shadow duration-300 hover:shadow-[0_24px_48px_-20px_rgba(106,29,184,0.35)] dark:border-white/15"
@@ -93,7 +92,7 @@ export function WorkShowcase() {
                   </div>
                 </article>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </StaggerGroup>
       </div>

@@ -5,8 +5,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronDown, Check, Sparkles } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SocialTooltip } from "@/components/ui/social-media";
-import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
-import { motion } from "framer-motion";
+import { StaggerGroup } from "@/components/shared/reveal";
 import { serviceCategories, type ServiceCategory, type ServiceItem } from "@/lib/content";
 import { serviceToolLogos } from "@/lib/service-logos";
 import { CATEGORY_ICONS, CATEGORY_SHORT_LABELS, SERVICE_ICONS } from "@/lib/service-icons";
@@ -66,8 +65,7 @@ function ServiceCard({
   }, [open]);
 
   return (
-    <motion.div
-      variants={staggerItem}
+    <div
       className="flex h-full flex-col rounded-3xl border border-border bg-card shadow-sm transition-colors hover:border-brand-violet/40"
     >
       <button
@@ -133,7 +131,7 @@ function ServiceCard({
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

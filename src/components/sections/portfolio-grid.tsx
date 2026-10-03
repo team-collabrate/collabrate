@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { StaggerGroup, staggerItem } from "@/components/shared/reveal";
+import { StaggerGroup } from "@/components/shared/reveal";
 import { portfolioProjects, type PortfolioProject } from "@/lib/content";
 import { track } from "@/lib/analytics";
 
@@ -17,13 +17,28 @@ export function PortfolioGrid({ pageHrefs = {} }: { pageHrefs?: Record<string, s
 }
 
 function PortfolioCard({ project, href }: { project: PortfolioProject; href?: string }) {
+  const ref = useRef<HTMLElement>(null);
+
+  // One analytics event per card, the first time most of it is on screen.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        track("view_portfolio_item", { item: project.title });
+        observer.disconnect();
+      },
+      { threshold: 0.6 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [project.title]);
+
   return (
-    <motion.article
-      variants={staggerItem}
-      whileHover={{ y: -4 }}
-      onViewportEnter={() => track("view_portfolio_item", { item: project.title })}
-      viewport={{ once: true, amount: 0.6 }}
-      className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-7 shadow-sm transition-colors duration-300 hover:border-brand-purple/40 sm:p-8"
+    <article
+      ref={ref}
+      className="flex flex-col gap-4 rounded-3xl border border-border bg-card p-7 shadow-sm transition-[border-color,translate] duration-300 hover:-translate-y-1 hover:border-brand-purple/40 sm:p-8"
     >
       <span className="text-xs font-semibold uppercase tracking-wider text-brand-violet">
         {project.industry}
@@ -50,6 +65,6 @@ function PortfolioCard({ project, href }: { project: PortfolioProject; href?: st
           Read the case study: {project.title}
         </Link>
       )}
-    </motion.article>
+    </article>
   );
 }

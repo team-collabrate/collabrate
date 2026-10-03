@@ -2,10 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Reveal, StaggerGroup, staggerItem } from "@/components/shared/reveal";
+import { Reveal, StaggerGroup } from "@/components/shared/reveal";
 import { ServiceVisual } from "@/components/shared/service-visuals";
 import { serviceCategories, site } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -52,9 +51,8 @@ export function ServicesBento() {
           if (!service) return null;
           const title = service.name.replace(/\s*\([^)]*\)\s*$/, "");
           return (
-            <motion.article
+            <article
               key={card.name}
-              variants={staggerItem}
               className={cn(
                 "group relative h-[410px] overflow-hidden rounded-[16px] border border-black/10 shadow-[0_1px_2px_rgba(26,20,51,0.04)] dark:border-white/10",
                 card.tint,
@@ -106,7 +104,7 @@ export function ServicesBento() {
                   <ServiceVisual name={card.name} wide />
                 </div>
               )}
-            </motion.article>
+            </article>
           );
         })}
       </StaggerGroup>
