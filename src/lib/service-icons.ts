@@ -4,7 +4,6 @@ import {
   BrainCircuit,
   MessageCircle,
   Mail,
-  Linkedin,
   Search,
   BarChart3,
   Smartphone,
@@ -16,8 +15,10 @@ import {
   Workflow,
   Headphones,
   Mic,
-  type LucideIcon,
 } from "lucide-react";
+import { Linkedin } from "@/components/shared/brand-icons";
+
+type LucideIcon = React.ComponentType<{ className?: string }>;
 
 // Shared by the Services page tabs and the navbar mega menu so both show the same icons and labels.
 export const CATEGORY_ICONS: Record<string, LucideIcon> = {

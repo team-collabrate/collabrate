@@ -4,7 +4,7 @@ import {
   Search, Compass, Hammer, Landmark, HeartPulse, ShoppingBag, Building2, Truck, Layers,
   GraduationCap, Scale, Clock, Award, Briefcase, MessageCircle, Star, ArrowRight,
   ArrowUpRight, CheckCircle2, Check, Menu, X, Sun, Moon, Mail, Phone, MapPin,
-  Twitter, Linkedin, Github, Dribbble, Bot, Mic, Eye, Workflow, Database,
+  Bot, Mic, Eye, Workflow, Database,
   Target, Laptop, Zap, CalendarCheck, ClipboardList, HelpCircle, FileText,
   type LucideIcon,
 } from "lucide-react";
@@ -15,7 +15,7 @@ export const iconMap: Record<string, LucideIcon> = {
   Search, Compass, Hammer, Landmark, HeartPulse, ShoppingBag, Building2, Truck, Layers,
   GraduationCap, Scale, Clock, Award, Briefcase, MessageCircle, Star, ArrowRight,
   ArrowUpRight, CheckCircle2, Check, Menu, X, Sun, Moon, Mail, Phone, MapPin,
-  Twitter, Linkedin, Github, Dribbble, Bot, Mic, Eye, Workflow, Database,
+  Bot, Mic, Eye, Workflow, Database,
   Target, Laptop, Zap, CalendarCheck, ClipboardList, HelpCircle, FileText,
 };
 

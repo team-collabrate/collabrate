@@ -1,6 +1,7 @@
 "use client";
 
-import { Mail, MapPin, Globe2, Linkedin, Instagram } from "lucide-react";
+import { Mail, MapPin, Globe2 } from "lucide-react";
+import { Linkedin, Instagram } from "@/components/shared/brand-icons";
 import { Reveal } from "@/components/shared/reveal";
 import { PendingIconLink } from "@/components/shared/pending-link";
 import { site } from "@/lib/content";
