@@ -276,7 +276,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                 href={site.social.linkedin}
                 label="LinkedIn"
                 icon={Linkedin}
-                text={isPending(site.social.linkedin) ? "LinkedIn" : "/" + site.social.linkedin.replace(/\/+$/, "").split("/").pop()}
+                text={isPending(site.social.linkedin) ? "LinkedIn" : "@" + site.social.linkedin.replace(/\/+$/, "").split("/").pop()}
                 textClass="text-[#0A66C2]"
               />
               <Social
