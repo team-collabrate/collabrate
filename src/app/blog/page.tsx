@@ -28,7 +28,6 @@ export default function BlogPage() {
         <div className="mx-auto max-w-2xl px-6 text-center">
           <SectionHeading
             as="h1"
-            eyebrow="Blog"
             title="Coming soon"
             description="We're working on our first posts. When they're ready, you'll find them here."
           />

@@ -14,7 +14,7 @@ export default function Error({ error, retry }: { error: Error & { digest?: stri
 
   return (
     <main>
-      <StatusPage code="500" eyebrow="Something went wrong" title="That didn't load as expected.">
+      <StatusPage code="500" title="That didn't load as expected.">
         <p className="mt-5 max-w-xl text-lg leading-[1.45] text-muted-foreground">
           An error happened on our side while loading this page. Please try again. If it keeps happening, email us at{" "}
           <a href={`mailto:${site.email}`} className="font-medium text-foreground underline underline-offset-4">

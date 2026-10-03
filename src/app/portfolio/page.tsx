@@ -23,7 +23,6 @@ export default function PortfolioPage() {
         <div className="mx-auto max-w-4xl px-6 text-center">
           <SectionHeading
             as="h1"
-            eyebrow="Our work"
             title="Our Work"
             description="A look at the platforms and applications we've built across different industries."
           />

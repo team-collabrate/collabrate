@@ -15,7 +15,7 @@ export default function GlobalError({ error, retry }: { error: Error & { digest?
     <html lang="en">
       <body className="antialiased">
         <main>
-          <StatusPage code="500" eyebrow="Something went wrong" title="We hit an unexpected error.">
+          <StatusPage code="500" title="We hit an unexpected error.">
             <p className="mt-5 max-w-xl text-lg leading-[1.45] text-muted-foreground">
               Please reload the page. If it keeps happening, email us at{" "}
               <a href={`mailto:${site.email}`} className="font-medium text-foreground underline underline-offset-4">

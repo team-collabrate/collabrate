@@ -28,7 +28,6 @@ export default function ServicesPage() {
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
             as="h1"
-            eyebrow="Services"
             title="Pick what you need. We handle the rest."
             description="Whether it's development, marketing, or AI automation, our services are organized around what you're actually trying to achieve."
           />
@@ -56,7 +55,6 @@ export default function ServicesPage() {
       )}
 
       <FAQ
-        eyebrow="FAQ"
         title="Common questions"
         items={servicesFaq}
         id="faq"

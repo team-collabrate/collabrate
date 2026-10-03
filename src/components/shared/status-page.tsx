@@ -7,13 +7,11 @@ import Image from "next/image";
  */
 export function StatusPage({
   code,
-  eyebrow,
   title,
   children,
 }: {
   /** Large decorative code behind the heading, for example "404". */
   code: string;
-  eyebrow: string;
   title: string;
   /** Body text, actions and links. */
   children: React.ReactNode;
@@ -30,12 +28,7 @@ export function StatusPage({
 
       <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center text-center">
         <Image src="/brand/png/collabrate-mark-color-256w.png" alt="" width={56} height={56} className="size-14" priority />
-        <span className="mt-6 inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-violet">
-          <span className="h-px w-6 bg-brand-violet/50" aria-hidden />
-          {eyebrow}
-          <span className="h-px w-6 bg-brand-violet/50" aria-hidden />
-        </span>
-        <h1 className="display-1 mt-4 text-balance">{title}</h1>
+        <h1 className="display-1 mt-6 text-balance">{title}</h1>
         {children}
       </div>
     </section>

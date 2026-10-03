@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/shared/reveal";
 
 export function SectionHeading({
-  eyebrow,
   title,
   description,
   align = "center",
@@ -10,7 +9,6 @@ export function SectionHeading({
   titleClassName,
   as: Heading = "h2",
 }: {
-  eyebrow?: string;
   title: React.ReactNode;
   description?: React.ReactNode;
   align?: "center" | "left";
@@ -27,19 +25,6 @@ export function SectionHeading({
         className
       )}
     >
-      {eyebrow && (
-        <Reveal>
-          <span
-            className={cn(
-              "inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-violet",
-              align === "center" && "justify-center"
-            )}
-          >
-            <span className="h-px w-6 shrink-0 bg-brand-violet/50" aria-hidden />
-            {eyebrow}
-          </span>
-        </Reveal>
-      )}
       <Reveal delay={0.08}>
         <Heading
           className={cn(

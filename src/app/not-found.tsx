@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main>
-      <StatusPage code="404" eyebrow="Page not found" title="This page doesn't exist.">
+      <StatusPage code="404" title="This page doesn't exist.">
         <p className="mt-5 max-w-xl text-lg leading-[1.45] text-muted-foreground">
           The link may be out of date, or the page may have moved. Head back to the homepage, or jump to one of the
           main sections below.

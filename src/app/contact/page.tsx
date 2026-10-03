@@ -35,7 +35,7 @@ export default function ContactPage() {
         <span className="font-medium text-foreground">Your message goes straight to our team.</span> We usually respond within one business day.
       </p>
 
-      <FAQ eyebrow="FAQ" title="Still have questions?" items={contactFaq} id="faq" compact />
+      <FAQ title="Still have questions?" items={contactFaq} id="faq" compact />
     </main>
   );
 }

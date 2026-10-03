@@ -66,7 +66,6 @@ export default function PricingPage() {
         <div className="mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
             as="h1"
-            eyebrow="Pricing"
             title="Pricing"
             description="Every business is different, so we don't force projects into fixed packages. Pricing is based on scope, complexity, and what you actually need."
           />
