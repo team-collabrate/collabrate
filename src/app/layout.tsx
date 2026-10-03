@@ -7,6 +7,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { getSiteNavData } from "@/lib/site-links";
 import { Analytics } from "@/components/analytics/analytics";
+import { ConsentBanner } from "@/components/analytics/consent-banner";
 
 const description =
   "Collabrate designs, builds, and markets digital products for businesses that need one accountable team instead of multiple vendors. Web and app development, marketing, and AI solutions.";
@@ -85,6 +86,7 @@ export default function RootLayout({
         <div id="main-content">{children}</div>
         <Footer navData={getSiteNavData()} />
         <Analytics />
+        <ConsentBanner />
       </body>
     </html>
   );

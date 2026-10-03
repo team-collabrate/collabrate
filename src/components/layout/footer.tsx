@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Instagram, Linkedin } from "@/components/shared/brand-icons";
 import { Logo } from "@/components/layout/logo";
 import { NewsletterForm } from "@/components/layout/newsletter-form";
+import { CookieSettingsLink } from "@/components/analytics/cookie-settings-link";
 import { publishedBlogPosts } from "@/content/blog-posts";
 import { isPending, site, footer, serviceCategories } from "@/lib/content";
 import type { SiteNavData } from "@/lib/site-links";
@@ -296,6 +297,9 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                     </Link>
                   </li>
                 ))}
+                <li>
+                  <CookieSettingsLink className="text-[13px] text-foreground/60 transition-colors hover:text-foreground" />
+                </li>
               </ul>
               <p className="text-xs uppercase tracking-[1.5px] text-foreground/45">{footer.copyright}</p>
             </div>
