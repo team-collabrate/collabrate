@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { PageJsonLd } from "@/components/seo/page-json-ld";
+import { LegalDocument, type LegalSection } from "@/components/sections/legal-document";
 
 const pageMeta = {
   title: "Privacy Policy | Collabrate",
@@ -11,36 +12,178 @@ const pageMeta = {
 
 export const metadata: Metadata = buildMetadata(pageMeta);
 
-const sections = [
-  { heading: "Information We Collect", body: "We collect information you provide directly, such as your name, email, company name, and project details, when you submit a contact form, book a call, or communicate with us. We may also collect basic usage data (such as pages visited or general location) through analytics tools, but only if you accept analytics cookies (see Cookies below)." },
-  { heading: "How We Use Your Information", body: "We use the information you provide to respond to inquiries, prepare quotes, deliver services, and communicate about your project. We do not sell your personal information to third parties." },
-  { heading: "Third-Party Services", body: "We use a small number of third-party services to run this website. Google Analytics 4 and Microsoft Clarity measure how the site is used, and they load only after you accept analytics cookies. Cloudflare Turnstile protects our contact form from spam. The booking calendar on the Contact page is provided by Calendly, which may set its own cookies when that section loads and processes the details you enter to book a call. Details you send through the contact form or newsletter sign-up are passed to the tools we use to receive and answer them, such as email and workflow services. We may also use scheduling and email providers to run our business. These providers process data under their own privacy policies." },
-  { heading: "Data Retention", body: "We retain your information only as long as necessary to fulfill the purpose it was collected for, or as required by law." },
-  { heading: "Your Rights", body: "You may request access to, correction of, or deletion of your personal information at any time by contacting us at hello@collabrate.digital." },
-  { heading: "Cookies", body: "The site works without analytics cookies. If you accept them in the notice that appears on your first visit, Google Analytics 4 and Microsoft Clarity may set cookies and collect information such as the pages you view, your approximate location, device and browser type, and how you interact with pages. If you decline, or do not choose, neither tool loads. You can change your choice at any time with the Cookie settings link at the bottom of every page, and you can also control cookies in your browser settings." },
-  { heading: "Changes to This Policy", body: "We may update this policy from time to time. Continued use of our website after changes are posted constitutes acceptance of the updated policy." },
-  { heading: "Contact", body: "For questions about this policy, contact us at hello@collabrate.digital." },
+// Same structure and voice as the Terms and Conditions page. Every statement below describes what the site
+// actually does: analytics load only after consent, forms go to the contact and newsletter webhooks,
+// bookings go through Calendly, and Turnstile protects the contact form.
+const sections: LegalSection[] = [
+  {
+    heading: "Interpretation and Definitions",
+    subsections: [
+      {
+        heading: "Interpretation",
+        paras: [
+          "The words whose initial letters are capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.",
+        ],
+      },
+      {
+        heading: "Definitions",
+        paras: [
+          "For the purposes of this Privacy Policy:",
+          {
+            term: "Company",
+            text: '(referred to as either "the Company", "We", "Us" or "Our" in this Privacy Policy) refers to Collabrate Digitals, Tamilnadu, India.',
+          },
+          { term: "Country/State", text: "refers to: Tamilnadu, India" },
+          {
+            term: "Cookies",
+            text: "are small files that are placed on Your computer, mobile device or any other device by a website, containing details of Your browsing history on that website among its many uses.",
+          },
+          { term: "Device", text: "means any device that can access the Service such as a computer, a cell phone or a digital tablet." },
+          {
+            term: "Personal Data",
+            text: "is any information that relates to an identified or identifiable individual.",
+          },
+          { term: "Service", text: "refers to the Website." },
+          {
+            term: "Service Provider",
+            text: "means any natural or legal person who processes data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, or to assist the Company in analyzing how the Service is used.",
+          },
+          {
+            term: "Usage Data",
+            text: "refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).",
+          },
+          { term: "Website", text: "refers to Collabrate, accessible from https://collabrate.digital" },
+          {
+            term: "You",
+            text: "means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Collecting and Using Your Personal Data",
+    subsections: [
+      {
+        heading: "Types of Data Collected",
+        paras: [
+          "Personal Data you give us. When you use the contact form, We may ask You for your name, email address, company name, the service you are interested in, how you heard about us, your town, and the project details you choose to write. When you use the newsletter sign-up in the footer, We collect your email address. When you book a call through the calendar on the Contact page, the details you enter there (such as your name and email address) are handled by Calendly.",
+          "Usage Data. If You accept analytics cookies, Usage Data is collected automatically when You use the Service. It may include information such as the pages You visit, the time and date of Your visit, the time spent on those pages, Your approximate location, Your device type and browser type, and how You interact with pages. If You decline analytics cookies, or do not choose, We do not collect this analytics data.",
+        ],
+      },
+      {
+        heading: "Analytics and Cookies",
+        paras: [
+          "The Service works without analytics cookies. When You first visit, a notice asks whether You accept them. Until You accept, no analytics tool loads.",
+          "If You accept, We use Google Analytics 4 and Microsoft Clarity to understand how the Service is used. These tools may set cookies and collect Usage Data, and Microsoft Clarity may record how You interact with pages. If You decline, neither tool loads.",
+          "We store Your choice in Your browser so We do not ask again. You can change Your choice at any time with the Cookie settings link at the bottom of every page. You can also control cookies in Your browser settings. Withdrawing consent restarts the page without the analytics tools.",
+          "Cloudflare Turnstile runs on the contact form to protect it from spam and automated abuse. The Calendly booking calendar on the Contact page may set its own cookies when it loads.",
+        ],
+      },
+      {
+        heading: "Use of Your Personal Data",
+        paras: [
+          "The Company may use Personal Data for the following purposes:",
+          {
+            items: [
+              "To respond to Your enquiry, prepare a quote, and communicate with You about Your project, including by email.",
+              "To book and run a call with You when You choose a time on the calendar.",
+              "To send You the newsletter, if You signed up for it. You can ask to be removed at any time.",
+              "To keep the Service secure and protect the contact form from spam.",
+              "To understand how the Service is used and improve it, if You accepted analytics cookies.",
+            ],
+          },
+          "We do not sell Your Personal Data to third parties.",
+        ],
+      },
+      {
+        heading: "Retention of Your Personal Data",
+        paras: [
+          "The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our agreements and policies.",
+        ],
+      },
+      {
+        heading: "Transfer of Your Personal Data",
+        paras: [
+          "Your information may be processed at the Company's operating location in India and in other places where the Service Providers listed below operate. By submitting Your information You agree to this transfer. The Company will take reasonable steps to ensure that Your data is treated securely and in accordance with this Privacy Policy.",
+        ],
+      },
+      {
+        heading: "Disclosure of Your Personal Data",
+        paras: [
+          "We may disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities, to comply with a legal obligation, to protect and defend the rights or property of the Company, to prevent or investigate possible wrongdoing in connection with the Service, to protect the personal safety of users of the Service or the public, or to protect against legal liability.",
+          "If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.",
+        ],
+      },
+    ],
+  },
+  {
+    heading: "Third-Party Services",
+    paras: [
+      "We use a small number of Service Providers to run the Service. They process data under their own privacy policies.",
+      {
+        term: "Google Analytics 4 and Microsoft Clarity",
+        text: "measure how the Service is used. They load only after You accept analytics cookies.",
+      },
+      { term: "Cloudflare Turnstile", text: "protects the contact form from spam." },
+      {
+        term: "Calendly",
+        text: "provides the booking calendar on the Contact page and processes the details You enter to book a call.",
+      },
+      {
+        term: "Google tools and email",
+        text: "(such as Google Sheets, Google Apps Script and email) may receive and store the details You send through the contact form and the newsletter sign-up, so that We can reply to You.",
+      },
+      { term: "Hosting", text: "is provided by Vercel, which delivers the Service and may process technical data such as Your IP address to do so." },
+    ],
+  },
+  {
+    heading: "Security of Your Personal Data",
+    paras: [
+      "The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage, is completely secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot promise its absolute security.",
+    ],
+  },
+  {
+    heading: "Children's Privacy",
+    paras: [
+      "Our Service does not address anyone under the age of 18. We do not knowingly collect personally identifiable information from anyone under the age of 18. If You are a parent or guardian and You are aware that Your child has provided Us with Personal Data, please contact Us so that We can remove it.",
+    ],
+  },
+  {
+    heading: "Links to Other Websites",
+    paras: [
+      "Our Service may contain links to other websites that are not operated by Us. If You click on a third-party link, You will be directed to that third party's site. We strongly advise You to review the Privacy Policy of every site You visit.",
+      "We have no control over and assume no responsibility for the content, privacy policies or practices of any third-party sites or services.",
+    ],
+  },
+  {
+    heading: "Your Rights",
+    paras: [
+      "You may request access to, correction of, or deletion of Your Personal Data at any time, and You may ask to be removed from the newsletter, by contacting Us at hello@collabrate.digital. You may also withdraw Your consent to analytics cookies at any time using the Cookie settings link at the bottom of every page.",
+      "If You are in the European Union or another region with data protection laws that give You further rights, You may also have the right to object to or restrict certain processing, and to lodge a complaint with a supervisory authority.",
+    ],
+  },
+  {
+    heading: "Changes to this Privacy Policy",
+    paras: [
+      "We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page and updating the Last updated date at the top.",
+      "You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.",
+    ],
+  },
 ];
 
 export default function PrivacyPage() {
   return (
     <main>
       <PageJsonLd type="WebPage" meta={pageMeta} crumb="Privacy Policy" />
-      <section className="relative pt-40 pb-16 sm:pt-48 sm:pb-24">
-        <div className="mx-auto max-w-2xl px-6">
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Privacy Policy</h1>
-          <p className="mt-2 text-sm text-muted-foreground">Last updated: October 2026</p>
-
-          <div className="mt-10 flex flex-col gap-8">
-            {sections.map((section) => (
-              <div key={section.heading}>
-                <h2 className="text-lg font-semibold text-foreground">{section.heading}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{section.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <LegalDocument
+        title="Privacy Policy"
+        updated="October 2026"
+        lead="This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service."
+        sections={sections}
+        contactIntro="If you have any questions about this Privacy Policy, You can contact us by email or through the contact page on our website."
+        email="hello@collabrate.digital"
+      />
     </main>
   );
 }

@@ -3,8 +3,8 @@ import { ArrowUpRight, CalendarDays, Mail } from "lucide-react";
 import { LegalToc } from "@/components/sections/legal-toc";
 import { slugify } from "@/lib/slug";
 
-/** A paragraph, or a definition whose term is shown in bold. */
-export type Para = string | { term: string; text: string };
+/** A paragraph, a definition whose term is shown in bold, or a bulleted list. */
+export type Para = string | { term: string; text: string } | { items: string[] };
 
 export interface LegalSection {
   heading: string;
@@ -14,9 +14,14 @@ export interface LegalSection {
 
 function Paragraphs({ paras }: { paras: Para[] }) {
   // Consecutive definitions are grouped into one list; everything else is a paragraph.
-  const blocks: ({ kind: "p"; text: string } | { kind: "dl"; items: { term: string; text: string }[] })[] = [];
+  type Block =
+    | { kind: "p"; text: string }
+    | { kind: "dl"; items: { term: string; text: string }[] }
+    | { kind: "ul"; items: string[] };
+  const blocks: Block[] = [];
   for (const para of paras) {
     if (typeof para === "string") blocks.push({ kind: "p", text: para });
+    else if ("items" in para) blocks.push({ kind: "ul", items: para.items });
     else {
       const last = blocks[blocks.length - 1];
       if (last?.kind === "dl") last.items.push(para);
@@ -31,6 +36,12 @@ function Paragraphs({ paras }: { paras: Para[] }) {
           <p key={i} className="mt-4 text-[15px] leading-7 text-muted-foreground first:mt-0">
             {block.text}
           </p>
+        ) : block.kind === "ul" ? (
+          <ul key={i} className="mt-4 flex list-disc flex-col gap-2 pl-5 text-[15px] leading-7 text-muted-foreground marker:text-brand-violet first:mt-0">
+            {block.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         ) : (
           <dl key={i} className="mt-4 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-surface first:mt-0">
             {block.items.map((item) => (
