@@ -29,7 +29,7 @@ export function StatusPage({
       </span>
 
       <div className="relative mx-auto flex w-full max-w-2xl flex-col items-center text-center">
-        <Image src="/logo-mark.png" alt="" width={56} height={56} className="size-14" priority />
+        <Image src="/brand/png/collabrate-mark-color-256w.png" alt="" width={56} height={56} className="size-14" priority />
         <span className="mt-6 inline-flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-violet">
           <span className="h-px w-6 bg-brand-violet/50" aria-hidden />
           {eyebrow}

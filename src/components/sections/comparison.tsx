@@ -89,7 +89,7 @@ export function Comparison() {
                 role="columnheader"
                 className="flex items-center justify-center gap-2 rounded-t-[16px] border border-b-0 border-brand-violet/40 bg-tint-sky px-4 py-5"
               >
-                <Image src="/logo-mark.png" alt="" width={28} height={28} className="size-7" />
+                <Image src="/brand/png/collabrate-mark-color-256w.png" alt="" width={28} height={28} className="size-7" />
                 <span className="font-[family-name:var(--font-display)] text-xl font-semibold text-foreground">
                   Collabrate
                 </span>

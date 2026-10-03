@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    apple: "/brand/icons/apple-touch-icon.png",
   },
   // Defaults only: no url here. Pages build their full openGraph/twitter/canonical with
   // buildMetadata() in src/lib/seo.ts, because Next.js replaces these objects per page.
