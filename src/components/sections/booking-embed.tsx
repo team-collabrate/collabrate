@@ -31,7 +31,7 @@ export function BookingEmbed() {
                 href={site.calendlyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 underline underline-offset-2 hover:text-foreground"
+                className="inline-flex min-h-6 items-center gap-1 underline underline-offset-2 hover:text-foreground"
               >
                 Open in a new tab <ArrowUpRight className="size-3.5" aria-hidden />
               </a>
