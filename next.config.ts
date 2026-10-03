@@ -57,6 +57,9 @@ const SECURITY_HEADERS = [
 ];
 
 const nextConfig: NextConfig = {
+  // The whole stylesheet is about 22 KB (Tailwind), so inline it: the CSS link no longer blocks first paint.
+  experimental: { inlineCss: true },
+
   async headers() {
     return [
       { source: "/:path*", headers: SECURITY_HEADERS },
