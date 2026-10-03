@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Instagram, Linkedin, XLogo } from "@/components/shared/brand-icons";
+import { InstagramBrand, LinkedinBrand, XLogoBold } from "@/components/shared/brand-icons";
 import { Logo } from "@/components/layout/logo";
 import { NewsletterForm } from "@/components/layout/newsletter-form";
 import { CookieSettingsLink } from "@/components/analytics/cookie-settings-link";
@@ -275,21 +275,21 @@ export function Footer({ navData }: { navData: SiteNavData }) {
               <Social
                 href={site.social.linkedin}
                 label="LinkedIn"
-                icon={Linkedin}
+                icon={LinkedinBrand}
                 text={isPending(site.social.linkedin) ? "LinkedIn" : "@" + site.social.linkedin.replace(/\/+$/, "").split("/").pop()}
                 textClass="text-[#0A66C2]"
               />
               <Social
                 href={site.social.x}
                 label="X"
-                icon={XLogo}
+                icon={XLogoBold}
                 text={"@" + site.social.x.replace(/\/+$/, "").split("/").pop()}
                 textClass="text-foreground"
               />
               <Social
                 href={site.social.instagram}
                 label="Instagram"
-                icon={Instagram}
+                icon={InstagramBrand}
                 text={"@" + site.social.instagram.replace(/\/+$/, "").split("/").pop()}
                 textClass="bg-[linear-gradient(45deg,#feda75_0%,#fa7e1e_25%,#d62976_50%,#962fbf_75%,#4f5bd5_100%)] bg-clip-text text-transparent"
               />
