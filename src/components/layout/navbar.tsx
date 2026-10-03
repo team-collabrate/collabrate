@@ -112,6 +112,28 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
     closeTimer.current = setTimeout(() => setMenuOpen(false), 140);
   };
 
+  // Keyboard: Escape closes whichever menu is open (and returns focus to the trigger); ArrowDown on the
+  // Services link moves into the panel, whose links come later in tab order than the nav row.
+  const triggerRef = useRef<HTMLAnchorElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      const hadPanelFocus = panelRef.current?.contains(document.activeElement);
+      setMenuOpen(false);
+      setOpen(false);
+      if (hadPanelFocus) triggerRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  const focusFirstPanelLink = () => {
+    openMenu();
+    window.setTimeout(() => panelRef.current?.querySelector<HTMLAnchorElement>("a")?.focus(), 80);
+  };
+
   const linkClass = (active: boolean) =>
     cn(
       "inline-flex h-9 items-center gap-1.5 rounded-[8px] px-[18px] text-sm font-medium transition-colors duration-200 hover:bg-black/[0.05] dark:hover:bg-white/10",
@@ -156,9 +178,17 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                   onBlur={closeMenu}
                 >
                   <Link
+                    ref={triggerRef}
                     href={link.href}
                     aria-haspopup="true"
                     aria-expanded={menuOpen}
+                    aria-controls="services-menu"
+                    onKeyDown={(event) => {
+                      if (event.key === "ArrowDown") {
+                        event.preventDefault();
+                        focusFirstPanelLink();
+                      }
+                    }}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(linkClass(isActive), menuOpen && "bg-black/5 text-nav-ink dark:bg-white/10")}
                   >
@@ -190,7 +220,7 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
         </div>
 
         <button
-          className="relative z-10 flex size-10 items-center justify-center rounded-lg text-foreground lg:hidden"
+          className="relative z-10 flex size-11 items-center justify-center rounded-lg text-foreground lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
@@ -204,6 +234,10 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
         <AnimatePresence>
           {menuOpen && (
             <m.div
+              ref={panelRef}
+              id="services-menu"
+              onFocus={openMenu}
+              onBlur={closeMenu}
               initial={{ opacity: 0, y: 10, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.99 }}

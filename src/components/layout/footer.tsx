@@ -9,7 +9,7 @@ import { isPending, site, footer, serviceCategories } from "@/lib/content";
 import type { SiteNavData } from "@/lib/site-links";
 
 const eyebrow = "text-xs font-semibold uppercase tracking-[2px] text-brand-violet";
-const linkCls = "inline-flex min-h-6 items-center gap-2 text-[15px] text-foreground/80 transition-colors hover:text-foreground";
+const linkCls = "inline-flex min-h-11 items-center gap-2 text-[15px] lg:min-h-6 text-foreground/80 transition-colors hover:text-foreground";
 const divider = "relative z-[1] mx-6 h-px bg-[linear-gradient(90deg,#8A2BE2_0%,rgba(138,43,226,0.1)_100%)] sm:mx-10";
 
 const AI_PROMPT = `Tell me everything about Collabrate (${site.domain}), a digital development, marketing and AI agency that is ${site.location}. Cover: (1) what services they offer, (2) the kinds of businesses they work with, (3) how they work with clients, and (4) why a business should choose one accountable team over separate vendors.`;
@@ -86,7 +86,7 @@ function Social({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={text.toLowerCase().includes(label.toLowerCase()) ? text : `${label} ${text}`}
-        className="inline-flex min-h-6 items-center gap-2 text-sm transition-opacity hover:opacity-70"
+        className="inline-flex min-h-11 items-center gap-2 text-sm transition-opacity hover:opacity-70 lg:min-h-6"
       >
         {inner}
       </a>
@@ -146,7 +146,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
               <div className="flex gap-16 lg:ml-auto lg:justify-end max-md:grid max-md:w-full max-md:grid-cols-2 max-md:gap-x-4 max-md:gap-y-8 md:max-lg:grid md:max-lg:w-full md:max-lg:grid-cols-3 md:max-lg:gap-x-8 md:max-lg:gap-y-10">
                 <nav aria-label="Company">
                   <div className={`${eyebrow} mb-5`}>Company</div>
-                  <ul className="flex flex-col gap-3 max-lg:gap-2">
+                  <ul className="flex flex-col gap-3 max-lg:gap-0">
                     {company.map((l) => (
                       <li key={l.href}>
                         <Link href={l.href} className={linkCls}>
@@ -158,7 +158,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                 </nav>
                 <nav aria-label="Resources">
                   <div className={`${eyebrow} mb-5`}>Resources</div>
-                  <ul className="flex flex-col gap-3 max-lg:gap-2">
+                  <ul className="flex flex-col gap-3 max-lg:gap-0">
                     {resources.map((l) => (
                       <li key={l.href}>
                         <Link href={l.href} className={linkCls}>
@@ -170,7 +170,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                 </nav>
                 <nav aria-label="Services" className="max-md:col-span-2 md:max-lg:order-last md:max-lg:col-span-3">
                   <div className={`${eyebrow} mb-5`}>Services</div>
-                  <ul className="flex flex-col gap-3 max-lg:gap-2 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8">
+                  <ul className="flex flex-col gap-3 max-lg:gap-0 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8">
                     {serviceCategories.map((c) => (
                       <li key={c.id}>
                         <Link href="/services" className={linkCls}>
@@ -183,7 +183,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                 {services.length > 0 && (
                   <nav aria-label="All services" className="max-md:col-span-2 md:max-lg:col-span-3">
                     <div className={`${eyebrow} mb-5`}>All services</div>
-                    <ul className="flex flex-col gap-3 max-lg:gap-2 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8 lg:grid lg:grid-cols-2 lg:gap-x-10">
+                    <ul className="flex flex-col gap-3 max-lg:gap-0 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8 lg:grid lg:grid-cols-2 lg:gap-x-10">
                       {services.map((l) => (
                         <li key={l.href}>
                           <Link href={l.href} className={linkCls}>
@@ -197,7 +197,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
                 {industries.length > 0 && (
                   <nav aria-label="Industries" className="max-md:col-span-2 md:max-lg:col-span-3">
                     <div className={`${eyebrow} mb-5`}>Industries</div>
-                    <ul className="flex flex-col gap-3 max-lg:gap-2 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8">
+                    <ul className="flex flex-col gap-3 max-lg:gap-0 md:max-lg:grid md:max-lg:grid-cols-3 md:max-lg:gap-x-8">
                       {industries.map((l) => (
                         <li key={l.href}>
                           <Link href={l.href} className={linkCls}>
@@ -292,13 +292,13 @@ export function Footer({ navData }: { navData: SiteNavData }) {
               <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
                 {legal.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="inline-flex min-h-6 items-center text-[13px] text-foreground/60 transition-colors hover:text-foreground">
+                    <Link href={l.href} className="inline-flex min-h-11 items-center text-[13px] lg:min-h-6 text-foreground/60 transition-colors hover:text-foreground">
                       {l.label === "Privacy" ? "Privacy policy" : "Terms and conditions"}
                     </Link>
                   </li>
                 ))}
                 <li>
-                  <CookieSettingsLink className="text-[13px] text-foreground/60 transition-colors hover:text-foreground" />
+                  <CookieSettingsLink className="inline-flex min-h-11 items-center text-[13px] lg:min-h-6 text-foreground/60 transition-colors hover:text-foreground" />
                 </li>
               </ul>
               <p className="text-xs uppercase tracking-[1.5px] text-foreground/45">{footer.copyright}</p>

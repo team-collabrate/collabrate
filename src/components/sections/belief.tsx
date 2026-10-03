@@ -45,6 +45,8 @@ export function Belief() {
           {STRIP_LOGOS.map(([file, label]) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img loading="lazy" decoding="async"
+              width={28}
+              height={28}
               key={file}
               src={`/logos/${file}`}
               alt={label}

@@ -14,7 +14,7 @@ export function Logo({
   tone?: "color" | "white";
 }) {
   return (
-    <Link href="/" className={cn("flex shrink-0 items-center px-1", className)} aria-label="Collabrate home">
+    <Link href="/" className={cn("flex min-h-11 shrink-0 items-center px-1", className)} aria-label="Collabrate home">
       <Image
         src={`/brand/svg/collabrate-full-${tone}.svg`}
         alt="Collabrate"

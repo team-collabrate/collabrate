@@ -13,7 +13,7 @@ export function DirectContact() {
         <Reveal>
           <div className="flex flex-col gap-6 rounded-3xl border border-border bg-surface p-8 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-10">
             <div className="flex flex-col gap-3">
-              <a href={`mailto:${site.email}`} className="flex min-h-6 items-center gap-2.5 text-sm font-medium text-foreground hover:text-brand-violet">
+              <a href={`mailto:${site.email}`} className="flex min-h-11 items-center gap-2.5 text-sm font-medium text-foreground hover:text-brand-violet">
                 <Mail className="size-4" /> {site.email}
               </a>
               <span className="flex items-center gap-2.5 text-sm text-muted-foreground">

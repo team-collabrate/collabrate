@@ -45,12 +45,12 @@ export function NewsletterForm() {
           placeholder="you@company.com"
           aria-label="Email address"
           autoComplete="email"
-          className="min-w-0 flex-1 bg-transparent px-3 py-2 text-[15px] text-foreground outline-none placeholder:text-foreground/40"
+          className="h-11 min-w-0 flex-1 bg-transparent px-3 text-[15px] text-foreground outline-none placeholder:text-foreground/40"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="shrink-0 rounded-[8px] bg-[linear-gradient(180deg,#A86BEF_0%,#8A2BE2_100%)] px-4 py-2 text-[14px] font-medium text-white transition-[transform,box-shadow] duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_18px_-6px_rgba(138,43,226,0.55)] disabled:opacity-70"
+          className="h-11 shrink-0 rounded-[8px] bg-[linear-gradient(180deg,#A86BEF_0%,#8A2BE2_100%)] px-4 text-[14px] font-medium text-white transition-[transform,box-shadow] duration-200 hover:-translate-y-px hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_6px_18px_-6px_rgba(138,43,226,0.55)] disabled:opacity-70"
         >
           {status === "loading" ? "Subscribing…" : "Subscribe"}
         </button>

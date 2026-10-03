@@ -89,6 +89,8 @@ export function Hero() {
                   <img
                     loading="lazy"
                     decoding="async"
+                    width={36}
+                    height={36}
                     key={i}
                     src={`/logos/${file}`}
                     alt=""
