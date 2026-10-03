@@ -56,7 +56,7 @@ function Social({
 }) {
   const inner = (
     <>
-      <Icon className="size-4" />
+      <Icon className="size-[18px] shrink-0" />
       <span className={textClass}>{text}</span>
     </>
   );
@@ -66,7 +66,7 @@ function Social({
         <span
           aria-disabled="true"
           title={`${label} coming soon`}
-          className="inline-flex min-h-6 cursor-not-allowed items-center gap-2 text-sm opacity-45"
+          className="inline-flex min-h-6 cursor-not-allowed items-center gap-2.5 text-[15px] opacity-45"
         >
           {inner}
         </span>
@@ -80,7 +80,7 @@ function Social({
         target="_blank"
         rel="noopener noreferrer"
         aria-label={text.toLowerCase().includes(label.toLowerCase()) ? text : `${label} ${text}`}
-        className="inline-flex min-h-11 items-center gap-2 text-sm transition-opacity hover:opacity-70 lg:min-h-6"
+        className="inline-flex min-h-11 items-center gap-2.5 text-[15px] transition-opacity hover:opacity-70 lg:min-h-6"
       >
         {inner}
       </a>
@@ -271,7 +271,7 @@ export function Footer({ navData }: { navData: SiteNavData }) {
 
           {/* Bottom bar */}
           <div className="relative z-[1] flex items-center justify-between gap-6 px-6 pb-8 pt-8 max-md:flex-col max-md:items-start sm:px-10 sm:pb-10">
-            <ul className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <ul className="flex flex-wrap items-center gap-x-8 gap-y-1 sm:gap-x-10">
               <Social
                 href={site.social.linkedin}
                 label="LinkedIn"
