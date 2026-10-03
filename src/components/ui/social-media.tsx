@@ -51,6 +51,8 @@ const SocialTooltip = React.forwardRef<HTMLUListElement, SocialTooltipProps>(
                 className={cn(baseFilledStyles)}
                 style={{ backgroundColor: item.color }}
               />
+              {/* Brand SVG logos: next/image would only wrap them in an optimizer round-trip. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img loading="lazy" decoding="async"
                 src={item.svgUrl}
                 alt={item.ariaLabel}
