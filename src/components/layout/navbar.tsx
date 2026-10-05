@@ -245,10 +245,12 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
               onMouseLeave={closeMenu}
               className="absolute left-1/2 top-full hidden w-[min(1260px,calc(100vw-2rem))] -translate-x-1/2 pt-1 lg:block"
             >
-              <div className="flex gap-3 rounded-[22px] border border-white/80 bg-white/92 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_30px_70px_-20px_rgba(26,20,51,0.35)] ring-1 ring-black/[0.06] backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:bg-white/[0.06] dark:ring-white/5">
+              <div className="relative flex gap-3 rounded-[22px] p-3 shadow-[0_30px_70px_-20px_rgba(26,20,51,0.35)]">
+                {/* Same liquid glass as the bar, a little more opaque because this panel carries lots of small text. */}
+                <LiquidGlassSurface className="rounded-[22px]" tint="bg-white/90 dark:bg-white/[0.07]" />
                 {/* Column labels are one short line each, so all three columns start level; items then flow
                     naturally within their own column. */}
-                <div className="min-w-0 flex-1">
+                <div className="relative z-10 min-w-0 flex-1">
                   <div className="grid grid-cols-3">
                     {serviceCategories.map((category, index) => {
                       const accent = CATEGORY_ACCENTS[category.id];
@@ -328,7 +330,7 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
                 </div>
 
                 {/* Contact card. No ratings, client counts or logos: nothing that is not in the content file. */}
-                <aside className="relative hidden w-[248px] shrink-0 flex-col overflow-hidden xl:flex rounded-2xl bg-gradient-to-br from-[#9A44C3] via-[#BE47A5] to-[#FF613E] p-5 text-white">
+                <aside className="relative z-10 hidden w-[248px] shrink-0 flex-col overflow-hidden xl:flex rounded-2xl bg-gradient-to-br from-[#9A44C3] via-[#BE47A5] to-[#FF613E] p-5 text-white">
                   {/* Website mock-up artwork: heading space on top, tilted screens below, bleeding off the edges. */}
                   <Image src={MENU_CARD_IMAGE} alt="" fill sizes="248px" unoptimized aria-hidden className="pointer-events-none object-cover object-bottom" />
                   <p className="relative text-[22px] font-semibold leading-tight tracking-tight">Not sure which service you need?</p>

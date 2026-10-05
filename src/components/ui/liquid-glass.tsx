@@ -49,11 +49,18 @@ const EDGE_DARK =
  * Decorative glass layer. Put it inside a `relative` box that has a border-radius class; it
  * inherits that radius. It sits apart from the box's content so the blur can never touch text.
  */
-export function LiquidGlassSurface({ className }: { className?: string }) {
+export function LiquidGlassSurface({
+  className,
+  tint = "bg-white/80 dark:bg-white/[0.07]",
+}: {
+  className?: string;
+  /** Background tint classes. Raise the opacity for surfaces that carry a lot of small text. */
+  tint?: string;
+}) {
   return (
     <div aria-hidden className={cn("pointer-events-none absolute inset-0 rounded-[inherit]", className)}>
       <div
-        className="absolute inset-0 rounded-[inherit] bg-white/80 backdrop-blur-xl backdrop-saturate-150 dark:bg-white/[0.07]"
+        className={cn("absolute inset-0 rounded-[inherit] backdrop-blur-xl backdrop-saturate-150", tint)}
         style={{ backdropFilter: "url(#container-glass) blur(10px) saturate(1.5)" }}
       />
       <div className={cn("absolute inset-0 rounded-[inherit]", EDGE_LIGHT, EDGE_DARK)} />
