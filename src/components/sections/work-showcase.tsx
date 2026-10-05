@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal, StaggerGroup } from "@/components/shared/reveal";
@@ -15,7 +16,16 @@ const intro = (content.pages as { portfolio?: { sections: PortfolioIntro[] } }).
   (s) => s.type === "portfolioIntro"
 );
 
-// Generated covers only: there are no real project screenshots to show yet.
+// Real cover images, keyed by project title (exported at 5:3, 1619x971). Projects without one
+// fall back to the generated gradient cover below.
+const COVER_IMAGES: Record<string, { src: string; alt: string }> = {
+  "Turf Booking Platform": {
+    src: "/work/turf-booking-platform.webp",
+    alt: "A turf booking website on a laptop and its mobile app on a phone, showing booking, ticket and cafe menu options.",
+  },
+};
+
+// Generated covers for projects that don't have an image yet.
 const COVERS = [
   "from-[#8A2BE2] via-[#B154B3] to-[#CF6CAD]",
   "from-[#F7686F] via-[#FF9F43] to-[#FFC9A3]",
@@ -65,7 +75,9 @@ export function WorkShowcase() {
         </Reveal>
 
         <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-2" stagger={0.06}>
-          {portfolioProjects.map((project, i) => (
+          {portfolioProjects.map((project, i) => {
+            const cover = COVER_IMAGES[project.title];
+            return (
             <div key={`${project.title}-${i}`}>
               <Link
                 href="/portfolio"
@@ -73,14 +85,26 @@ export function WorkShowcase() {
               >
                 <article className="flex h-full min-h-[623px] flex-col overflow-hidden rounded-[27px] bg-background">
                   <div
-                    className={`grain relative h-[387px] shrink-0 overflow-hidden bg-gradient-to-br ${COVERS[i % COVERS.length]}`}
+                    className={`relative aspect-[5/3] shrink-0 overflow-hidden ${
+                      cover ? "bg-panel" : `grain bg-gradient-to-br ${COVERS[i % COVERS.length]}`
+                    }`}
                   >
                     <span className="absolute left-0 top-0 z-10 rounded-br-2xl border-b border-r border-black/10 bg-background px-4 py-2.5 text-sm font-medium uppercase text-foreground">
                       {project.industry}
                     </span>
-                    <div className="transition-transform duration-500 group-hover:-translate-y-2">
-                      <CoverMock variant={i} />
-                    </div>
+                    {cover ? (
+                      <Image
+                        src={cover.src}
+                        alt={cover.alt}
+                        fill
+                        sizes="(min-width: 1344px) 642px, (min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                    ) : (
+                      <div className="transition-transform duration-500 group-hover:-translate-y-2">
+                        <CoverMock variant={i} />
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col gap-4 p-6">
                     <h3 className="card-title">{project.title}</h3>
@@ -93,7 +117,8 @@ export function WorkShowcase() {
                 </article>
               </Link>
             </div>
-          ))}
+            );
+          })}
         </StaggerGroup>
       </div>
     </section>
