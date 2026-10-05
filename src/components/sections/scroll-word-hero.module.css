@@ -1,0 +1,192 @@
+/*
+ * Scroll-driven "cycling words" band. Ported from a scroll-hero demo, scoped to this component
+ * (every selector is class-based, nothing global) and mapped to the site's own tokens:
+ * --heading / --background / --brand-violet from globals.css, and the `.dark` class for dark mode.
+ */
+
+.root {
+  --start: 50vh; /* where the highlight band sits */
+  --space: 50vh; /* gap between the word list and the closing panel */
+  --accent: var(--brand-violet);
+  --panel-link: #cdb0f7; /* readable on the dark panel (light theme) */
+  --dimmed: color-mix(in oklch, var(--heading), transparent 80%);
+
+  --font-size-min: 14;
+  --font-size-max: 20;
+  --font-ratio-min: 1.1;
+  --font-ratio-max: 1.33;
+  --font-width-min: 375;
+  --font-width-max: 1500;
+
+  position: relative;
+  width: 100%;
+}
+
+:global(.dark) .root {
+  --accent: #b98cf0;
+  --panel-link: var(--brand-violet); /* the panel is near-white in dark theme */
+}
+
+/* Fluid type scale. Plain clamp() fallback first, the full formula where pow() is supported. */
+.fluid {
+  font-size: clamp(2rem, 7vw, 3.75rem);
+}
+@supports (font-size: calc(pow(2, 2) * 1px)) {
+  .fluid {
+    --fluid-min: calc(var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0)));
+    --fluid-max: calc(var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0)));
+    --fluid-preferred: calc((var(--fluid-max) - var(--fluid-min)) / (var(--font-width-max) - var(--font-width-min)));
+    --fluid-type: clamp(
+      (var(--fluid-min) / 16) * 1rem,
+      ((var(--fluid-min) / 16) * 1rem) - (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+        (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+      (var(--fluid-max) / 16) * 1rem
+    );
+    font-size: var(--fluid-type);
+  }
+}
+
+/* The sticky block: "We help you" stays put while the word list scrolls through the band. */
+.header {
+  --font-level: 4;
+  --font-size-min: 24;
+  position: sticky;
+  top: calc((var(--count) - 1) * -1lh);
+  display: flex;
+  align-items: start;
+  width: 100%;
+  margin-bottom: var(--space);
+  line-height: 1.2;
+}
+
+.stage {
+  display: flex;
+  width: 100%;
+  align-items: start;
+  justify-content: center;
+  padding-top: calc(var(--start) - 0.5lh);
+}
+
+.lead {
+  position: sticky;
+  top: calc(var(--start) - 0.5lh);
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.words {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Each word is painted from a viewport-fixed gradient: dim above/below the band, accent inside it. */
+.word {
+  background: linear-gradient(
+    180deg,
+    var(--dimmed) 0 calc(var(--start) - 0.5lh),
+    var(--accent) calc(var(--start) - 0.55lh) calc(var(--start) + 0.55lh),
+    var(--dimmed) calc(var(--start) + 0.5lh)
+  );
+  background-attachment: fixed;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Closing panel. It sits in the page flow (the demo pinned its text with position: fixed, which
+   would float over the rest of the About page). */
+.panel {
+  --font-level: 3;
+  --font-size-min: 20;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  max-width: 1344px;
+  min-height: 90svh;
+  margin-inline: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.5rem;
+  color: var(--background);
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 1.5rem;
+  background: var(--heading);
+}
+
+.panelInner {
+  display: flex;
+  max-width: 22em;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+  text-align: center;
+}
+
+.statement {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--panel-link);
+  text-underline-offset: 0.25em;
+}
+.link:is(:hover, :focus-visible) {
+  text-decoration: underline;
+}
+
+/* Scroll-linked entrance for the panel, only where supported and motion is allowed. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .panel {
+      view-timeline: --panel;
+    }
+    .panel::before {
+      scale: 0.92;
+      transform-origin: 50% 100%;
+      animation: grow both ease-in-out;
+      animation-timeline: --panel;
+      animation-range: entry 0% entry 80%;
+    }
+    .panelInner {
+      animation: reveal both ease-in-out;
+      animation-timeline: --panel;
+      animation-range: entry 30% entry 90%;
+    }
+  }
+}
+
+@keyframes grow {
+  to {
+    scale: 1;
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}

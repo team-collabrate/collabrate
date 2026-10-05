@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Reveal } from "@/components/shared/reveal";
 import { AboutPillars } from "@/components/sections/about-pillars";
+import { ScrollWordHero } from "@/components/sections/scroll-word-hero";
 import { aboutContent } from "@/content/about-page";
 import { isPending, serviceCategories, site, stripServiceParenthetical } from "@/lib/content";
 import { SHOW_UNPUBLISHED } from "@/lib/publish";
@@ -61,6 +62,17 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Each word maps to something we do: UI/UX design and web/app builds, store deployment,
+          marketing, and workflow/AI automation (see the service lists on /services). */}
+      <ScrollWordHero
+        lead="We help you"
+        words={["design.", "build.", "launch.", "market.", "automate."]}
+        summary="We help you design, build, launch, market, and automate."
+        statement="Development, marketing, and AI, from one accountable team."
+        ctaLabel="Tell us what you're building"
+        ctaHref="/contact"
+      />
 
       <section className="relative py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
