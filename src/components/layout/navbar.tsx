@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, LazyMotion, m } from "framer-motion";
 import { ArrowRight, ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "@/components/layout/logo";
-import { Button } from "@/components/ui/button";
+import { GlassFilter, LiquidGlassSurface, MetalButton } from "@/components/ui/liquid-glass";
 import { isPending, nav, site, serviceCategories, stripServiceParenthetical } from "@/lib/content";
 import { menuLines } from "@/content/menu-lines";
 import { CATEGORY_SHORT_LABELS, SERVICE_ICONS } from "@/lib/service-icons";
@@ -154,11 +154,10 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
           compact && "lg:max-w-[1025px]"
         )}
       >
-        {/* Glass layer lives apart from the content so the blur can never swallow the links. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[18px] border border-white/80 bg-white/92 shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_10px_30px_-10px_rgba(20,30,60,0.22)] ring-1 ring-black/[0.06] backdrop-blur-2xl backdrop-saturate-150 dark:border-white/10 dark:bg-white/[0.06] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_10px_32px_-8px_rgba(0,0,0,0.6)] dark:ring-white/5"
-        />
+        {/* Liquid-glass layer lives apart from the content so the blur can never swallow the links.
+            The refraction filter is defined once here and only used by this bar. */}
+        <GlassFilter scale={30} />
+        <LiquidGlassSurface className="rounded-[18px]" />
         <Logo className="relative z-10" />
 
         <nav
@@ -214,9 +213,9 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
         </nav>
 
         <div className="relative z-10 hidden items-center lg:flex">
-          <Button variant="primary" className="h-11 rounded-[12px] px-5" asChild>
-            <Link href={site.primaryCTA.href}>{site.primaryCTA.label}</Link>
-          </Button>
+          <MetalButton href={site.primaryCTA.href} className="px-5">
+            {site.primaryCTA.label}
+          </MetalButton>
         </div>
 
         <button
@@ -406,11 +405,14 @@ export function Navbar({ navData }: { navData: SiteNavData }) {
               </nav>
             )}
             <div className="mt-3 border-t border-border pt-3">
-              <Button variant="primary" className="w-full" asChild>
-                <Link href={site.primaryCTA.href} onClick={() => setOpen(false)}>
-                  {site.primaryCTA.label}
-                </Link>
-              </Button>
+              <MetalButton
+                href={site.primaryCTA.href}
+                onClick={() => setOpen(false)}
+                wrapperClassName="flex w-full"
+                className="w-full"
+              >
+                {site.primaryCTA.label}
+              </MetalButton>
             </div>
           </m.div>
         )}
